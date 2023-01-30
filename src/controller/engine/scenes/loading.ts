@@ -15,7 +15,8 @@ class LoadingScene extends Phaser.Scene {
   preload(): void {
     this.load.baseURL = 'assets/';
     this.load.image('cat', 'spritesheets/cat-idlesprite.png');
-    this.load.atlas('a-cat', 'spritesheets/run-sprite.png', 'spritesheets/cat-run-atlas.json');
+    this.load.atlas('a-cat-idle', 'spritesheets/cat-idle-atlas.png', 'spritesheets/cat-idle-atlas.json');
+    this.load.atlas('a-cat', 'spritesheets/cat-run-atlas.png', 'spritesheets/cat-run-atlas.json');
   }
 }
 

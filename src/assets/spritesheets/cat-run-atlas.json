@@ -1,138 +1,138 @@
 {
 	"textures": [
 		{
-			"image": "run-sprite.png",
+			"image": "cat-run-atlas.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 312,
-				"h": 50
+				"w": 50,
+				"h": 209
 			},
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "cat-run-sprites-0.png",
+					"filename": "cat-run-5.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 50,
+						"w": 48,
 						"h": 48
 					},
 					"spriteSourceSize": {
 						"x": 0,
-						"y": 0,
-						"w": 50,
-						"h": 48
+						"y": 12,
+						"w": 48,
+						"h": 36
 					},
 					"frame": {
 						"x": 1,
 						"y": 1,
-						"w": 50,
-						"h": 48
+						"w": 48,
+						"h": 36
 					}
 				},
 				{
-					"filename": "cat-run-sprites-1.png",
+					"filename": "cat-run-6.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 50,
+						"w": 48,
 						"h": 48
 					},
 					"spriteSourceSize": {
 						"x": 0,
-						"y": 0,
-						"w": 50,
-						"h": 48
+						"y": 13,
+						"w": 48,
+						"h": 35
 					},
 					"frame": {
-						"x": 53,
-						"y": 1,
-						"w": 50,
-						"h": 48
+						"x": 1,
+						"y": 39,
+						"w": 48,
+						"h": 35
 					}
 				},
 				{
-					"filename": "cat-run-sprites-2.png",
+					"filename": "cat-run-1.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 50,
+						"w": 48,
 						"h": 48
 					},
 					"spriteSourceSize": {
 						"x": 0,
-						"y": 0,
-						"w": 50,
-						"h": 48
+						"y": 15,
+						"w": 48,
+						"h": 33
 					},
 					"frame": {
-						"x": 105,
-						"y": 1,
-						"w": 50,
-						"h": 48
+						"x": 1,
+						"y": 76,
+						"w": 48,
+						"h": 33
 					}
 				},
 				{
-					"filename": "cat-run-sprites-3.png",
+					"filename": "cat-run-2.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 50,
+						"w": 48,
 						"h": 48
 					},
 					"spriteSourceSize": {
 						"x": 0,
-						"y": 0,
-						"w": 50,
-						"h": 48
+						"y": 16,
+						"w": 48,
+						"h": 32
 					},
 					"frame": {
-						"x": 157,
-						"y": 1,
-						"w": 50,
-						"h": 48
+						"x": 1,
+						"y": 111,
+						"w": 48,
+						"h": 32
 					}
 				},
 				{
-					"filename": "cat-run-sprites-4.png",
+					"filename": "cat-run-4.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 50,
+						"w": 48,
 						"h": 48
 					},
 					"spriteSourceSize": {
 						"x": 0,
-						"y": 0,
-						"w": 50,
-						"h": 48
+						"y": 11,
+						"w": 48,
+						"h": 32
 					},
 					"frame": {
-						"x": 209,
-						"y": 1,
-						"w": 50,
-						"h": 48
+						"x": 1,
+						"y": 145,
+						"w": 48,
+						"h": 32
 					}
 				},
 				{
-					"filename": "cat-run-sprites-5.png",
+					"filename": "cat-run-3.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 50,
+						"w": 48,
 						"h": 48
 					},
 					"spriteSourceSize": {
 						"x": 0,
-						"y": 0,
-						"w": 50,
-						"h": 48
+						"y": 13,
+						"w": 48,
+						"h": 29
 					},
 					"frame": {
-						"x": 261,
-						"y": 1,
-						"w": 50,
-						"h": 48
+						"x": 1,
+						"y": 179,
+						"w": 48,
+						"h": 29
 					}
 				}
 			]
@@ -141,6 +141,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:39d791594424000fa53057c3d70718b5:5183e43da6a88cc6d535538c0829cc48:b142fa61ea1ca46c122c11b4079e4659$"
+		"smartupdate": "$TexturePacker:SmartUpdate:3e7f96984493a36439b013639416a40b:99e24a18936ae84730ce40784da6c4b9:cd299b26bb471b41e16874474ae6bc16$"
 	}
 }

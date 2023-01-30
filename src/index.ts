@@ -21,7 +21,7 @@ const config: Phaser.Types.Core.GameConfig = {
     antialiasGL: false,
     pixelArt: true,
   },
-  canvasStyle: `display: block; width: 100%; height: 100%`,
+  // canvasStyle: `display: block; width: 100%; height: 100%`,
   autoFocus: true,
 
   // callbacks: {
@@ -29,8 +29,8 @@ const config: Phaser.Types.Core.GameConfig = {
   //     window.sizeChanged();
   //   }
   // }
-  width: 928,
-  height: 793,
+  width: 800,
+  height: 450,
   scene: [LoadingScene, PlaySceneOne],
 };
 

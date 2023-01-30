@@ -1,0 +1,104 @@
+{
+	"textures": [
+		{
+			"image": "cut-idle-atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 97,
+				"h": 85
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "cat-idle1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 8,
+						"w": 47,
+						"h": 40
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 47,
+						"h": 40
+					}
+				},
+				{
+					"filename": "cat-idle2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 8,
+						"w": 45,
+						"h": 40
+					},
+					"frame": {
+						"x": 50,
+						"y": 1,
+						"w": 45,
+						"h": 40
+					}
+				},
+				{
+					"filename": "cat-idle3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 7,
+						"w": 45,
+						"h": 41
+					},
+					"frame": {
+						"x": 1,
+						"y": 43,
+						"w": 45,
+						"h": 41
+					}
+				},
+				{
+					"filename": "cat-idle4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 7,
+						"w": 48,
+						"h": 41
+					},
+					"frame": {
+						"x": 48,
+						"y": 43,
+						"w": 48,
+						"h": 41
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:09bfa00a6fcb192e25a2b518195a1428:4d15730d44c6ee3eae08815730aedebd:d9eb74f577733297b8f92f06b29a26d9$"
+	}
+}
