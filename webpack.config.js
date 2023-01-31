@@ -70,10 +70,10 @@ const baseConfig = {
         //   from: './src/components/views',
         //   to: path.resolve(__dirname, './dist/components/views'),
         // },
-        {
-          from: './src/data',
-          to: path.resolve(__dirname, './dist/data'),
-        },
+        // {
+        //   from: './src/data',
+        //   to: path.resolve(__dirname, './dist/data'),
+        // },
         {
           from: './src/assets',
           to: path.resolve(__dirname, './dist/assets'),

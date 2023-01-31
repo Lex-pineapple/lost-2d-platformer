@@ -9,14 +9,14 @@ class PlaySceneOne extends Phaser.Scene {
   }
 
   preload() {
-    this.load.json('level:1', '../../../data/levelData/level01.json');
+    // this.load.json('level:1', '../../../data/levelData/level01.json');
     this.load.image('cat', '../../../assets/spritesheets/cat-idlesprite.png');
     this.load.image('forest', '../../../assets/backgrounds/Backgroundx48.png');
     this.load.image('ground', '../../../assets/tiles/forest-tiles-allx48cut.png');
     this.load.tilemapTiledJSON('forestGround', '../../../assets/tiles/forest-temp-map.json');
   }
 
-  _loadLevel(data: IJSONData) {
+  _loadPlayer(data: IJSONData) {
     // data.platforms.forEach(this._spawnPlatform, this);
     this._spawnCharacters();
   }
@@ -41,23 +41,53 @@ class PlaySceneOne extends Phaser.Scene {
     //   -75,
     //   'forest'
     // ));
-    
+
     // this.player = new Player(this, 100, 100);
     // this.add.image(0, 0, 'forest');
-    this.add.tileSprite(465, -75, 0, 1920, 'forest');
-    this._loadLevel(this.game.cache.json.get('level:1'));
+
+    // 2nd parameter sets background exactly to left bottom
+    // this.add.image(
+    //   this.textures.get('forest').getSourceImage().width / 2,
+    //   +this.game.config.height - this.textures.get('forest').getSourceImage().height / 2,
+    //   'forest'
+    // );
+
+    const bgOffset = +this.game.config.height - this.textures.get('forest').getSourceImage().height / 2;
+    const worldSize = 4000;
+    // 2nd parameter sets background exactly to left bottom
+    this.add.tileSprite(this.textures.get('forest').getSourceImage().width / 2, bgOffset, 4000, 1056, 'forest');
+    this._loadPlayer(this.game.cache.json.get('level:1'));
 
     const map = this.make.tilemap({ key: 'forestGround' });
-    console.log(map);
-    
     const tileset = map.addTilesetImage('ts1', 'ground');
-    const platforms = map.createLayer('ts2', tileset, 0, -610);
+    const platforms = map.createLayer(
+      'ts2',
+      tileset,
+      0,
+      -(this.textures.get('forest').getSourceImage().height / 2 - bgOffset)
+    );
 
-    // Dont forget to set collision to each tile in tiled!
+    // // Dont forget to set collision to each tile in tiled!
     platforms.setCollisionByProperty({ collides: true });
     this.physics.add.collider(this.player, platforms);
-    this.cameras.main.setBounds(0, 0, 800, 450, true);
-    this.physics.world.setBounds(0, 0, 800, 450, true, true, false);
+    console.log(this.textures.get('forest').getSourceImage().width / 2);
+
+    this.cameras.main.setBounds(
+      0,
+      0,
+      worldSize / 2 + this.textures.get('forest').getSourceImage().width / 2,
+      450,
+      true
+    );
+    this.physics.world.setBounds(
+      0,
+      0,
+      worldSize / 2 + this.textures.get('forest').getSourceImage().width / 2,
+      450,
+      true,
+      true,
+      false
+    );
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
   }
 

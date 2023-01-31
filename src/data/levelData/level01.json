@@ -1,6 +1,0 @@
-{
-  "platforms": [
-    {"image": "ground", "x": 0, "y": 716},
-    {"image": "ground", "x": 400, "y": 200}
-  ]
-}

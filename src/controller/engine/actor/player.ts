@@ -17,9 +17,8 @@ class Player extends Actor {
     this.initAnimations();
   }
 
-  private initAnimations(): void {   
-    console.log( this.scene.anims.generateFrameNames('a-cat-idle'));
 
+  private initAnimations(): void {
     this.scene.anims.create({
       key: 'run',
       frames: this.scene.anims.generateFrameNames('a-cat', {
@@ -28,9 +27,9 @@ class Player extends Actor {
         start: 1,
         end: 5,
       }),
-      frameRate: 15,
+      frameRate: 12,
       repeat: -1,
-    });
+    }); 
     this.scene.anims.create({
       key: 'idle',
       frames: this.scene.anims.generateFrameNames('a-cat-idle', {
@@ -42,30 +41,67 @@ class Player extends Actor {
       frameRate: 5,
       repeat: -1,
     });
+    this.scene.anims.create({
+      key: 'jump',
+      frames: this.scene.anims.generateFrameNames('a-cat-jump', {
+        prefix: 'cat-jump-',
+        suffix: '.png',
+        start: 1,
+        end: 4,
+      }),
+    });
   }
 
-  update(): void {
-    this.getBody().setVelocity(0);
 
+
+  update(): void {
+    // Affects fall physics!
+    this.getBody().velocity.x = 0;
+
+    // Run left on A press
     if (this.keyA?.isDown) {
-      this.body.velocity.x = -160;
+      if (!this.keySpace?.isDown) {
+        this.anims.play('run', true);
+        this.body.velocity.x = -160;
+      }
+      this.body.velocity.x = -200;
+
       this.checkFlip();
       this.getBody().setOffset(48, 0);
-      this.anims.play('run', true);
     }
 
+    // Run right on D press
     if (this.keyD?.isDown) {
-      this.body.velocity.x = 160;
+      if (!this.keySpace?.isDown) {
+        this.anims.play('run', true);
+        this.body.velocity.x = 160;
+      }
+      this.body.velocity.x = 200;
       this.checkFlip();
       this.getBody().setOffset(15, 0);
-      this.anims.play('run', true);
     }
 
-    // if (this.keySpace?.isDown) {
-    //   this.body.velocity.y = -110;
-    // }
+    // Jump on space press
+    // Set frames based on velocity!!
+    if (this.keySpace?.isDown) {
+      console.log(this.getBody().velocity);
+      if (this.getBody().onFloor()) {
+        this.body.velocity.y = -800;
+      }
+      // this.anims.play('jump', true);
+      // if (this.keyD?.isDown) {
+        
+      //   this.body.velocity.x = 1000;
+      // }
+      // if (this.keyA?.isDown) {
+      //   this.body.velocity.x = -600;
+      // }
+      // this.anims.stop();
+      // this.body.gravity.y = -600;
+    }
 
-    if (!this.keyD?.isDown && !this.keyA?.isDown) {
+    // Idle animation
+    if (!this.keyD?.isDown && !this.keyA?.isDown && !this.keySpace?.isDown) {
       this.anims.play('idle', true);
     }
   }
