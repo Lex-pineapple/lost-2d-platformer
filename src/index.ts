@@ -1,6 +1,6 @@
 import * as Phaser from 'phaser';
 import LoadingScene from './controller/engine/scenes/loading';
-import PlaySceneOne from './controller/engine/scenes/scene1';
+import PlaySceneOne from './controller/engine/scenes/scene1Forest';
 
 const config: Phaser.Types.Core.GameConfig = {
   title: 'Lost',
