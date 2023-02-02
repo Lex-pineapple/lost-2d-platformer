@@ -1,0 +1,85 @@
+.visually-hidden:not(:focus):not(:active),
+.checkbox-block input[type='checkbox'],
+.radio-block input[type='radio'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(100%);
+}
+
+.hidden {
+  display: none;
+}
+
+.mobile-hidden,
+.button.mobile-hidden {
+  @media only screen and (max-width: $tablet-landscape-width-lb) {
+    display: none;
+  }
+}
+
+.mobile-midi-hidden {
+  @media only screen and (max-width: $mobile-max-width-lb) {
+    display: none;
+  }
+}
+
+.tablet-min-hidden,
+.button.tablet-min-hidden {
+  display: none;
+
+  @media only screen and (max-width: $mobile-max-width) {
+    display: block;
+  }
+}
+
+.laptop-hidden,
+.button.laptop-hidden {
+  display: none;
+
+  @media only screen and (max-width: $laptop-width-lb) {
+    display: block;
+  }
+}
+
+.desktop-hidden,
+.button.desktop-hidden {
+  display: none;
+
+  @media only screen and (max-width: $tablet-width-lb) {
+    display: block;
+  }
+}
+
+.desktop-midi-hidden,
+.button.desktop-midi-hidden {
+  display: none;
+
+  @media only screen and (max-width: $tablet-landscape-width-lb) {
+    display: block;
+  }
+}
+
+.desktop-mini-hidden,
+.button.desktop-mini-hidden {
+  display: none;
+
+  @media only screen and (max-width: $laptop-width-lb) {
+    display: block;
+  }
+}
+
+.desktop-max-hidden,
+.button.desktop-max-hidden {
+  display: none;
+
+  @media only screen and (max-width: $mobile-max-width) {
+    display: block;
+  }
+}
