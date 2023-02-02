@@ -49,7 +49,7 @@ class LoadingScene extends Phaser.Scene {
       xStart - borderOffset,
       yStart - borderOffset,
       width + borderOffset * 2,
-      height + borderOffset * 2
+      height + borderOffset * 2 // eslint-disable-line
     );
 
     const border = this.add.graphics({
@@ -61,7 +61,7 @@ class LoadingScene extends Phaser.Scene {
     border.strokeRectShape(borderRect);
     const progressBar = this.add.graphics();
 
-    const updateProgressBar = function (percentage: number) {
+    const updateProgressBar = function (percentage: number) { // eslint-disable-line
       progressBar.clear();
       progressBar.fillStyle(0x3afefd, 1);
       progressBar.fillRect(xStart, yStart, percentage * width, height);
@@ -76,7 +76,6 @@ class LoadingScene extends Phaser.Scene {
       });
       // this.scene.start('PlaySceneOne');
     });
-
   }
 
   preload(): void {

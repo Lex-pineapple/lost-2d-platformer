@@ -10,7 +10,6 @@ class PlaySceneOne extends Phaser.Scene {
 
   preload() {
     // this.load.json('level:1', '../../../data/levelData/level01.json');
-
   }
 
   _loadPlayer(data: IJSONData) {
@@ -52,7 +51,7 @@ class PlaySceneOne extends Phaser.Scene {
 
     const bgOffset = +this.game.config.height - this.textures.get('forest').getSourceImage().height / 2;
     const worldSize = 4000;
-    
+
     // 2nd parameter sets background exactly to left bottom
     this.add.tileSprite(this.textures.get('forest').getSourceImage().width / 2, bgOffset, 4000, 1056, 'forest');
     this._loadPlayer(this.game.cache.json.get('level:1'));
@@ -63,7 +62,7 @@ class PlaySceneOne extends Phaser.Scene {
       'ts2',
       tileset,
       0,
-      -(this.textures.get('forest').getSourceImage().height / 2 - bgOffset)
+      -(this.textures.get('forest').getSourceImage().height / 2 - bgOffset) // eslint-disable-line
     );
 
     // // Dont forget to set collision to each tile in tiled!
@@ -76,7 +75,7 @@ class PlaySceneOne extends Phaser.Scene {
       -(this.textures.get('forest').getSourceImage().height / 2 - bgOffset),
       worldSize / 2 + this.textures.get('forest').getSourceImage().width / 2,
       this.textures.get('forest').getSourceImage().height,
-      true
+      true // eslint-disable-line
     );
     this.physics.world.setBounds(
       0,
@@ -85,7 +84,7 @@ class PlaySceneOne extends Phaser.Scene {
       this.textures.get('forest').getSourceImage().height,
       true,
       true,
-      false
+      false // eslint-disable-line
     );
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
   }

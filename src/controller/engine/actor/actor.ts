@@ -21,7 +21,7 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
       alpha: 0.5,
       onStart: () => {
         if (value) {
-          this.hp = this.hp - value;
+          this.hp -= value;
         }
       },
       onComplete: () => {
@@ -43,7 +43,7 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
   }
 
   protected getBody(): Phaser.Physics.Arcade.Body {
-    return <Phaser.Physics.Arcade.Body>this.body;
+    return this.body as Phaser.Physics.Arcade.Body;
   }
 }
 
