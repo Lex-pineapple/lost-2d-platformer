@@ -1,0 +1,114 @@
+html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  position: relative;
+  width: 100%;
+  font-family: $font;
+  font-style: normal;
+  line-height: 1.5;
+  font-weight: 400;
+  color: $text-dark;
+  padding: 0;
+  margin: 0;
+  background-color: $bg;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: rgba($black, 0.5);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+figure {
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+select,
+textarea {
+  appearance: none;
+  -webkit-appearance: none;
+
+  @include text-16;
+  color: $grey-dark;
+  border: 1px solid $grey;
+  border-radius: 2px;
+  padding: 9px 18px;
+}
+
+input[type='color'] {
+  padding: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 0;
+  border: 1px solid $grey;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: $text-grey;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: $text-grey;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  color: $text-grey;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: $text-grey;
+}
+
+h1 {
+  @include font-h1;
+}
+
+h2 {
+  @include font-h2;
+}
+
+h3 {
+  @include font-h3;
+}
+
+h4 {
+  @include font-h4;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+.bold {
+  font-weight: 900;
+}

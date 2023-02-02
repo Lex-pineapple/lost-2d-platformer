@@ -3,7 +3,9 @@ import Actor from './actor';
 
 class Player extends Actor {
   private keyD: Phaser.Input.Keyboard.Key;
+
   private keyA: Phaser.Input.Keyboard.Key;
+
   private keySpace: Phaser.Input.Keyboard.Key;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -17,7 +19,6 @@ class Player extends Actor {
     this.initAnimations();
   }
 
-
   private initAnimations(): void {
     this.scene.anims.create({
       key: 'run',
@@ -29,7 +30,7 @@ class Player extends Actor {
       }),
       frameRate: 12,
       repeat: -1,
-    }); 
+    });
     this.scene.anims.create({
       key: 'idle',
       frames: this.scene.anims.generateFrameNames('a-cat-idle', {
@@ -51,8 +52,6 @@ class Player extends Actor {
       }),
     });
   }
-
-
 
   update(): void {
     // Affects fall physics!
@@ -90,7 +89,7 @@ class Player extends Actor {
       }
       // this.anims.play('jump', true);
       // if (this.keyD?.isDown) {
-        
+
       //   this.body.velocity.x = 1000;
       // }
       // if (this.keyA?.isDown) {

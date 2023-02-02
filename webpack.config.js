@@ -1,26 +1,33 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const baseConfig = {
-  entry: path.resolve(__dirname, './src/index.ts'),
+  entry: path.resolve(__dirname, 'src', 'index.ts'),
+  output: {
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[contenthash].js',
+    assetModuleFilename: '[name][ext]',
+    clean: true,
+  },
   mode: 'development',
   module: {
     rules: [
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.scss$/,
         use: [
+          { loader: 'style-loader' },
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: 'css-loader',
             options: {
-              publicPath: './',
+              url: false,
             },
           },
-          'css-loader',
-          'sass-loader',
+          { loader: 'sass-loader' },
         ],
       },
       {
@@ -46,11 +53,6 @@ const baseConfig = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
-    fallback: { url: require.resolve('url/') },
-  },
-  output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, './dist'),
   },
   devServer: {
     open: true,
@@ -59,11 +61,10 @@ const baseConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'),
+      template: path.resolve(__dirname, 'src', 'index.html'),
       filename: 'index.html',
     }),
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
+    // new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
         // {
@@ -75,8 +76,8 @@ const baseConfig = {
         //   to: path.resolve(__dirname, './dist/data'),
         // },
         {
-          from: './src/assets',
-          to: path.resolve(__dirname, './dist/assets'),
+          from: path.resolve(__dirname, 'src', 'assets'),
+          to: path.resolve(__dirname, 'dist', 'assets'),
         },
       ],
     }),
