@@ -1,11 +1,12 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const baseConfig = {
+/********************************************************************
+ *        Client Config
+ ********************************************************************/
+const clientConfig = {
   entry: path.resolve(__dirname, 'src', 'index.ts'),
   output: {
     filename: 'index.js',
@@ -14,7 +15,8 @@ const baseConfig = {
     assetModuleFilename: '[name][ext]',
     clean: true,
   },
-  mode: 'development',
+  target: 'web',
+  // mode: 'development',
   module: {
     rules: [
       {
@@ -31,11 +33,6 @@ const baseConfig = {
         ],
       },
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
         test: /\.(png|svg|jpg|jpeg|gif|ogg|mp3|wav)/,
         type: 'asset/resource',
         generator: {
@@ -49,15 +46,15 @@ const baseConfig = {
           filename: 'assets/fonts/[hash][ext][query]',
         },
       },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      }
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
-  },
-  devServer: {
-    open: true,
-    host: 'localhost',
-    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -84,11 +81,17 @@ const baseConfig = {
   ],
 };
 
+/********************************************************************
+ *        Exports
+ ********************************************************************/
 module.exports = ({ mode }) => {
   const isProductionMode = mode === 'prod';
-  const envConfig = isProductionMode
-    ? require('./webpack.prod.config')
-    : require('./webpack.dev.config');
 
-  return merge(baseConfig, envConfig);
+  if (isProductionMode) {
+    const envConfig = require('./webpack.prod');
+    return merge(clientConfig, envConfig.prodClient);
+  } else {
+    const envConfig = require('./webpack.dev');
+    return merge(clientConfig, envConfig.devClient);
+  }
 };
