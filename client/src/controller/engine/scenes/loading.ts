@@ -71,10 +71,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.on('progress', updateProgressBar);
     this.load.once('complete', () => {
       this.load.off('progress', updateProgressBar);
-      const button = new Button(this.getCenterX(), this.getCenterY() + 50, 'Start Game', this, () => {
-        this.cameras.main.fadeOut(1000, 0, 0, 0);
-      });
-      // this.scene.start('PlaySceneOne');
+      this.scene.start('MainMenuScene');
     });
   }
 
