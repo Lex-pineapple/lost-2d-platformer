@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin';
 import LoadingScene from './controller/engine/scenes/loading';
 import MainMenuScene from './controller/engine/scenes/menus/mainMenu';
 import PlaySceneOne from './controller/engine/scenes/scene1Forest';
@@ -19,6 +20,15 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 1400 },
       debug: false,
     },
+  },
+  plugins: {
+    scene: [
+      {
+        key: 'rexUI',
+        plugin: RexUIPlugin,
+        mapping: 'rexUI',
+      },
+    ],
   },
   render: {
     antialiasGL: false,
