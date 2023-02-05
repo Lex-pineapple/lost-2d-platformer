@@ -1,6 +1,8 @@
 import * as Phaser from 'phaser';
 import Button from '../helpers/button';
 
+import arrow from '../../../assets/menu/back_arrow.png';
+
 class LoadingScene extends Phaser.Scene {
   private cat!: Phaser.GameObjects.Sprite;
 
@@ -87,6 +89,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('cat', '../../../assets/spritesheets/cat-idlesprite.png');
     this.load.image('forest', '../../../assets/backgrounds/Backgroundx48.png');
     this.load.image('ground', '../../../assets/tiles/forest-tiles-allx48cut.png');
+    this.load.image('menu-arrow', arrow);
     this.load.tilemapTiledJSON('forestGround', '../../../assets/tiles/forest-temp-map.json');
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }
