@@ -10,12 +10,6 @@ enum EnumLang {
 class OptionsScene extends Scene {
   private rexUI!: RexUIPlugin;
 
-  private _volumeLabel!: GameObjects.Text;
-
-  private _volumeSlider!: Slider;
-
-  private _musicVolume!: Slider;
-
   private _langButton!: GameObjects.Text;
 
   private _backButton!: GameObjects.Sprite;
@@ -36,13 +30,22 @@ class OptionsScene extends Scene {
 
   changeMasterVolume(value: number) {
     this.game.sound.volume = value;
+    console.log(value);
+  }
+
+  changeMusicVolume(value: number) {
+    return () => value;
+  }
+
+  changeEffectsVolume(value: number) {
+    return () => value;
   }
 
   createSlider(xPos: number, yPos: number, labelText: string, callback: Function) {
-    this._volumeLabel = this.add.text(xPos - 63, yPos, `${labelText}:`);
-    this._volumeLabel.setStyle({ fill: '#ffffff' }).setOrigin(0.5).setAlign('left');
-    this._volumeLabel.width = 100;
-    this._volumeSlider = new Slider(this, {
+    const labeLSlider = this.add.text(xPos - 63, yPos, `${labelText}:`);
+    labeLSlider.setStyle({ fill: '#ffffff' }).setOrigin(0.5).setAlign('left');
+    labeLSlider.width = 100;
+    const volumeSlider = new Slider(this, {
       x: xPos + 75,
       y: yPos,
       width: 100,
@@ -55,7 +58,8 @@ class OptionsScene extends Scene {
       valuechangeCallback: (value) => {
         callback.call(this, value);
       },
-    }).layout();
+    });
+    volumeSlider.layout();
   }
 
   createLangButton(xPos: number, yPos: number) {
@@ -77,9 +81,11 @@ class OptionsScene extends Scene {
   create() {
     const xAxis = this.cameras.main.width / 2;
     const yAxis = this.cameras.main.height / 2;
-    this.createLangButton(xAxis, yAxis + 25);
-    this.createSlider(xAxis, yAxis - 50, 'Master Volume', this.changeMasterVolume);
     this.createBackButton(40, 30);
+    this.createSlider(xAxis, yAxis - 50, ' Master Volume', this.changeMasterVolume);
+    this.createSlider(xAxis, yAxis - 25, '  Music Volume', this.changeMusicVolume);
+    this.createSlider(xAxis, yAxis, 'Effects Volume', this.changeMusicVolume);
+    this.createLangButton(xAxis, yAxis + 25);
   }
 }
 
