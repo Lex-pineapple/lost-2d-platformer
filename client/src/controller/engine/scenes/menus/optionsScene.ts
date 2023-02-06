@@ -14,6 +14,8 @@ class OptionsScene extends Scene {
 
   private _volumeSlider!: Slider;
 
+  private _musicVolume!: Slider;
+
   private _langButton!: GameObjects.Text;
 
   private _backButton!: GameObjects.Sprite;
@@ -33,7 +35,7 @@ class OptionsScene extends Scene {
   }
 
   changeMasterVolume(value: number) {
-    return () => {};
+    this.game.sound.volume = value;
   }
 
   createSlider(xPos: number, yPos: number, labelText: string, callback: Function) {
@@ -51,7 +53,7 @@ class OptionsScene extends Scene {
       indicator: this.rexUI.add.roundRectangle(0, 0, 0, 0, 5, 0x3afefd),
       thumb: this.rexUI.add.roundRectangle(0, 0, 0, 0, 7, 0xffffff),
       valuechangeCallback: (value) => {
-        callback(value); // fix it
+        callback.call(this, value);
       },
     }).layout();
   }
@@ -76,7 +78,7 @@ class OptionsScene extends Scene {
     const xAxis = this.cameras.main.width / 2;
     const yAxis = this.cameras.main.height / 2;
     this.createLangButton(xAxis, yAxis + 25);
-    this.createSlider(xAxis, yAxis - 50, 'Master Volume', () => this.changeMasterVolume);
+    this.createSlider(xAxis, yAxis - 50, 'Master Volume', this.changeMasterVolume);
     this.createBackButton(40, 30);
   }
 }
