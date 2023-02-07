@@ -4,6 +4,7 @@ import LoadingScene from './controller/engine/scenes/loading';
 import MainMenuScene from './controller/engine/scenes/menus/mainMenu';
 import OptionsScene from './controller/engine/scenes/menus/optionsScene';
 import PlaySceneOne from './controller/engine/scenes/scene1Forest';
+import PauseMenu from './controller/engine/scenes/menus/pauseMenuScene';
 // import './style.scss';
 // import './assets/images/favicon.ico';
 
@@ -45,7 +46,7 @@ const config: Phaser.Types.Core.GameConfig = {
   // }
   width: 800,
   height: 450,
-  scene: [LoadingScene, MainMenuScene, OptionsScene, PlaySceneOne],
+  scene: [LoadingScene, MainMenuScene, OptionsScene, PlaySceneOne, PauseMenu],
 };
 
 // window.sizeChanged = () => {

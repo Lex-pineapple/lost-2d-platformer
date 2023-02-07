@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import Actor from './actor';
+import PauseManager from '../helpers/pauseManager';
 
 class Player extends Actor {
   private keyD: Phaser.Input.Keyboard.Key;
@@ -8,11 +9,18 @@ class Player extends Actor {
 
   private keySpace: Phaser.Input.Keyboard.Key;
 
+  private keyESC: Phaser.Input.Keyboard.Key;
+
+  private _PauseManager: PauseManager;
+
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
     this.keyA = this.scene.input.keyboard.addKey('A');
     this.keyD = this.scene.input.keyboard.addKey('D');
     this.keySpace = this.scene.input.keyboard.addKey('SPACE');
+    this.keyESC = this.scene.input.keyboard.addKey('ESC');
+
+    this._PauseManager = new PauseManager(scene);
 
     this.getBody().setSize(48, 48);
     this.getBody().setOffset(8, 0);
@@ -102,6 +110,11 @@ class Player extends Actor {
     // Idle animation
     if (!this.keyD?.isDown && !this.keyA?.isDown && !this.keySpace?.isDown) {
       this.anims.play('idle', true);
+    }
+
+    if (this.keyESC.isDown) {
+      console.log('player ESC');
+      this._PauseManager.switchPause();
     }
   }
 }
