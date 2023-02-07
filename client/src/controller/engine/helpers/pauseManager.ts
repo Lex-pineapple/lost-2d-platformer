@@ -1,27 +1,32 @@
-import { Scene } from 'phaser';
+import { Scene, Scenes } from 'phaser';
 
 class PauseManager {
-  private _currentScene: Scene;
+  // private _currentScene: Scene;
+  static sceneBeforePause: Scene;
 
-  private _pauseSceneKey: string;
+  static _pauseSceneKey: string = 'PauseMenuScene';
 
-  private _isPaused: boolean;
+  static whereToReturnFromOptions: string = 'MainMenuScene';
 
-  constructor(currentScene: Scene) {
-    this._currentScene = currentScene;
-    this._isPaused = false;
-    this._pauseSceneKey = 'PauseMenuScene';
-    console.log(this._currentScene);
-  }
+  static switchPause(scene: Scene) {
+    PauseManager.whereToReturnFromOptions = 'MainMenuScene';
+    // console.log(PauseManager.sceneBeforePause);
 
-  switchPause() {
-    if (!this._currentScene.scene.isPaused()) {
-      console.log('switch');
-      this._currentScene.scene.launch(this._pauseSceneKey);
-      this._currentScene.scene.pause();
-      this._isPaused = true;
-      console.log('first', this._currentScene.scene.isPaused());
+    // if (Scenes.SceneManager)
+    console.log(scene.game.scene.getScene('PauseMenuScene'));
+    if (!scene.scene.isPaused()) {
+      PauseManager.sceneBeforePause = scene;
+      scene.scene.launch(PauseManager._pauseSceneKey);
+      // scene.scene.pause();
+      scene.scene.setActive(false);
+      PauseManager.whereToReturnFromOptions = 'PauseMenuScene';
+    } else if (PauseManager.sceneBeforePause) {
+      scene.scene.stop();
+      scene.scene.resume(PauseManager.sceneBeforePause);
     }
+
+    console.log(scene.game.scene.isVisible('PauseMenuScene'));
+    console.log(scene.game.scene.isVisible('PlaySceneOne'));
   }
 }
 

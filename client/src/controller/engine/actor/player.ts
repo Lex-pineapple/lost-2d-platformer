@@ -11,7 +11,7 @@ class Player extends Actor {
 
   private keyESC: Phaser.Input.Keyboard.Key;
 
-  private _PauseManager: PauseManager;
+  // private _PauseManager: PauseManager;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
@@ -20,7 +20,7 @@ class Player extends Actor {
     this.keySpace = this.scene.input.keyboard.addKey('SPACE');
     this.keyESC = this.scene.input.keyboard.addKey('ESC');
 
-    this._PauseManager = new PauseManager(scene);
+    // this._PauseManager = new PauseManager(scene);
 
     this.getBody().setSize(48, 48);
     this.getBody().setOffset(8, 0);
@@ -113,8 +113,8 @@ class Player extends Actor {
     }
 
     if (this.keyESC.isDown) {
-      console.log('player ESC');
-      this._PauseManager.switchPause();
+      // this._PauseManager.switchPause();
+      PauseManager.switchPause(this.scene);
     }
   }
 }
