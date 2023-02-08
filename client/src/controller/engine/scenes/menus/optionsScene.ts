@@ -14,6 +14,8 @@ class OptionsScene extends Scene {
 
   private _backButton!: GameObjects.Sprite;
 
+  private previousScene!: string;
+
   returnToMainMenu = () => {
     this.scene.start('MainMenuScene');
   };
@@ -26,6 +28,10 @@ class OptionsScene extends Scene {
 
   constructor() {
     super('OptionsScene');
+  }
+
+  init(data: IInitScene) {
+    this.previousScene = data.key;
   }
 
   changeMasterVolume(value: number) {

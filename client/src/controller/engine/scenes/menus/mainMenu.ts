@@ -7,7 +7,7 @@ class MainMenuScene extends Scene {
   };
 
   openOptions = () => {
-    this.scene.start('OptionsScene');
+    this.scene.start('OptionsScene', { key: 'MainMenuScene' });
   };
 
   constructor() {

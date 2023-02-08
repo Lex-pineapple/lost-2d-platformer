@@ -3,10 +3,27 @@ import Button from '../../helpers/button';
 import PauseManager from '../../helpers/pauseManager';
 
 class PauseMenu extends Scene {
-  backToMainMenu = () => this.scene.start('MainMenuScene');
+  private previousScene!: string;
+
+  backToMainMenu = () => {
+    this.scene.stop(this.previousScene);
+    this.scene.start('MainMenuScene');
+  };
+
+  openOptionsMenu = () => {
+    // this.scene.stop('PauseMenuScene');
+    this.scene.setVisible(false, 'PauseMenuScene');
+    this.scene.launch('OptionsScene', { key: 'PauseMenuScene' });
+    // fix. сцена не становится видима
+  };
 
   constructor() {
     super('PauseMenuScene');
+  }
+
+  init(data: IInitScene) {
+    this.previousScene = data.key;
+    console.log(this.previousScene);
   }
 
   create() {
@@ -21,7 +38,7 @@ class PauseMenu extends Scene {
     });
     const saveButton = new Button(xAxis, yAxis - 50, 'Save', this, () => null);
     const loadButton = new Button(xAxis, yAxis, 'Load', this, () => null);
-    const optionsButton = new Button(xAxis, yAxis + 50, 'Options', this, () => null);
+    const optionsButton = new Button(xAxis, yAxis + 50, 'Options', this, this.openOptionsMenu);
     const exitButton = new Button(xAxis, yAxis + 100, 'Quit', this, this.backToMainMenu);
     this.input.keyboard.on('keydown', (event: KeyboardEventInit) => {
       if (event.key === 'Escape') {
