@@ -1,6 +1,8 @@
 import * as Phaser from 'phaser';
 import LoadingScene from './controller/engine/scenes/loading';
 import PlaySceneOne from './controller/engine/scenes/scene1Forest';
+import PlaySceneTwo from './controller/engine/scenes/scene2Caverns';
+import PlaySceneThree from './controller/engine/scenes/scene3darkWoods';
 // import './style.scss';
 // import './assets/images/favicon.ico';
 
@@ -15,7 +17,7 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 1400 },
+      // gravity: { y: 1400 },
       debug: false,
     },
   },
@@ -33,7 +35,7 @@ const config: Phaser.Types.Core.GameConfig = {
   // }
   width: 800,
   height: 450,
-  scene: [LoadingScene, PlaySceneOne],
+  scene: [LoadingScene, PlaySceneOne, PlaySceneTwo, PlaySceneThree],
 };
 
 // window.sizeChanged = () => {
