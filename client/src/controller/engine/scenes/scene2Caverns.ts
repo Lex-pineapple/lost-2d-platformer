@@ -36,7 +36,7 @@ class PlaySceneTwo extends SceneCreater {
   //   this.physics.world.setBounds(0, -1470, worldWidth, worldHeight, true, true, false);
   //   this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
   // }
-  
+
   // _createBackground(name: string, x: number, y: number, width: number) {
   //   this.add.tileSprite(x, y, width, 1920, name).setOrigin(0);
   // }

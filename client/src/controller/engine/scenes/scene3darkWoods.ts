@@ -12,7 +12,12 @@ class PlaySceneThree extends SceneCreater {
     this.tileBackgrounds(BGHeight);
     this._loadPlayer();
     this._setCamera(worldSize, BGHeight);
-    this.createPlatforms('dark-peacefulForestTileMap', 'dark-peacefulTileset', 'dark-peacefulMap', 'dark-peacefulForestTiles');
+    this.createPlatforms(
+      'dark-peacefulForestTileMap',
+      'dark-peacefulTileset',
+      'dark-peacefulMap',
+      'dark-peacefulForestTiles', // eslint-disable-line
+    );
   }
 
   tileBackgrounds(BGHeight: number) {
@@ -26,7 +31,7 @@ class PlaySceneThree extends SceneCreater {
       'demonForest-peaceful-skyTransition',
       1164 + 2298 + 1000 + 1000,
       gameHeight - BGHeight,
-      5000
+      5000 // eslint-disable-line
     );
     this._createBackground('peacefulBG1', 1164 + 2298 + 1000 + 5000, gameHeight - BGHeight, 1346);
     this._createBackground('peacefulBG2', 1164 + 2298 + 1000 + 5000 + 1346, gameHeight - BGHeight, 1174);

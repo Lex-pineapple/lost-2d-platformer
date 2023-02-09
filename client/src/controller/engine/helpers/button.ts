@@ -2,6 +2,8 @@ class Button {
   constructor(x: number, y: number, label: string, scene: Phaser.Scene, callback: () => void) {
     const button = scene.add.text(x, y, label);
     button
+      .setFixedSize(150, 0)
+      .setAlign('center')
       .setOrigin(0.5)
       .setPadding(10)
       .setStyle({

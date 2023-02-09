@@ -4,17 +4,13 @@ import Player from '../actor/player';
 class SceneCreater extends Phaser.Scene {
   private player!: Player;
 
-
-
   constructor(name: string) {
     super({ key: name });
-
   }
 
   _loadPlayer() {
     this._spawnCharacters();
   }
-
 
   _spawnCharacters() {
     this.player = new Player(this, 100, 100);

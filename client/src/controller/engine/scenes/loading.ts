@@ -1,6 +1,8 @@
 import * as Phaser from 'phaser';
 import Button from '../helpers/button';
 
+import arrow from '../../../assets/menu/back_arrow.png';
+
 class LoadingScene extends Phaser.Scene {
   private cat!: Phaser.GameObjects.Sprite;
 
@@ -71,10 +73,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.on('progress', updateProgressBar);
     this.load.once('complete', () => {
       this.load.off('progress', updateProgressBar);
-      const button = new Button(this.getCenterX(), this.getCenterY() + 50, 'Start Game', this, () => {
-        this.cameras.main.fadeOut(1000, 0, 0, 0);
-      });
-      // this.scene.start('PlaySceneOne');
+      this.scene.start('MainMenuScene');
     });
   }
 
@@ -83,7 +82,6 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('can', 'spritesheets/objects/pickupCatCan-small.png');
     this.load.image('plantFinal', 'spritesheets/objects/plant-big.png');
     this.load.image('plantPickupSmall', 'spritesheets/objects/plant-small.png');
-
 
     this.load.image('cat', 'spritesheets/cat-idlesprite.png');
     this.load.image('cat-wall-slide', 'spritesheets/catWallSlide.png');
@@ -98,6 +96,10 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('cat-jump-3', 'spritesheets/cat-jump-frames/cat-jump-3.png');
     this.load.image('cat-jump-4', 'spritesheets/cat-jump-frames/cat-jump-4.png');
     this.load.image('cat', '../../../assets/spritesheets/cat-idlesprite.png');
+    this.load.image('forest', '../../../assets/backgrounds/Backgroundx48.png');
+    this.load.image('ground', '../../../assets/tiles/forest-tiles-allx48cut.png');
+    this.load.image('menu-arrow', arrow);
+    this.load.tilemapTiledJSON('forestGround', '../../../assets/tiles/forest-temp-map.json');
     // this.load.image('forest', '../../../assets/backgrounds/Backgroundx48.png');
     this.load.image('forestBG1', '../../../assets/backgrounds/ForestBG1.png');
     this.load.image('forestBG2', '../../../assets/backgrounds/ForestBG2-transition.png');
@@ -107,7 +109,10 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('demonForestBG2', '../../../assets/backgrounds/DemonForestBG2-transition.png');
     this.load.image('demonForestBG3', '../../../assets/backgrounds/DemonForestBG3.png');
     this.load.image('demonForestBG4', '../../../assets/backgrounds/DemonForestBG4-moon.png');
-    this.load.image('demonForest-peaceful-skyTransition', '../../../assets/backgrounds/demonForest-peacefulForest-transition.png');
+    this.load.image(
+      'demonForest-peaceful-skyTransition', // eslint-disable-next-line
+      '../../../assets/backgrounds/demonForest-peacefulForest-transition.png',
+    );
     this.load.image('peacefulBG1', '../../../assets/backgrounds/PeacefulBG1-start.png');
     this.load.image('peacefulBG2', '../../../assets/backgrounds/PeacefulBG2.png');
 
@@ -116,10 +121,10 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('cavernsTiles', '../../../assets/tiles/Cave-TileMap/caveTileMap-yellow.png');
     this.load.tilemapTiledJSON('cavernsTileMap', '../../../assets/tiles/Cave-TileMap/cavernsTileMap.json');
     this.load.image('dark-peacefulForestTiles', '../../../assets/tiles/Forets-TileMap/forestTileMap-Peaceful.png');
-    this.load.tilemapTiledJSON('dark-peacefulForestTileMap', '../../../assets/tiles/Forets-TileMap/dark-peacefulForestTileMap.json');
-
-
-
+    this.load.tilemapTiledJSON(
+      'dark-peacefulForestTileMap', // eslint-disable-next-line
+      '../../../assets/tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
+    );
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }

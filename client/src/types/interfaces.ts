@@ -7,3 +7,7 @@ interface IPlatformData {
   x: number;
   y: number;
 }
+
+interface IInitScene {
+  key: string;
+}

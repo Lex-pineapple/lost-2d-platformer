@@ -1,4 +1,4 @@
-interface dialogueModalConfig {
+interface DialogueModalConfig {
   borderThickness?: number;
   borderColor?: number;
   borderAlpha?: number;
@@ -45,7 +45,7 @@ class DialogueModal {
 
   // closeBtn: any;
 
-  constructor(scene: Phaser.Scene, config: dialogueModalConfig) {
+  constructor(scene: Phaser.Scene, config: DialogueModalConfig) {
     this.scene = scene;
     this.borderThickness = config.borderThickness || 3;
     this.borderColor = config.borderColor || 0x907748;
@@ -68,7 +68,6 @@ class DialogueModal {
   }
 
   protected getGameWidth() {
-    
     return +this.scene.sys.game.config.width;
   }
 
@@ -135,7 +134,6 @@ class DialogueModal {
     if (this.eventCounter === this.dialog.length) {
       this.timedEvent.remove();
     }
-
   }
 
   _setText(text: string) {

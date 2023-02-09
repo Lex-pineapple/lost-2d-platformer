@@ -1,8 +1,13 @@
 import * as Phaser from 'phaser';
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin';
 import LoadingScene from './controller/engine/scenes/loading';
+import MainMenuScene from './controller/engine/scenes/menus/mainMenu';
+import OptionsScene from './controller/engine/scenes/menus/optionsScene';
 import PlaySceneOne from './controller/engine/scenes/scene1Forest';
 import PlaySceneTwo from './controller/engine/scenes/scene2Caverns';
 import PlaySceneThree from './controller/engine/scenes/scene3darkWoods';
+import PauseMenu from './controller/engine/scenes/menus/pauseMenuScene';
+
 // import './style.scss';
 // import './assets/images/favicon.ico';
 
@@ -21,6 +26,15 @@ const config: Phaser.Types.Core.GameConfig = {
       debug: false,
     },
   },
+  plugins: {
+    scene: [
+      {
+        key: 'rexUI',
+        plugin: RexUIPlugin,
+        mapping: 'rexUI',
+      },
+    ],
+  },
   render: {
     antialiasGL: false,
     pixelArt: true,
@@ -35,7 +49,8 @@ const config: Phaser.Types.Core.GameConfig = {
   // }
   width: 800,
   height: 450,
-  scene: [LoadingScene, PlaySceneOne, PlaySceneTwo, PlaySceneThree],
+  // eslint-disable-next-line
+  scene: [LoadingScene, PlaySceneOne, PlaySceneTwo, PlaySceneThree, MainMenuScene, OptionsScene, PauseMenu],
 };
 
 // window.sizeChanged = () => {

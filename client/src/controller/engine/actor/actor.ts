@@ -38,7 +38,6 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
     if (this.body.velocity.x < 0) {
       this.scaleX = -1;
       console.log('Flipped');
-
     } else if (this.body.velocity.x > 0) {
       console.log('Flipped');
 
@@ -49,7 +48,7 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
   protected checkFlipY(): void {
     if (this.body.velocity.y < 0) {
       console.log('Flipped');
-      
+
       this.scaleX = -1;
     } else {
       console.log('Flipped');

@@ -2,7 +2,7 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
   name: string;
 
   scene: Phaser.Scene;
-
+  // eslint-disable-next-line
   constructor(scene: Phaser.Scene, name: string, x: number, y: number, texture: string, frame?: string | number) {
     super(scene, x, y, texture, frame);
     this.scene = scene;
@@ -13,8 +13,8 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     this.initAnimation();
     this.flipX = true;
     // this.getBody().setOffset(11, 9);
-      // .setOrigin(0.5, 1)
-      // .setDepth(2);
+    // .setOrigin(0.5, 1)
+    // .setDepth(2);
     // this.body.setCollideWorldBounds(true);
     // .sprite(x, y, name)
     // .setCollideWorldBounds(true)

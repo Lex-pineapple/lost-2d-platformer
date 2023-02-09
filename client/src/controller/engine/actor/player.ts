@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import Actor from './actor';
+import PauseManager from '../helpers/pauseManager';
 
 class Player extends Actor {
   private keyD: Phaser.Input.Keyboard.Key;
@@ -10,6 +11,8 @@ class Player extends Actor {
 
   private keySpace: Phaser.Input.Keyboard.Key;
 
+  private keyESC: Phaser.Input.Keyboard.Key;
+
   onWall: boolean;
 
   canJump: boolean;
@@ -19,6 +22,8 @@ class Player extends Actor {
   jumpVelocity: number;
 
   runVelocity: number;
+
+  // private _PauseManager: PauseManager;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
@@ -31,6 +36,9 @@ class Player extends Actor {
     this.jumped = false;
     this.jumpVelocity = 600;
     this.runVelocity = 600;
+    this.keyESC = this.scene.input.keyboard.addKey('ESC');
+
+    // this._PauseManager = new PauseManager(scene);
 
     this.getBody().setSize(48, 48);
     this.getBody().setGravityY(1400);
@@ -88,7 +96,6 @@ class Player extends Actor {
       this.canJump = false;
       this.onWall = false;
     }
-    
 
     // if (this.getBody().onFloor()) {
     //   this.anims.play('jump');
@@ -119,7 +126,7 @@ class Player extends Actor {
     } else {
       this.angle = 0;
       this.getBody().setGravityY(1400);
-    } 
+    }
     if (!this.onWall) {
       if (this.body.velocity.y > 100) {
         this.anims.stop();
@@ -129,10 +136,10 @@ class Player extends Actor {
         this.anims.stop();
         this.setTexture('cat-jump-1');
       }
-    } 
+    }
 
     // Run left on A press
-    if (this.keyA?.isDown  && !this.onWall) {
+    if (this.keyA?.isDown && !this.onWall) {
       console.log(this.body.velocity.y);
       if (!this.keySpace?.isDown && !this.body.velocity.y) {
         this.anims.play('run', true);
@@ -153,7 +160,7 @@ class Player extends Actor {
       this.checkFlip();
       this.getBody().setOffset(0, 0);
     }
-    
+
     // Jump on space press
     // Set frames based on velocity!!
     if (this.keySpace?.isDown) {
@@ -161,8 +168,14 @@ class Player extends Actor {
     }
 
     // Idle animation
+    // eslint-disable-next-line
     if (!this.keyD?.isDown && !this.keyA?.isDown && !this.keySpace?.isDown && !this.onWall && this.body.blocked.down) {
       this.anims.play('idle', true);
+    }
+
+    if (this.keyESC.isDown) {
+      // this._PauseManager.switchPause();
+      PauseManager.switchPause(this.scene);
     }
   }
 }
