@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import Button from '../../helpers/button';
 import PauseManager from '../../helpers/pauseManager';
+import EscapeHandler from '../../helpers/escHandler';
 
 class PauseMenu extends Scene {
   private previousScene!: string;
@@ -11,10 +12,9 @@ class PauseMenu extends Scene {
   };
 
   openOptionsMenu = () => {
-    // this.scene.stop('PauseMenuScene');
-    this.scene.setVisible(false, 'PauseMenuScene');
-    this.scene.launch('OptionsScene', { key: 'PauseMenuScene' });
-    // fix. сцена не становится видима
+    this.scene.stop('PauseMenuScene');
+    this.scene.start('OptionsScene', { key: 'PauseMenuScene' });
+    this.scene.bringToTop('OptionsScene');
   };
 
   constructor() {
@@ -23,7 +23,6 @@ class PauseMenu extends Scene {
 
   init(data: IInitScene) {
     this.previousScene = data.key;
-    console.log(this.previousScene);
   }
 
   create() {
@@ -40,12 +39,8 @@ class PauseMenu extends Scene {
     const loadButton = new Button(xAxis, yAxis, 'Load', this, () => null);
     const optionsButton = new Button(xAxis, yAxis + 50, 'Options', this, this.openOptionsMenu);
     const exitButton = new Button(xAxis, yAxis + 100, 'Quit', this, this.backToMainMenu);
-    this.input.keyboard.on('keydown', (event: KeyboardEventInit) => {
-      if (event.key === 'Escape') {
-        this.scene.stop();
-        this.scene.resume(PauseManager.sceneBeforePause);
-      }
-    });
+    const escHandler = new EscapeHandler(this);
+    escHandler.addEscEvent(PauseManager.sceneBeforePause.scene.key);
   }
 }
 
