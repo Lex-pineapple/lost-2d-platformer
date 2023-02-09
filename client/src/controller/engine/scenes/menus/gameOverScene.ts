@@ -1,7 +1,8 @@
 import { Scene } from 'phaser';
+import BaseMenu from './baseMenu';
 import Button from '../../helpers/button';
 
-class GameOverScene extends Scene {
+class GameOverScene extends BaseMenu {
   private previousScene!: string;
 
   constructor() {

@@ -1,14 +1,14 @@
 import { Scene, GameObjects } from 'phaser';
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin';
 import { Slider } from 'phaser3-rex-plugins/templates/ui/ui-components';
-import EscapeHandler from '../../helpers/escHandler';
+import BaseMenu from './baseMenu';
 
 enum EnumLang {
   ru = 'Язык: Русский',
   en = 'Lang: English',
 }
 
-class OptionsScene extends Scene {
+class OptionsScene extends BaseMenu {
   private rexUI!: RexUIPlugin;
 
   private _langButton!: GameObjects.Text;
@@ -94,15 +94,14 @@ class OptionsScene extends Scene {
   }
 
   create() {
-    const xAxis = this.cameras.main.width / 2;
-    const yAxis = this.cameras.main.height / 2;
+    const xAxis = this.getMiddlePositionX();
+    const yAxis = this.getMiddlePositionY();
     this.createBackButton(40, 30);
     this.createSlider(xAxis, yAxis - 50, ' Master Volume', this.changeMasterVolume);
     this.createSlider(xAxis, yAxis - 25, '  Music Volume', this.changeMusicVolume);
     this.createSlider(xAxis, yAxis, 'Effects Volume', this.changeMusicVolume);
     this.createLangButton(xAxis, yAxis + 25);
-    const escHandler = new EscapeHandler(this);
-    escHandler.addEscEvent(this.previousScene);
+    this.addEscEvent(this.previousScene);
   }
 }
 

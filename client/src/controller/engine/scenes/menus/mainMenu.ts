@@ -1,7 +1,8 @@
 import { Scene } from 'phaser';
+import BaseMenu from './baseMenu';
 import Button from '../../helpers/button';
 
-class MainMenuScene extends Scene {
+class MainMenuScene extends BaseMenu {
   startGame = () => {
     this.scene.start('PlaySceneOne');
   };
@@ -15,8 +16,8 @@ class MainMenuScene extends Scene {
   }
 
   create() {
-    const xAxis = this.cameras.main.width / 2;
-    const yAxis = this.cameras.main.height / 2;
+    const xAxis = this.getMiddlePositionX();
+    const yAxis = this.getMiddlePositionY();
     const text = this.add.text(15, 10, 'Main Menu', { color: '#ffffff' });
     const startButton = new Button(xAxis, yAxis - 25, 'Start Game', this, this.startGame);
     const optionsButton = new Button(xAxis, yAxis + 25, 'Options', this, this.openOptions);

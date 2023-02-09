@@ -1,9 +1,9 @@
 import { Scene } from 'phaser';
+import BaseMenu from './baseMenu';
 import Button from '../../helpers/button';
 import PauseManager from '../../helpers/pauseManager';
-import EscapeHandler from '../../helpers/escHandler';
 
-class PauseMenu extends Scene {
+class PauseMenu extends BaseMenu {
   private previousScene!: string;
 
   backToMainMenu = () => {
@@ -26,21 +26,19 @@ class PauseMenu extends Scene {
   }
 
   create() {
-    const xAxis = this.cameras.main.width / 2;
-    const yAxis = this.cameras.main.height / 2;
+    const xAxis = this.getMiddlePositionX();
+    const yAxis = this.getMiddlePositionY();
     const pauseLabel = this.add.text(xAxis, 25, 'Pause').setOrigin(0.5);
 
     const resumeButton = new Button(xAxis, yAxis - 100, 'Resume', this, () => {
       this.scene.stop();
       this.scene.resume(PauseManager.sceneBeforePause);
-      // PauseManager.switchPause(this.scene.scene);
     });
     const saveButton = new Button(xAxis, yAxis - 50, 'Save', this, () => null);
     const loadButton = new Button(xAxis, yAxis, 'Load', this, () => null);
     const optionsButton = new Button(xAxis, yAxis + 50, 'Options', this, this.openOptionsMenu);
     const exitButton = new Button(xAxis, yAxis + 100, 'Quit', this, this.backToMainMenu);
-    const escHandler = new EscapeHandler(this);
-    escHandler.addEscEvent(PauseManager.sceneBeforePause.scene.key);
+    this.addEscEvent(PauseManager.sceneBeforePause.scene.key); // fix it
   }
 }
 

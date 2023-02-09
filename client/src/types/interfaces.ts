@@ -11,3 +11,9 @@ interface IPlatformData {
 interface IInitScene {
   key: string;
 }
+
+interface IMenuScenes {
+  mainMenu: string;
+  optionsMenu: string;
+  pauseMenu: string;
+}
