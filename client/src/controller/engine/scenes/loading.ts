@@ -84,6 +84,10 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('plantFinal', 'spritesheets/objects/plant-big.png');
     this.load.image('plantPickupSmall', 'spritesheets/objects/plant-small.png');
 
+    this.load.spritesheet('objectPickups', 'spritesheets/objects/PickupObjectMap.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
 
     this.load.image('cat', 'spritesheets/cat-idlesprite.png');
     this.load.image('cat-wall-slide', 'spritesheets/catWallSlide.png');

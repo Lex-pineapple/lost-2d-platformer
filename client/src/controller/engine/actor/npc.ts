@@ -12,12 +12,11 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     this.getBody().setCollideWorldBounds(true);
     this.initAnimation();
     this.flipX = true;
-    // this.getBody().setOffset(11, 9);
-      // .setOrigin(0.5, 1)
-      // .setDepth(2);
-    // this.body.setCollideWorldBounds(true);
-    // .sprite(x, y, name)
-    // .setCollideWorldBounds(true)
+    this.setSize(100, 100);
+  }
+
+  getName() {
+    return this.name;
   }
 
   private initAnimation() {
