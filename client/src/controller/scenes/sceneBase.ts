@@ -1,5 +1,6 @@
 import { ISharedState } from '../../types/interfaces';
 import DialogueModal from '../actor/dialogueModal';
+import Enemy from '../actor/enemy';
 import Player from '../actor/player';
 import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 
@@ -9,6 +10,8 @@ class SceneBase extends Phaser.Scene {
   private keyESC!: Phaser.Input.Keyboard.Key;
 
   private scoreText!: Phaser.GameObjects.Text;
+
+  private livesText!: Phaser.GameObjects.Text;
 
   score: number;
 
@@ -21,7 +24,7 @@ class SceneBase extends Phaser.Scene {
     this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
   }
 
-  update() {
+  update() {    
     this.checkEsc();
   }
 
@@ -31,8 +34,15 @@ class SceneBase extends Phaser.Scene {
       backgroundColor: '#073454',
       fill: '#3afefd',
     });
+    this.livesText = this.add.text(300, 16, 'Lives: 3').setPadding(10).setStyle({
+      fontSize: '28px',
+      backgroundColor: '#073454',
+      fill: '#3afefd',
+    });
     this.scoreText.scrollFactorX = 0;
     this.scoreText.scrollFactorY = 0;
+    this.livesText.scrollFactorX = 0;
+    this.livesText.scrollFactorY = 0;
   }
 
   createPlatforms(platformsKey: string, platformTs: string, platformMap: string, tileImg: string) {
@@ -49,6 +59,7 @@ class SceneBase extends Phaser.Scene {
     });
     this.createPickups(map, 'leaf', 2);
     this.createPickups(map, 'can', 0);
+    this.createEnemies(map);
     return platforms;
   }
 
@@ -61,6 +72,10 @@ class SceneBase extends Phaser.Scene {
       this.score += 100;
       this.scoreText.setText(`Score: ${this.score}`);
     }
+  }
+
+  reduceLife() {
+    this.livesText.setText(`Lives: ${this.player.getHPValue()}`);
   }
 
   createPickups(map: Phaser.Tilemaps.Tilemap, type: string, frame: number) {
@@ -77,6 +92,32 @@ class SceneBase extends Phaser.Scene {
         });
       });
     }
+  }
+
+  createEnemies(map: Phaser.Tilemaps.Tilemap) {
+    const enemyPoints = gameObjectsToObjectPoints(
+      map.filterObjects('EnemyLayer', (obj) => obj.name === 'commonEnemyPoint')
+    );
+
+    const enemies = enemyPoints.map((point) => new Enemy(this, point.x, 450 - (1920 - point.y), 'cat'));
+    enemies.forEach((enemy) => {
+      this.physics.add.overlap(this.player, enemy, () => {
+        this.reduceLife();
+        this.player.enemyCollide = true;
+        if (this.getPlayer().getHPValue() <= 0) {
+          this.cameras.main.fadeOut(200, 0, 0, 0);
+          this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+            this.scene.start('GameOverScene');
+          });
+        }
+        
+      // });
+      // this.physics.add.collider(this.player, enemy, () => {
+      //   this.getPlayer().getDamage(1);
+      //   this.reduceLife();
+      // });
+      });
+    });
   }
 
 

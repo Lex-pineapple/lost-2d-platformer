@@ -29,6 +29,10 @@ class Player extends Actor {
 
   dialogueModal: DialogueModal;
 
+  enemyCollide: boolean;
+
+  collisionEnd: boolean;
+
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
     this.keyA = this.scene.input.keyboard.addKey('A');
@@ -44,6 +48,8 @@ class Player extends Actor {
     this.runVelocity = 600;
     this.overlap = false;
     this.dialogueModal = new DialogueModal(this.scene, {});
+    this.enemyCollide = false;
+    this.collisionEnd = false;
 
     this.getBody().setSize(48, 48);
     this.getBody().setGravityY(1400);
@@ -133,12 +139,19 @@ class Player extends Actor {
   }
 
   update(): void {
+    if (this.enemyCollide && !this.collisionEnd) {
+      this.getDamage(1);
+      this.collisionEnd = true;
+    }
+
     if (this.body.embedded) {
       this.body.touching.none = false;
     }
   
     if (this.body.touching.none && !this.body.wasTouching.none) {
       this.setOverlap(false);
+      this.enemyCollide = false;
+      this.collisionEnd = false;
     }
     // Affects fall physics!
     this.getBody().velocity.x = 0;

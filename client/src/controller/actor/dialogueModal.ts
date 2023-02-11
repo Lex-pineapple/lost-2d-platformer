@@ -92,7 +92,7 @@ class DialogueModal {
     // this.graphics;
     // this.closeBtn;
     // Create the dialog window
-    this.createWindow();
+    // this.createWindow();
   }
 
   protected getGameWidth() {

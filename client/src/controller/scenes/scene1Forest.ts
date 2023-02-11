@@ -9,7 +9,7 @@ class PlaySceneOne extends SceneBase {
   // private player!: Player;
   private NPC1!: NPC;
 
-  dialogueModal!: DialogueModal;
+  // dialogueModal!: DialogueModal;
 
   constructor(name: string, protected sharedState: ISharedState) {
     super('PlaySceneOne', sharedState);

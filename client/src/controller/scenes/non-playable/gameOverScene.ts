@@ -1,4 +1,4 @@
-import { IMenuItem, ISharedState } from '../../../types/interfaces';
+import { IInitScene, IMenuItem, ISharedState } from '../../../types/interfaces';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 
 class GameOverScene extends NonPlayableBaseScene {
@@ -23,6 +23,7 @@ class GameOverScene extends NonPlayableBaseScene {
   // }
 
   create() {
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
     super.create();
     this.createTitle();
     this.createMenu(this, this.menu, 150);
@@ -30,8 +31,8 @@ class GameOverScene extends NonPlayableBaseScene {
 
   createTitle() {
     this.add
-      .text(this.getMiddlePositionX(), this.getMiddlePositionY() - 100, 'Game Over', {
-        fontSize: '26px',
+      .text(this.getMiddlePositionX(), this.getMiddlePositionY(), 'Game Over', {
+        fontSize: '48px',
         color: '#ffffff',
       })
       .setOrigin(0.5);
