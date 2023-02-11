@@ -2,8 +2,15 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
   name: string;
 
   scene: Phaser.Scene;
-  // eslint-disable-next-line
-  constructor(scene: Phaser.Scene, name: string, x: number, y: number, texture: string, frame?: string | number) {
+
+  constructor(
+    scene: Phaser.Scene,
+    name: string,
+    x: number,
+    y: number,
+    texture: string,
+    frame?: string | number
+  ) {
     super(scene, x, y, texture, frame);
     this.scene = scene;
     this.name = name;

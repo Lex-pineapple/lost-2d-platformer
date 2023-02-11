@@ -1,11 +1,12 @@
-import SceneCreater from './sceneCreater';
+import SceneBase from './sceneBase';
 
-class PlaySceneThree extends SceneCreater {
-  constructor() {
-    super('PlaySceneThree');
+class PlaySceneThree extends SceneBase {
+  constructor(name: string, protected sharedState: ISharedState) {
+    super('PlaySceneThree', sharedState);
   }
 
   create() {
+    super.create();
     const worldSize = 11000;
     const BGHeight = 1920;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
@@ -31,13 +32,19 @@ class PlaySceneThree extends SceneCreater {
       'demonForest-peaceful-skyTransition',
       1164 + 2298 + 1000 + 1000,
       gameHeight - BGHeight,
-      5000 // eslint-disable-line
+      5000
     );
     this._createBackground('peacefulBG1', 1164 + 2298 + 1000 + 5000, gameHeight - BGHeight, 1346);
-    this._createBackground('peacefulBG2', 1164 + 2298 + 1000 + 5000 + 1346, gameHeight - BGHeight, 1174);
+    this._createBackground(
+      'peacefulBG2',
+      1164 + 2298 + 1000 + 5000 + 1346,
+      gameHeight - BGHeight,
+      1174
+    );
   }
 
   update(): void {
+    this.checkEsc();
     this.getPlayer().update();
   }
 }

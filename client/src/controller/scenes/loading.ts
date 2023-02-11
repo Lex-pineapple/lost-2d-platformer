@@ -1,12 +1,12 @@
 import * as Phaser from 'phaser';
 import Button from '../helpers/button';
 
-import arrow from '../../../assets/menu/back_arrow.png';
+import arrow from '../../assets/menu/back_arrow.png';
 
 class LoadingScene extends Phaser.Scene {
   private cat!: Phaser.GameObjects.Sprite;
 
-  constructor() {
+  constructor(name: string, protected sharedState: ISharedState) {
     super({ key: 'LoadingScene' });
     // this.initAnims();
   }
@@ -86,54 +86,70 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('cat', 'spritesheets/cat-idlesprite.png');
     this.load.image('cat-wall-slide', 'spritesheets/catWallSlide.png');
 
-    this.load.atlas('a-cat-idle', 'spritesheets/cat-idle-atlas.png', 'spritesheets/cat-idle-atlas.json');
+    this.load.atlas(
+      'a-cat-idle',
+      'spritesheets/cat-idle-atlas.png',
+      'spritesheets/cat-idle-atlas.json'
+    );
     this.load.atlas('a-cat', 'spritesheets/cat-run-atlas.png', 'spritesheets/cat-run-atlas.json');
-    this.load.atlas('a-cat-jump', 'spritesheets/cat-jump-atlas.png', 'spritesheets/cat-jump-atlas.json');
-    this.load.atlas('a-cat-sit', 'spritesheets/cat-sit-atlas.png', 'spritesheets/cat-sit-atlas.json');
-    this.load.atlas('a-npc1-sit', 'spritesheets/NPC/npc1-sit-atlas.png', 'spritesheets/NPC/npc1-sit-atlas.json');
+    this.load.atlas(
+      'a-cat-jump',
+      'spritesheets/cat-jump-atlas.png',
+      'spritesheets/cat-jump-atlas.json'
+    );
+    this.load.atlas(
+      'a-cat-sit',
+      'spritesheets/cat-sit-atlas.png',
+      'spritesheets/cat-sit-atlas.json'
+    );
+    this.load.atlas(
+      'a-npc1-sit',
+      'spritesheets/NPC/npc1-sit-atlas.png',
+      'spritesheets/NPC/npc1-sit-atlas.json'
+    );
     this.load.image('cat-jump-1', 'spritesheets/cat-jump-frames/cat-jump-1.png');
     this.load.image('cat-jump-2', 'spritesheets/cat-jump-frames/cat-jump-2.png');
     this.load.image('cat-jump-3', 'spritesheets/cat-jump-frames/cat-jump-3.png');
     this.load.image('cat-jump-4', 'spritesheets/cat-jump-frames/cat-jump-4.png');
-    this.load.image('cat', '../../../assets/spritesheets/cat-idlesprite.png');
-    this.load.image('forest', '../../../assets/backgrounds/Backgroundx48.png');
-    this.load.image('ground', '../../../assets/tiles/forest-tiles-allx48cut.png');
+    this.load.image('cat', 'spritesheets/cat-idlesprite.png');
+    this.load.image('forest', 'backgrounds/Backgroundx48.png');
+    // this.load.image('ground', 'tiles/forest-tiles-allx48cut.png');
     this.load.image('menu-arrow', arrow);
-    this.load.tilemapTiledJSON('forestGround', '../../../assets/tiles/forest-temp-map.json');
-    // this.load.image('forest', '../../../assets/backgrounds/Backgroundx48.png');
-    this.load.image('forestBG1', '../../../assets/backgrounds/ForestBG1.png');
-    this.load.image('forestBG2', '../../../assets/backgrounds/ForestBG2-transition.png');
-    this.load.image('forestBG3', '../../../assets/backgrounds/ForestBG3.png');
-    this.load.image('cavernBG', '../../../assets/backgrounds/CavernBG.png');
-    this.load.image('demonForestBG1', '../../../assets/backgrounds/DemonForestBG1.png');
-    this.load.image('demonForestBG2', '../../../assets/backgrounds/DemonForestBG2-transition.png');
-    this.load.image('demonForestBG3', '../../../assets/backgrounds/DemonForestBG3.png');
-    this.load.image('demonForestBG4', '../../../assets/backgrounds/DemonForestBG4-moon.png');
+    // this.load.tilemapTiledJSON('forestGround', 'tiles/forest-temp-map.json');
+    // this.load.image('forest', 'backgrounds/Backgroundx48.png');
+    this.load.image('forestBG1', 'backgrounds/ForestBG1.png');
+    this.load.image('forestBG2', 'backgrounds/ForestBG2-transition.png');
+    this.load.image('forestBG3', 'backgrounds/ForestBG3.png');
+    this.load.image('cavernBG', 'backgrounds/CavernBG.png');
+    this.load.image('demonForestBG1', 'backgrounds/DemonForestBG1.png');
+    this.load.image('demonForestBG2', 'backgrounds/DemonForestBG2-transition.png');
+    this.load.image('demonForestBG3', 'backgrounds/DemonForestBG3.png');
+    this.load.image('demonForestBG4', 'backgrounds/DemonForestBG4-moon.png');
     this.load.image(
       'demonForest-peaceful-skyTransition', // eslint-disable-next-line
-      '../../../assets/backgrounds/demonForest-peacefulForest-transition.png',
+      'backgrounds/demonForest-peacefulForest-transition.png',
     );
-    this.load.image('peacefulBG1', '../../../assets/backgrounds/PeacefulBG1-start.png');
-    this.load.image('peacefulBG2', '../../../assets/backgrounds/PeacefulBG2.png');
+    this.load.image('peacefulBG1', 'backgrounds/PeacefulBG1-start.png');
+    this.load.image('peacefulBG2', 'backgrounds/PeacefulBG2.png');
 
-    this.load.image('startForestTiles', '../../../assets/tiles/Forets-TileMap/forestTileMap.png');
-    this.load.tilemapTiledJSON('startForestTileMap', '../../../assets/tiles/Forets-TileMap/forestTileMap.json');
-    this.load.image('cavernsTiles', '../../../assets/tiles/Cave-TileMap/caveTileMap-yellow.png');
-    this.load.tilemapTiledJSON('cavernsTileMap', '../../../assets/tiles/Cave-TileMap/cavernsTileMap.json');
-    this.load.image('dark-peacefulForestTiles', '../../../assets/tiles/Forets-TileMap/forestTileMap-Peaceful.png');
+    this.load.image('startForestTiles', 'tiles/Forets-TileMap/forestTileMap.png');
+    this.load.tilemapTiledJSON('startForestTileMap', 'tiles/Forets-TileMap/forestTileMap.json');
+    this.load.image('cavernsTiles', 'tiles/Cave-TileMap/caveTileMap-yellow.png');
+    this.load.tilemapTiledJSON('cavernsTileMap', 'tiles/Cave-TileMap/cavernsTileMap.json');
+    this.load.image('dark-peacefulForestTiles', 'tiles/Forets-TileMap/forestTileMap-Peaceful.png');
     this.load.tilemapTiledJSON(
       'dark-peacefulForestTileMap', // eslint-disable-next-line
-      '../../../assets/tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
+      'tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
     );
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }
 
-  create(): void {
-    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-      this.scene.start('PlaySceneOne');
-    });
-  }
+  // create(): void {
+  //   this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+  //     this.scene.start('PlaySceneOne');
+  //   });
+  // }
 }
 
 export default LoadingScene;

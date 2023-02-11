@@ -2,16 +2,16 @@ import * as Phaser from 'phaser';
 import DialogueModal from '../actor/dialogueModal';
 import NPC from '../actor/npc';
 import Player from '../actor/player';
-import SceneCreater from './sceneCreater';
+import SceneBase from './sceneBase';
 
-class PlaySceneOne extends SceneCreater {
+class PlaySceneOne extends SceneBase {
   // private player!: Player;
   private NPC1!: NPC;
 
   dialogueModal!: DialogueModal;
 
-  constructor() {
-    super('PlaySceneOne');
+  constructor(name: string, protected sharedState: ISharedState) {
+    super('PlaySceneOne', sharedState);
   }
 
   // _loadPlayer() {
@@ -24,6 +24,7 @@ class PlaySceneOne extends SceneCreater {
   // }
 
   create() {
+    super.create();
     const worldSize = 9000;
     const BGHeight = 1920;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
@@ -76,6 +77,7 @@ class PlaySceneOne extends SceneCreater {
   // }
 
   update(): void {
+    this.checkEsc();
     this.getPlayer().update();
   }
 }

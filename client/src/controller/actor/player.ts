@@ -1,6 +1,5 @@
 import * as Phaser from 'phaser';
 import Actor from './actor';
-import PauseManager from '../helpers/pauseManager';
 
 class Player extends Actor {
   private keyD: Phaser.Input.Keyboard.Key;
@@ -11,8 +10,6 @@ class Player extends Actor {
 
   private keySpace: Phaser.Input.Keyboard.Key;
 
-  private keyESC: Phaser.Input.Keyboard.Key;
-
   onWall: boolean;
 
   canJump: boolean;
@@ -22,8 +19,6 @@ class Player extends Actor {
   jumpVelocity: number;
 
   runVelocity: number;
-
-  // private _PauseManager: PauseManager;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
@@ -36,9 +31,6 @@ class Player extends Actor {
     this.jumped = false;
     this.jumpVelocity = 600;
     this.runVelocity = 600;
-    this.keyESC = this.scene.input.keyboard.addKey('ESC');
-
-    // this._PauseManager = new PauseManager(scene);
 
     this.getBody().setSize(48, 48);
     this.getBody().setGravityY(1400);
@@ -168,14 +160,14 @@ class Player extends Actor {
     }
 
     // Idle animation
-    // eslint-disable-next-line
-    if (!this.keyD?.isDown && !this.keyA?.isDown && !this.keySpace?.isDown && !this.onWall && this.body.blocked.down) {
+    if (
+      !this.keyD?.isDown
+      && !this.keyA?.isDown
+      && !this.keySpace?.isDown
+      && !this.onWall
+      && this.body.blocked.down
+    ) {
       this.anims.play('idle', true);
-    }
-
-    if (this.keyESC.isDown) {
-      // this._PauseManager.switchPause();
-      PauseManager.switchPause(this.scene);
     }
   }
 }

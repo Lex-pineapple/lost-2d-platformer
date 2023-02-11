@@ -1,11 +1,12 @@
-import SceneCreater from './sceneCreater';
+import SceneBase from './sceneBase';
 
-class PlaySceneTwo extends SceneCreater {
-  constructor() {
-    super('PlaySceneTwo');
+class PlaySceneTwo extends SceneBase {
+  constructor(name: string, protected sharedState: ISharedState) {
+    super('PlaySceneTwo', sharedState);
   }
 
   create() {
+    super.create();
     const worldSize = 9000;
     const BGHeight = 4800;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
@@ -42,6 +43,7 @@ class PlaySceneTwo extends SceneCreater {
   // }
 
   update(): void {
+    this.checkEsc();
     this.getPlayer().update();
   }
 }

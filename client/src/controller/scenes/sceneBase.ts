@@ -1,11 +1,32 @@
 import DialogueModal from '../actor/dialogueModal';
 import Player from '../actor/player';
 
-class SceneCreater extends Phaser.Scene {
+class SceneBase extends Phaser.Scene {
   private player!: Player;
 
-  constructor(name: string) {
+  private keyESC!: Phaser.Input.Keyboard.Key;
+
+  constructor(name: string, protected sharedState: ISharedState) {
     super({ key: name });
+  }
+
+  create() {
+    this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+  }
+
+  update() {
+    this.checkEsc();
+  }
+
+  checkEsc() {
+    if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
+      if (!this.scene.isPaused()) {
+        this.scene.launch('PauseMenuScene', { key: this.scene.key });
+        this.scene.pause();
+
+        this.sharedState.playableScenePaused = this.scene.key;
+      }
+    }
   }
 
   _loadPlayer() {
@@ -53,4 +74,4 @@ class SceneCreater extends Phaser.Scene {
   }
 }
 
-export default SceneCreater;
+export default SceneBase;
