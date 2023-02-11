@@ -1,8 +1,31 @@
 import * as Phaser from 'phaser';
-import LoadingScene from './controller/engine/scenes/loading';
-import PlaySceneOne from './controller/engine/scenes/scene1Forest';
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin';
+import LoadingScene from './controller/scenes/loading';
+import MainMenuScene from './controller/scenes/non-playable/mainMenuScene';
+import OptionsScene from './controller/scenes/non-playable/optionsScene';
+import PlaySceneOne from './controller/scenes/scene1Forest';
+import PlaySceneTwo from './controller/scenes/scene2Caverns';
+import PlaySceneThree from './controller/scenes/scene3DarkWoods';
+import PauseMenuScene from './controller/scenes/non-playable/pauseMenuScene';
+
 // import './style.scss';
 // import './assets/images/favicon.ico';
+
+const SHARED_STATE: ISharedState = {
+  playableScenePaused: null,
+};
+
+const scenes = [
+  { Cls: LoadingScene, key: 'LoadingScene' },
+  { Cls: PlaySceneOne, key: 'PlaySceneOne' },
+  { Cls: PlaySceneTwo, key: 'PlaySceneTwo' },
+  { Cls: PlaySceneThree, key: 'PlaySceneThree' },
+  { Cls: MainMenuScene, key: 'MainMenuScene' },
+  { Cls: OptionsScene, key: 'OptionsScene' },
+  { Cls: PauseMenuScene, key: 'PauseMenuScene' },
+];
+
+const initScenes = () => scenes.map((Scene) => new Scene.Cls(Scene.key, SHARED_STATE));
 
 const config: Phaser.Types.Core.GameConfig = {
   title: 'Lost',
@@ -15,9 +38,18 @@ const config: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 1400 },
+      // gravity: { y: 1400 },
       debug: false,
     },
+  },
+  plugins: {
+    scene: [
+      {
+        key: 'rexUI',
+        plugin: RexUIPlugin,
+        mapping: 'rexUI',
+      },
+    ],
   },
   render: {
     antialiasGL: false,
@@ -33,7 +65,7 @@ const config: Phaser.Types.Core.GameConfig = {
   // }
   width: 800,
   height: 450,
-  scene: [LoadingScene, PlaySceneOne],
+  scene: initScenes(),
 };
 
 // window.sizeChanged = () => {

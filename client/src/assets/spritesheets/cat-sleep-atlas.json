@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "cat-sleep-atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 43,
+				"h": 61
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "2 - cat-sleep-frames.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 11,
+						"w": 41,
+						"h": 31
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 41,
+						"h": 31
+					}
+				},
+				{
+					"filename": "1 - cat-sleep-frames.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 16,
+						"w": 41,
+						"h": 26
+					},
+					"frame": {
+						"x": 1,
+						"y": 34,
+						"w": 41,
+						"h": 26
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:a8b8f21be077eeeb1fbe14a0f6007d29:4cbf95005d5acf0ac4a30fc1ecb3a6b4:ca2a6675e36484aa483a9d424955803b$"
+	}
+}

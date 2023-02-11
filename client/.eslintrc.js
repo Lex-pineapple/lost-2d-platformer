@@ -28,13 +28,16 @@ module.exports = {
     "@typescript-eslint/no-unused-vars" : "off",
     "no-underscore-dangle": "off",
     "@typescript-eslint/no-explicit-any": "error",
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto",
-        "tabWidth": 2,
-        "singleQuote": true
-      }
-    ]
+    "@typescript-eslint/comma-dangle": "off",
+    "@typescript-eslint/indent": "off",
+    "indent": "off",
+    "comma-dangle": ["error", {
+      arrays: "always-multiline",
+      objects: "always-multiline",
+      imports: "always-multiline",
+      exports: "always-multiline",
+      functions: "never",
+    }],
+    "prettier/prettier": 0
   }
 }
