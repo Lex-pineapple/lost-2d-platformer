@@ -1,3 +1,5 @@
+import dialogFlow from '../../assets/data/dialogFlow';
+
 interface DialogueModalConfig {
   borderThickness?: number;
   borderColor?: number;
@@ -8,6 +10,17 @@ interface DialogueModalConfig {
   padding?: number;
   closeBtnColor?: string;
   dialogSpeed?: number;
+}
+
+interface IDialogData {
+  [PlaySceneOne: string]: {
+    [NPC: string]: INPCDialogData;
+  };
+}
+
+interface INPCDialogData {
+  story: string[];
+  idle: string[];
 }
 
 class DialogueModal {
@@ -43,6 +56,16 @@ class DialogueModal {
 
   timedEvent!: Phaser.Time.TimerEvent;
 
+  dialogData: IDialogData;
+
+  dialogCounter: number;
+
+  mainDialogDone: boolean;
+
+  dialogFinished: boolean;
+
+  created: boolean;
+
   // closeBtn: any;
 
   constructor(scene: Phaser.Scene, config: DialogueModalConfig) {
@@ -59,6 +82,11 @@ class DialogueModal {
     this.eventCounter = 0;
     // if the dialog window is shown
     this.visible = true;
+    this.dialogData = dialogFlow;
+    this.mainDialogDone = false;
+    this.dialogCounter = 0;
+    this.dialogFinished = false;
+    this.created = false;
 
     // the text that will be displayed in the window
     // this.graphics;
@@ -101,11 +129,17 @@ class DialogueModal {
   protected createWindow() {
     const gameHeight = this.getGameHeight();
     const gameWidth = this.getGameWidth();
+    const positionX = this.scene.cameras.main.worldView.x + this.padding;
+    const positionY = this.scene.cameras.main.worldView.y + this.padding;
+
     const dimensions = this.calculateWindowDimensions(gameWidth, gameHeight);
     this.graphics = this.scene.add.graphics();
     this.graphics.setDepth(1);
-    this.createOuterWindow(dimensions.x, dimensions.y, dimensions.rectWidth, dimensions.rectHeight);
-    this.createInnerWindow(dimensions.x, dimensions.y, dimensions.rectWidth, dimensions.rectHeight);
+
+
+    this.createOuterWindow(positionX, positionY, dimensions.rectWidth, dimensions.rectHeight);
+    this.createInnerWindow(positionX, positionY, dimensions.rectWidth, dimensions.rectHeight);
+    this.created = true;
   }
 
   setText(text: string, animate: boolean) {
@@ -140,16 +174,44 @@ class DialogueModal {
     if (this.text) this.text.destroy();
     const x = this.padding + 10;
     const y = this.windowHeight - 10;
-    console.log(this.getGameHeight(), this.windowHeight);
+    const positionX = this.scene.cameras.main.worldView.x + this.padding + 10;
+    const positionY = this.scene.cameras.main.worldView.y + this.padding + 10;
     this.text = this.scene.make.text({
-      x,
-      y,
+      x: positionX,
+      y: positionY,
       text,
       style: {
         wordWrap: { width: this.getGameWidth() - this.padding * 2 - 25 },
       },
     });
     this.text.setDepth(1);
+  }
+
+  _removeWindow() {
+    this.graphics.destroy();
+    this.timedEvent.remove();
+
+    this.text.destroy();
+    this.created = false;
+  }
+
+  displayNPCdialogue(npcName: string, sceneName: string) {
+    const idleDialog = this.dialogData[sceneName][npcName].idle;
+    const mainDialog = this.dialogData[sceneName][npcName].story;
+    if (!this.created) {
+      this.createWindow();
+    }
+    if (this.dialogFinished) {
+      this.setText(idleDialog[0], true);
+    }
+    if (this.dialogCounter < mainDialog.length) {
+      this.setText(mainDialog[this.dialogCounter], true);
+    } else {
+      this.dialogFinished = true;
+      this._removeWindow();
+    }
+    this.dialogCounter += 1;
+    
   }
 }
 

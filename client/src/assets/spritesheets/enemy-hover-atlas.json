@@ -1,0 +1,103 @@
+{
+	"textures": [
+		{
+			"image": "enemy-hover",
+			"format": "RGBA8888",
+			"size": {
+				"w": 25,
+				"h": 104
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "bee-hover-1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 26,
+						"h": 30
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 1,
+						"w": 25,
+						"h": 26
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 25,
+						"h": 26
+					}
+				},
+				{
+					"filename": "bee-hover-3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 26,
+						"h": 30
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 2,
+						"w": 25,
+						"h": 26
+					},
+					"frame": {
+						"x": 0,
+						"y": 26,
+						"w": 25,
+						"h": 26
+					}
+				},
+				{
+					"filename": "bee-hover-2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 26,
+						"h": 30
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 1,
+						"w": 24,
+						"h": 26
+					},
+					"frame": {
+						"x": 0,
+						"y": 52,
+						"w": 24,
+						"h": 26
+					}
+				},
+				{
+					"filename": "bee-hover-4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 26,
+						"h": 30
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 2,
+						"w": 24,
+						"h": 26
+					},
+					"frame": {
+						"x": 0,
+						"y": 78,
+						"w": 24,
+						"h": 26
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7"
+	}
+}

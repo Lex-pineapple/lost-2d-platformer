@@ -7,6 +7,7 @@ import PlaySceneOne from './controller/scenes/scene1Forest';
 import PlaySceneTwo from './controller/scenes/scene2Caverns';
 import PlaySceneThree from './controller/scenes/scene3DarkWoods';
 import PauseMenuScene from './controller/scenes/non-playable/pauseMenuScene';
+import { ISharedState } from './types/interfaces';
 
 // import './style.scss';
 // import './assets/images/favicon.ico';
@@ -39,7 +40,7 @@ const config: Phaser.Types.Core.GameConfig = {
     default: 'arcade',
     arcade: {
       // gravity: { y: 1400 },
-      debug: false,
+      debug: true,
     },
   },
   plugins: {

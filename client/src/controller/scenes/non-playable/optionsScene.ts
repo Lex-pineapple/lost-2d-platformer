@@ -2,6 +2,7 @@ import { GameObjects } from 'phaser';
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin';
 import { Slider } from 'phaser3-rex-plugins/templates/ui/ui-components';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
+import { ISharedState } from '../../../types/interfaces';
 
 enum EnumLang {
   ru = 'Язык: Русский',

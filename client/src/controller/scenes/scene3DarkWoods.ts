@@ -1,3 +1,4 @@
+import { ISharedState } from '../../types/interfaces';
 import SceneBase from './sceneBase';
 
 class PlaySceneThree extends SceneBase {
