@@ -21,13 +21,15 @@ class PlaySceneTwo extends SceneBase {
     const BGHeight = 4800;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     this.tileBackgrounds(BGHeight);
-    // this.createEndpoint(worldSize, 0);
     this._loadPlayer();
     if (this.playerX !== null) this.getPlayer().x = this.playerX;
     if (this.playerY !== null) this.getPlayer().y = this.playerY;
     this._setCamera(worldSize, BGHeight);
-    this.createPlatforms('cavernsTileMap', 'cavernsTileset', 'cavernsMap', 'cavernsTiles');
-    // this.addEndpointHandler('PlaySceneThree', 0, 420);
+    const map = this.createPlatforms('cavernsTileMap', 'cavernsTileset', 'cavernsMap', 'cavernsTiles');
+    // this.createEndpoint(worldSize, 0);
+    // this.addEndpointHandler('PlaySceneThree', 0, 420);7
+    this.createEndpoint(map, 'PlaySceneThree', 24, 362);
+    this.createHUD();
   }
 
   tileBackgrounds(BGHeight: number) {

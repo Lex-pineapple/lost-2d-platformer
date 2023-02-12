@@ -26,7 +26,7 @@ class SceneBase extends Phaser.Scene {
     this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
   }
 
-  update() {    
+  update() {
     this.checkEsc();
   }
 
@@ -47,21 +47,6 @@ class SceneBase extends Phaser.Scene {
     this.livesText.scrollFactorY = 0;
   }
 
-  createPlatforms(platformsKey: string, platformTs: string, platformMap: string, tileImg: string) {
-    const map = this.make.tilemap({ key: platformsKey });
-    const tileset = map.addTilesetImage(platformTs, tileImg);
-    const platforms = map.createLayer(platformMap, tileset, 0, -1470);
-    // // Dont forget to set collision to each tile in tiled!
-    platforms.setCollisionByProperty({ collides: true });
-    this.physics.add.collider(this.player, platforms);
-
-    const pickupObjects = map.createFromObjects('EntityLayer', {});
-    pickupObjects.forEach((coin) => {
-      this.physics.world.enable(coin);
-    });
-    return map;
-  }
-
   increaseScore(type: string) {
     if (type === 'leaf') {
       this.score += 10;
@@ -75,6 +60,16 @@ class SceneBase extends Phaser.Scene {
 
   reduceLife() {
     this.livesText.setText(`Lives: ${this.player.getHPValue()}`);
+  }
+
+  createPlatforms(platformsKey: string, platformTs: string, platformMap: string, tileImg: string) {
+    const map = this.make.tilemap({ key: platformsKey });
+    const tileset = map.addTilesetImage(platformTs, tileImg);
+    const platforms = map.createLayer(platformMap, tileset, 0, -1470);
+    // // Dont forget to set collision to each tile in tiled!
+    platforms.setCollisionByProperty({ collides: true });
+    this.physics.add.collider(this.player, platforms);
+    return map;
   }
 
   createPickups(map: Phaser.Tilemaps.Tilemap, type: string, frame: number) {
@@ -97,7 +92,6 @@ class SceneBase extends Phaser.Scene {
     );
 
     const key = this.physics.add.sprite(keyPoint[0].x, 450 - (1920 - keyPoint[0].y), 'keyPickup')
-    // .setOrigin(0, 0)
     .setScale(1)
     .setImmovable(true)
     .setBodySize(64, 55);
@@ -107,24 +101,17 @@ class SceneBase extends Phaser.Scene {
     });
   }
 
-  createEndpoint(map: Phaser.Tilemaps.Tilemap,worldWidth: number, posY: number) {
-    // Get the rightmost bound of the scene
-    // const rightBound = this.physics.world.bounds.width;
-    // This doesn't work because the world bounds are set after this method is called
-    // But we need to call it before _loadPlayer so that player
-    // is in front of the door, not behind it
+  createEndpoint(map: Phaser.Tilemaps.Tilemap, nextSceneKey: string, posX: number, posY: number) {
     const doorPoint = gameObjectsToObjectPoints(
       map.filterObjects('FunctionalLayer', (obj) => obj.name === 'doorPoint')
     );
 
     this.endpoint = this.physics.add.sprite(doorPoint[0].x, 450 - (1920 - doorPoint[0].y), 'doorLock')
-    // .setOrigin(0, 0)
     .setScale(1)
     .setImmovable(true)
     .setBodySize(64, 55);
     this.physics.add.collider(this.player, this.endpoint, (obj1, obj2) => {
       if (this.player.hasKey) {
-        // this.time.delayedCall(5000, this.beginTransition);
         this.tweens.add({
           targets: this.endpoint,
           duration: 100,
@@ -134,26 +121,34 @@ class SceneBase extends Phaser.Scene {
           onComplete: () => {
             this.endpoint.setAlpha(1);
             obj2.destroy();
-            this.beginTransition();
+            this.beginTransition(nextSceneKey, posX, posY);
           },
         });
       }
     });
-    // this.endpoint = this.physics.add.sprite(0, 0, 'door')
-    //   .setOrigin(0, 1)
-    //   .setScale(1)
-    //   .setImmovable(true);
-    // this.endpoint.x = worldWidth - this.endpoint.displayWidth - 10;
-    // this.endpoint.y = posY;
-    // this.endpoint.setBodySize(this.endpoint.displayWidth, this.endpoint.displayHeight - 40);
-    // .setDisplaySize(200, 200);
   }
 
-  beginTransition() {
+  createFinalEndpoint(map: Phaser.Tilemaps.Tilemap) {
+    const finalPlant = gameObjectsToObjectPoints(
+      map.filterObjects('FunctionalLayer', (obj) => obj.name === 'finalPlant')
+    );
+
+    this.endpoint = this.physics.add.sprite(finalPlant[0].x, 450 - (1920 - finalPlant[0].y), 'plantFinal')
+    .setScale(1)
+    .setImmovable(true)
+    .setBodySize(64, 55);
+    this.physics.add.collider(this.player, this.endpoint, (obj1, obj2) => {
+      this.player.diableKeys();
+      this.player.disableRun();
+      console.log('Win!!!!!!!!!!!!');
+    });
+  }
+
+  beginTransition(nextSceneKey: string, posX: number, posY: number) {
     this.player.diableKeys();
     this.cameras.main.fadeOut(1000, 0, 0, 0);
     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-      this.handleEndpointChange('PlaySceneTwo', 24, 3274);
+      this.handleEndpointChange(nextSceneKey, posX, posY);
     });
   }
 
@@ -166,40 +161,6 @@ class SceneBase extends Phaser.Scene {
         playerY: playerPosY,
       }
     );
-  }
-
-  addEndpointHandler(nextSceneKey: string, playerPosX: number, playerPosY: number) {
-    const prevX = this.player.x;
-    const prevY = this.player.y;
-
-    this.physics.add.overlap(this.player, this.endpoint, () => {
-      if (
-        this.endpoint
-        && (prevX !== this.player.x || prevY !== this.player.y)
-        && this.player.x > this.endpoint.x + (this.player.width / 2)
-        && this.player.x < this.endpoint.x + this.endpoint.displayWidth + (this.player.width / 2)
-        && this.player.y < this.endpoint.y - (this.player.height / 2)
-        && this.player.y > this.endpoint.y - this.endpoint.displayHeight - (this.player.height / 2)
-      ) {
-        this.scene.start(
-          nextSceneKey,
-          // Set player's coordinates to specific point in next scene
-          {
-            playerX: playerPosX + (this.player.width / 2),
-            playerY: playerPosY + (this.player.height / 2),
-          }
-        );
-      }
-    });
-
-    // // Get the rightmost bound of the scene
-    // const rightBound = this.physics.world.bounds.width;
-
-    // // Check if the player has reached the rightmost bound
-    // if (this.player.x >= rightBound - (this.player.width / 2)) {
-    //   // Transition to the next scene
-    //   this.scene.start(nextSceneKey);
-    // }
   }
 
   createEnemies(map: Phaser.Tilemaps.Tilemap) {
@@ -219,16 +180,8 @@ class SceneBase extends Phaser.Scene {
           });
         }
       });
-        
-      // });
-      // this.physics.add.collider(this.player, enemy, () => {
-      //   this.getPlayer().getDamage(1);
-      //   this.reduceLife();
-      // });
     });
   }
-
-
 
   checkEsc() {
     if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
@@ -246,7 +199,7 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
-    this.player = new Player(this, 10500, 100);
+    this.player = new Player(this, 24, 100);
     this._addPlayer();
   }
 

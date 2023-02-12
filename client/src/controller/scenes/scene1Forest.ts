@@ -48,13 +48,15 @@ class PlaySceneOne extends SceneBase {
       // eslint-disable-next-line
       'startForestTiles' // name of exported tiles file
     );
+
     this.createPickups(map, 'leaf', 2);
     this.createPickups(map, 'can', 0);
     this.createEnemies(map);
-    this.createHUD(); 
+    this.createHUD();
     this.createKey(map);
-    this.createEndpoint(map, worldSize, 0);
-    this.addEndpointHandler('PlaySceneTwo', 0, 420);
+    // this.createEndpoint(map, 'PlaySceneTwo', 24, 3274);
+    this.createEndpoint(map, 'PlaySceneTwo', 7986, -1238);
+
     // if (this.playerX !== null) this.getPlayer().x = this.playerX;
     // if (this.playerY !== null) this.getPlayer().y = this.playerY;
     this.initNPCBehaviour();

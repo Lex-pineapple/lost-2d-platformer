@@ -157,6 +157,8 @@ class Player extends Actor {
   }
 
   update(): void {
+    console.log(this.x, this.y);
+    
     if (this.enemyCollide && !this.collisionEnd) {
       this.getDamage(1);
       this.collisionEnd = true;
