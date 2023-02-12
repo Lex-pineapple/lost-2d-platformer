@@ -27,3 +27,8 @@ interface IMenuItem {
   textGameObj: Phaser.GameObjects.Text | null;
   handleEvents?: (menuItem?: IMenuItem) => void;
 }
+
+interface IPlayerPosition {
+  playerX: number;
+  playerY: number;
+}
