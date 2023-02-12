@@ -137,8 +137,8 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('demonForestBG3', 'backgrounds/DemonForestBG3.png');
     this.load.image('demonForestBG4', 'backgrounds/DemonForestBG4-moon.png');
     this.load.image(
-      'demonForest-peaceful-skyTransition', // eslint-disable-next-line
-      'backgrounds/demonForest-peacefulForest-transition.png',
+      'demonForest-peaceful-skyTransition',
+      'backgrounds/demonForest-peacefulForest-transition.png'
     );
     this.load.image('peacefulBG1', 'backgrounds/PeacefulBG1-start.png');
     this.load.image('peacefulBG2', 'backgrounds/PeacefulBG2.png');
@@ -149,9 +149,10 @@ class LoadingScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('cavernsTileMap', 'tiles/Cave-TileMap/cavernsTileMap.json');
     this.load.image('dark-peacefulForestTiles', 'tiles/Forets-TileMap/forestTileMap-Peaceful.png');
     this.load.tilemapTiledJSON(
-      'dark-peacefulForestTileMap', // eslint-disable-next-line
+      'dark-peacefulForestTileMap',
       'tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
     );
+    this.load.image('door', 'spritesheets/objects/door.png');
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }

@@ -40,3 +40,8 @@ export type ObjectPoint = {
   x: number;
   y: number;
 };
+
+export interface IPlayerPosition {
+  playerX: number;
+  playerY: number;
+}

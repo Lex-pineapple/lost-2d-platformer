@@ -2,8 +2,17 @@ import { ISharedState } from '../../types/interfaces';
 import SceneBase from './sceneBase';
 
 class PlaySceneTwo extends SceneBase {
+  private playerX: number | null = null;
+
+  private playerY: number | null = null;
+
   constructor(name: string, protected sharedState: ISharedState) {
     super('PlaySceneTwo', sharedState);
+  }
+
+  init(data: IPlayerPosition) {
+    this.playerX = data.playerX;
+    this.playerY = data.playerY;
   }
 
   create() {
@@ -12,9 +21,19 @@ class PlaySceneTwo extends SceneBase {
     const BGHeight = 4800;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     this.tileBackgrounds(BGHeight);
+
+    this.createEndpoint(worldSize, 0);
+
     this._loadPlayer();
+
+    if (this.playerX !== null) this.getPlayer().x = this.playerX;
+    if (this.playerY !== null) this.getPlayer().y = this.playerY;
+
     this._setCamera(worldSize, BGHeight);
+
     this.createPlatforms('cavernsTileMap', 'cavernsTileset', 'cavernsMap', 'cavernsTiles');
+
+    this.addEndpointHandler('PlaySceneThree', 0, 420);
   }
 
   tileBackgrounds(BGHeight: number) {

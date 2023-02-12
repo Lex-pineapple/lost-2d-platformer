@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import { ISharedState } from '../../types/interfaces';
+import { IPlayerPosition, ISharedState } from '../../types/interfaces';
 import DialogueModal from '../actor/dialogueModal';
 import NPC from '../actor/npc';
 import Player from '../actor/player';
@@ -9,10 +9,19 @@ class PlaySceneOne extends SceneBase {
   // private player!: Player;
   private NPC1!: NPC;
 
-  // dialogueModal!: DialogueModal;
+  private playerX: number | null = null;
+
+  private playerY: number | null = null;
+
+  dialogueModal!: DialogueModal;
 
   constructor(name: string, protected sharedState: ISharedState) {
     super('PlaySceneOne', sharedState);
+  }
+
+  init(data: IPlayerPosition) {
+    this.playerX = data.playerX;
+    this.playerY = data.playerY;
   }
 
   // _loadPlayer() {
@@ -30,13 +39,21 @@ class PlaySceneOne extends SceneBase {
     const BGHeight = 1920;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     this.tileBackgrounds(BGHeight);
+
+    this.createEndpoint(worldSize, 0);
+    this.addEndpointHandler('PlaySceneTwo', 0, 420);
+
     this._loadPlayer();
+
+    // if (this.playerX !== null) this.getPlayer().x = this.playerX;
+    // if (this.playerY !== null) this.getPlayer().y = this.playerY;
+
     this._setCamera(worldSize, BGHeight);
+
     const platforms = this.createPlatforms(
       'startForestTileMap', // name of exported file
       'startForestTileset', // name of tileset in tiled
       'startForestMap', // name of layer in tiled
-      // eslint-disable-next-line
       'startForestTiles' // name of exported tiles file
     );
     this.createHUD();
