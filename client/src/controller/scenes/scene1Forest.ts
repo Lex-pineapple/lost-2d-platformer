@@ -13,7 +13,7 @@ class PlaySceneOne extends SceneBase {
 
   private playerY: number | null = null;
 
-  dialogueModal!: DialogueModal;
+  // dialogueModal!: DialogueModal;
 
   constructor(name: string, protected sharedState: ISharedState) {
     super('PlaySceneOne', sharedState);
@@ -35,37 +35,29 @@ class PlaySceneOne extends SceneBase {
 
   create() {
     super.create();
-    const worldSize = 9000;
+    const worldSize = 11000;
     const BGHeight = 1920;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     this.tileBackgrounds(BGHeight);
-
-    this.createEndpoint(worldSize, 0);
-    this.addEndpointHandler('PlaySceneTwo', 0, 420);
-
     this._loadPlayer();
-
-    // if (this.playerX !== null) this.getPlayer().x = this.playerX;
-    // if (this.playerY !== null) this.getPlayer().y = this.playerY;
-
     this._setCamera(worldSize, BGHeight);
-
-    const platforms = this.createPlatforms(
+    const map = this.createPlatforms(
       'startForestTileMap', // name of exported file
       'startForestTileset', // name of tileset in tiled
       'startForestMap', // name of layer in tiled
+      // eslint-disable-next-line
       'startForestTiles' // name of exported tiles file
     );
-    this.createHUD();
+    this.createPickups(map, 'leaf', 2);
+    this.createPickups(map, 'can', 0);
+    this.createEnemies(map);
+    this.createHUD(); 
+    this.createKey(map);
+    this.createEndpoint(map, worldSize, 0);
+    this.addEndpointHandler('PlaySceneTwo', 0, 420);
+    // if (this.playerX !== null) this.getPlayer().x = this.playerX;
+    // if (this.playerY !== null) this.getPlayer().y = this.playerY;
     this.initNPCBehaviour();
-    // this.NPC1 = new NPC(this, 'Cat1', 1940, -300, 'cat');
-    // // this.add.existing(this.NPC1);
-    // this.physics.add.collider(this.NPC1, platforms);
-    // this.dialogueModal = new DialogueModal(this, {});
-    // this.dialogueModal.setText(
-    //   "Wow you're back! Are you looking for the elder? He is just down the path. I would have shown you but  I've been waiting for the flower delivery all day and can't really leave my home...",
-    //   true // eslint-disable-line
-    // );
   }
 
   initNPCBehaviour() {

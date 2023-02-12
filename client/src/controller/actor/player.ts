@@ -33,6 +33,8 @@ class Player extends Actor {
 
   collisionEnd: boolean;
 
+  hasKey: boolean;
+
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
     this.keyA = this.scene.input.keyboard.addKey('A');
@@ -50,9 +52,11 @@ class Player extends Actor {
     this.dialogueModal = new DialogueModal(this.scene, {});
     this.enemyCollide = false;
     this.collisionEnd = false;
+    this.hasKey = true;
 
     this.getBody().setSize(48, 48);
     this.getBody().setGravityY(1400);
+    this.setDepth(1);
     // this.getBody().setOffset(8, 0);
     this.initAnimations();
   }
@@ -129,6 +133,20 @@ class Player extends Actor {
     this.keyD.enabled = false;
     this.keySpace.enabled = false;
     this.keyS.enabled = false;
+  }
+
+  enableRun() {
+    this.anims.play('run', true);
+  }
+
+  disableRun() {
+    this.body.velocity.x = 0;
+    this.anims.stop();
+  }
+
+  enableIdle() {
+    this.body.velocity.x = 0;
+    this.anims.play('idle', true);
   }
 
   enableKeys() {

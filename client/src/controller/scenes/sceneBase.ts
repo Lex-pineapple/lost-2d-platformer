@@ -7,13 +7,13 @@ import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 class SceneBase extends Phaser.Scene {
   private player!: Player;
 
-  protected endpoint!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-
   private keyESC!: Phaser.Input.Keyboard.Key;
 
   private scoreText!: Phaser.GameObjects.Text;
 
   private livesText!: Phaser.GameObjects.Text;
+
+  protected endpoint!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
   score: number;
 
@@ -59,10 +59,7 @@ class SceneBase extends Phaser.Scene {
     pickupObjects.forEach((coin) => {
       this.physics.world.enable(coin);
     });
-    this.createPickups(map, 'leaf', 2);
-    this.createPickups(map, 'can', 0);
-    this.createEnemies(map);
-    return platforms;
+    return map;
   }
 
   increaseScore(type: string) {
@@ -84,84 +81,91 @@ class SceneBase extends Phaser.Scene {
     const objectPoints = gameObjectsToObjectPoints(
       map.filterObjects('EntityLayer', (obj) => obj.name === `${type}Point`)
     );
-    if (objectPoints) {
-      const pickups = objectPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'objectPickups', frame).setScale(1.5).setSize(16, 16),
-      );
-      pickups.forEach((leaf) => {
-        this.physics.add.overlap(this.player, leaf, (obj1, obj2) => {
-          obj2.destroy();
-          this.increaseScore(type);
-        });
-      });
-    }
-  }
-
-  createEnemies(map: Phaser.Tilemaps.Tilemap) {
-    const enemyPoints = gameObjectsToObjectPoints(
-      map.filterObjects('EnemyLayer', (obj) => obj.name === 'commonEnemyPoint')
+    const pickups = objectPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'objectPickups', frame).setScale(1.5).setSize(16, 16),
     );
-
-    const enemies = enemyPoints.map((point) => new Enemy(this, point.x, 450 - (1920 - point.y), 'cat'));
-    enemies.forEach((enemy) => {
-      this.physics.add.overlap(this.player, enemy, () => {
-        this.reduceLife();
-        this.player.enemyCollide = true;
-        if (this.getPlayer().getHPValue() <= 0) {
-          this.cameras.main.fadeOut(200, 0, 0, 0);
-          this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-            this.scene.start('GameOverScene');
-          });
-        }
-        
-      // });
-      // this.physics.add.collider(this.player, enemy, () => {
-      //   this.getPlayer().getDamage(1);
-      //   this.reduceLife();
-      // });
+    pickups.forEach((leaf) => {
+      this.physics.add.overlap(this.player, leaf, (obj1, obj2) => {
+        obj2.destroy();
+        this.increaseScore(type);
       });
     });
   }
 
+  createKey(map: Phaser.Tilemaps.Tilemap) {
+    const keyPoint = gameObjectsToObjectPoints(
+      map.filterObjects('FunctionalLayer', (obj) => obj.name === 'keyPoint')
+    );
 
-
-  checkEsc() {
-    if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
-      if (!this.scene.isPaused()) {
-        this.scene.launch('PauseMenuScene', { key: this.scene.key });
-        this.scene.pause();
-
-        this.sharedState.playableScenePaused = this.scene.key;
-      }
-    }
+    const key = this.physics.add.sprite(keyPoint[0].x, 450 - (1920 - keyPoint[0].y), 'keyPickup')
+    // .setOrigin(0, 0)
+    .setScale(1)
+    .setImmovable(true)
+    .setBodySize(64, 55);
+    this.physics.add.overlap(this.player, key, (obj1, obj2) => {
+      this.player.hasKey = true;
+      obj2.destroy();
+    });
   }
 
-  _loadPlayer() {
-    this._spawnCharacters();
-  }
-
-  _spawnCharacters() {
-    this.player = new Player(this, 100, 100);
-    this._addPlayer();
-  }
-
-  _addPlayer() {
-    this.add.existing(this.player);
-  }
-
-  createEndpoint(worldWidth: number, posY: number) {
+  createEndpoint(map: Phaser.Tilemaps.Tilemap,worldWidth: number, posY: number) {
     // Get the rightmost bound of the scene
     // const rightBound = this.physics.world.bounds.width;
     // This doesn't work because the world bounds are set after this method is called
     // But we need to call it before _loadPlayer so that player
     // is in front of the door, not behind it
-    this.endpoint = this.physics.add.sprite(0, 0, 'door')
-      .setOrigin(0, 1)
-      .setScale(3)
-      .setImmovable(true);
-    this.endpoint.x = worldWidth - this.endpoint.displayWidth - 10;
-    this.endpoint.y = posY;
-    this.endpoint.setBodySize(this.endpoint.displayWidth, this.endpoint.displayHeight - 40);
+    const doorPoint = gameObjectsToObjectPoints(
+      map.filterObjects('FunctionalLayer', (obj) => obj.name === 'doorPoint')
+    );
+
+    this.endpoint = this.physics.add.sprite(doorPoint[0].x, 450 - (1920 - doorPoint[0].y), 'doorLock')
+    // .setOrigin(0, 0)
+    .setScale(1)
+    .setImmovable(true)
+    .setBodySize(64, 55);
+    this.physics.add.collider(this.player, this.endpoint, (obj1, obj2) => {
+      if (this.player.hasKey) {
+        // this.time.delayedCall(5000, this.beginTransition);
+        this.tweens.add({
+          targets: this.endpoint,
+          duration: 100,
+          repeat: 3,
+          yoyo: true,
+          alpha: 0.5,
+          onComplete: () => {
+            this.endpoint.setAlpha(1);
+            obj2.destroy();
+            this.beginTransition();
+          },
+        });
+      }
+    });
+    // this.endpoint = this.physics.add.sprite(0, 0, 'door')
+    //   .setOrigin(0, 1)
+    //   .setScale(1)
+    //   .setImmovable(true);
+    // this.endpoint.x = worldWidth - this.endpoint.displayWidth - 10;
+    // this.endpoint.y = posY;
+    // this.endpoint.setBodySize(this.endpoint.displayWidth, this.endpoint.displayHeight - 40);
     // .setDisplaySize(200, 200);
+  }
+
+  beginTransition() {
+    this.player.diableKeys();
+    this.cameras.main.fadeOut(1000, 0, 0, 0);
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      this.handleEndpointChange('PlaySceneTwo', 24, 3274);
+    });
+  }
+
+  handleEndpointChange(nextSceneKey: string, playerPosX: number, playerPosY: number) {
+    this.scene.start(
+      nextSceneKey,
+      // Set player's coordinates to specific point in next scene
+      {
+        playerX: playerPosX,
+        playerY: playerPosY,
+      }
+    );
   }
 
   addEndpointHandler(nextSceneKey: string, playerPosX: number, playerPosY: number) {
@@ -198,13 +202,61 @@ class SceneBase extends Phaser.Scene {
     // }
   }
 
-  // collectPickup(player: Player, pickup: Phaser.GameObjects.GameObject) {
-  //   pickup.destroy()
-  // }
+  createEnemies(map: Phaser.Tilemaps.Tilemap) {
+    const enemyPoints = gameObjectsToObjectPoints(
+      map.filterObjects('EnemyLayer', (obj) => obj.name === 'commonEnemyPoint')
+    );
+
+    const enemies = enemyPoints.map((point) => new Enemy(this, point.x, 450 - (1920 - point.y), 'cat'));
+    enemies.forEach((enemy) => {
+      this.physics.add.overlap(this.player, enemy, () => {
+        this.reduceLife();
+        this.player.enemyCollide = true;
+        if (this.getPlayer().getHPValue() <= 0) {
+          this.cameras.main.fadeOut(200, 0, 0, 0);
+          this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+            this.scene.start('GameOverScene');
+          });
+        }
+      });
+        
+      // });
+      // this.physics.add.collider(this.player, enemy, () => {
+      //   this.getPlayer().getDamage(1);
+      //   this.reduceLife();
+      // });
+    });
+  }
+
+
+
+  checkEsc() {
+    if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
+      if (!this.scene.isPaused()) {
+        this.scene.launch('PauseMenuScene', { key: this.scene.key });
+        this.scene.pause();
+
+        this.sharedState.playableScenePaused = this.scene.key;
+      }
+    }
+  }
+
+  _loadPlayer() {
+    this._spawnCharacters();
+  }
+
+  _spawnCharacters() {
+    this.player = new Player(this, 10500, 100);
+    this._addPlayer();
+  }
+
+  _addPlayer() {
+    this.add.existing(this.player);
+  }
 
   _setCamera(worldWidth: number, worldHeight: number) {
     this.cameras.main.setBounds(0, -1470, worldWidth, worldHeight, true);
-    this.physics.world.setBounds(0, -1470, worldWidth, worldHeight, true, true, false);
+    this.physics.world.setBounds(0, -1470, worldWidth + 500, worldHeight, true, true, false);
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5, 0, 100);
   }
 
