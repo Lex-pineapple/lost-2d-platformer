@@ -72,6 +72,7 @@ class NonPlayableBaseScene extends Scene {
         ctx,
         menuItemFn
       ).getObj();
+      menuItem.textGameObj.on('pointerdown', () => this.soundServise.playSoundButton());
 
       lastMenuItemPosY += 50;
     });
@@ -106,6 +107,7 @@ class NonPlayableBaseScene extends Scene {
           }
         }
       }
+      this.soundServise.playSoundButton();
     }
   }
 }

@@ -96,6 +96,7 @@ class OptionsScene extends NonPlayableBaseScene {
     } else {
       this.scene.start('MainMenuScene');
     }
+    this.soundServise.playSoundButton();
   }
 }
 
