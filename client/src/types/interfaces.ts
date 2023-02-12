@@ -1,34 +1,47 @@
-interface ISharedState {
+export interface ISharedState {
   [key: string]: string | null;
 }
-interface IJSONData {
+export interface IJSONData {
   platforms: IPlatformData[];
 }
 
-interface IPlatformData {
+export interface IPlatformData {
   image: string;
   x: number;
   y: number;
 }
 
-interface IInitScene {
+export interface IInitScene {
   key: string;
 }
 
-interface IMenuScenes {
+export interface IMenuScenes {
   mainMenu: string;
   optionsMenu: string;
   pauseMenu: string;
 }
 
-interface IMenuItem {
+export interface IMenuItem {
   sceneKey: string | null | (() => string | null);
   text: string;
   textGameObj: Phaser.GameObjects.Text | null;
   handleEvents?: (menuItem?: IMenuItem) => void;
 }
 
-interface IPlayerPosition {
+export type ObjectPoint = {
+  height: number;
+  id: number;
+  name: string;
+  point: boolean;
+  rotation: number;
+  type: string;
+  visible: boolean;
+  width: number;
+  x: number;
+  y: number;
+};
+
+export interface IPlayerPosition {
   playerX: number;
   playerY: number;
 }

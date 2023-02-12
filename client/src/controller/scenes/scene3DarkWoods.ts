@@ -1,3 +1,4 @@
+import { IPlayerPosition, ISharedState } from '../../types/interfaces';
 import SceneBase from './sceneBase';
 
 class PlaySceneThree extends SceneBase {
@@ -16,27 +17,22 @@ class PlaySceneThree extends SceneBase {
 
   create() {
     super.create();
-    const worldSize = 11000;
+    const worldSize = 12960;
     const BGHeight = 1920;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     this.tileBackgrounds(BGHeight);
-
     // this.createEndpoint(worldSize, 0);
-
     this._loadPlayer();
-
     // if (this.playerX !== null) this.getPlayer().x = this.playerX;
     // if (this.playerY !== null) this.getPlayer().y = this.playerY;
-
     this._setCamera(worldSize, BGHeight);
-
-    this.createPlatforms(
+    const map = this.createPlatforms(
       'dark-peacefulForestTileMap',
       'dark-peacefulTileset',
       'dark-peacefulMap',
-      'dark-peacefulForestTiles'
+      'dark-peacefulForestTiles', // eslint-disable-line
     );
-
+    this.createFinalEndpoint(map);
     // this.addEndpointHandler('PlaySceneNext', 0, 420);
   }
 

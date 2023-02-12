@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import { IPlayerPosition, ISharedState } from '../../types/interfaces';
 import DialogueModal from '../actor/dialogueModal';
 import NPC from '../actor/npc';
 import Player from '../actor/player';
@@ -12,7 +13,7 @@ class PlaySceneOne extends SceneBase {
 
   private playerY: number | null = null;
 
-  dialogueModal!: DialogueModal;
+  // dialogueModal!: DialogueModal;
 
   constructor(name: string, protected sharedState: ISharedState) {
     super('PlaySceneOne', sharedState);
@@ -34,37 +35,47 @@ class PlaySceneOne extends SceneBase {
 
   create() {
     super.create();
-    const worldSize = 9000;
+    const worldSize = 11000;
     const BGHeight = 1920;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     this.tileBackgrounds(BGHeight);
-
-    this.createEndpoint(worldSize, 0);
-
     this._loadPlayer();
-
-    // if (this.playerX !== null) this.getPlayer().x = this.playerX;
-    // if (this.playerY !== null) this.getPlayer().y = this.playerY;
-
     this._setCamera(worldSize, BGHeight);
-
-    const platforms = this.createPlatforms(
+    const map = this.createPlatforms(
       'startForestTileMap', // name of exported file
       'startForestTileset', // name of tileset in tiled
       'startForestMap', // name of layer in tiled
+      // eslint-disable-next-line
       'startForestTiles' // name of exported tiles file
     );
 
-    this.addEndpointHandler('PlaySceneTwo', 0, 420);
+    this.createPickups(map, 'leaf', 2);
+    this.createPickups(map, 'can', 0);
+    this.createEnemies(map);
+    this.createHUD();
+    this.createKey(map);
+    // this.createEndpoint(map, 'PlaySceneTwo', 24, 3274);
+    this.createEndpoint(map, 'PlaySceneTwo', 7986, -1238);
 
-    this.NPC1 = new NPC(this, 'Cat1', 1940, -300, 'cat');
-    // this.add.existing(this.NPC1);
-    this.physics.add.collider(this.NPC1, platforms);
-    this.dialogueModal = new DialogueModal(this, {});
-    this.dialogueModal.setText(
-      "Wow you're back! Are you looking for the elder? He is just down the path. I would have shown you but  I've been waiting for the flower delivery all day and can't really leave my home...",
-      true
-    );
+    // if (this.playerX !== null) this.getPlayer().x = this.playerX;
+    // if (this.playerY !== null) this.getPlayer().y = this.playerY;
+    this.initNPCBehaviour();
+  }
+
+  initNPCBehaviour() {
+    const NPC1 = new NPC(this, 'Cat1', 5750, 450-758, 'cat');
+    const NPC2 = new NPC(this, 'Cat2', 8400, 450-1494, 'cat');
+    // const NPC3 = new NPC(this, 'Cat1', 1940, -300, 'cat');
+    // const NPC4 = new NPC(this, 'Cat1', 1940, -300, 'cat');
+    
+    this.physics.add.overlap(this.getPlayer(), NPC1, () => {
+      this.getPlayer().setOverlap(true);
+      this.getPlayer().getOverlapSprite('NPC1', 'PlaySceneOne');
+      // this.getPlayer().getOverlapSprite('NPC2', 'PlaySceneOne');
+
+      // this.input.keyboard.enabled = false;
+      // this.dialogueModal.displayNPCdialogue('NPC1', 'PlaySceneOne');
+    });
   }
 
   tileBackgrounds(BGHeight: number) {

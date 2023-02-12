@@ -1,3 +1,4 @@
+import { IMenuItem, ISharedState } from '../../../types/interfaces';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 
 class PauseMenuScene extends NonPlayableBaseScene {

@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import Button from '../helpers/button';
 
 import arrow from '../../assets/menu/back_arrow.png';
+import { ISharedState } from '../../types/interfaces';
 
 class LoadingScene extends Phaser.Scene {
   private cat!: Phaser.GameObjects.Sprite;
@@ -82,6 +83,20 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('can', 'spritesheets/objects/pickupCatCan-small.png');
     this.load.image('plantFinal', 'spritesheets/objects/plant-big.png');
     this.load.image('plantPickupSmall', 'spritesheets/objects/plant-small.png');
+    this.load.image('keyPickup', 'spritesheets/objects/keyPng.png');
+    this.load.image('doorLock', 'spritesheets/objects/doorLock.png');
+
+
+
+    this.load.spritesheet('objectPickups', 'spritesheets/objects/PickupObjectMap.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.atlas(
+      'a-enemy-hover',
+      'spritesheets/enemy-hover-atlas.png',
+      'spritesheets/enemy-hover-atlas.json'
+    );
 
     this.load.image('cat', 'spritesheets/cat-idlesprite.png');
     this.load.image('cat-wall-slide', 'spritesheets/catWallSlide.png');
@@ -126,22 +141,23 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('demonForestBG3', 'backgrounds/DemonForestBG3.png');
     this.load.image('demonForestBG4', 'backgrounds/DemonForestBG4-moon.png');
     this.load.image(
-      'demonForest-peaceful-skyTransition',
-      'backgrounds/demonForest-peacefulForest-transition.png'
+      'demonForest-peaceful-skyTransition', // eslint-disable-next-line
+      'backgrounds/demonForest-peacefulForest-transition.png',
     );
     this.load.image('peacefulBG1', 'backgrounds/PeacefulBG1-start.png');
     this.load.image('peacefulBG2', 'backgrounds/PeacefulBG2.png');
 
+    this.load.image('door', 'spritesheets/objects/door.png');
     this.load.image('startForestTiles', 'tiles/Forets-TileMap/forestTileMap.png');
     this.load.tilemapTiledJSON('startForestTileMap', 'tiles/Forets-TileMap/forestTileMap.json');
     this.load.image('cavernsTiles', 'tiles/Cave-TileMap/caveTileMap-yellow.png');
     this.load.tilemapTiledJSON('cavernsTileMap', 'tiles/Cave-TileMap/cavernsTileMap.json');
     this.load.image('dark-peacefulForestTiles', 'tiles/Forets-TileMap/forestTileMap-Peaceful.png');
     this.load.tilemapTiledJSON(
-      'dark-peacefulForestTileMap',
+      'dark-peacefulForestTileMap', // eslint-disable-next-line
       'tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
     );
-    this.load.image('door', 'spritesheets/objects/door.png');
+    
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }

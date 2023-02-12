@@ -1,4 +1,5 @@
 import { Scene } from 'phaser';
+import { IMenuScenes, ISharedState, IMenuItem } from '../../../types/interfaces';
 import Button from '../../helpers/button';
 
 class NonPlayableBaseScene extends Scene {
