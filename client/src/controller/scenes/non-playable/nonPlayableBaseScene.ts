@@ -1,10 +1,14 @@
-import { Scene } from 'phaser';
+import { Scene, Sound } from 'phaser';
 import Button from '../../helpers/button';
+// import AudioMaster from '../../audio/audioManager1';
+import SoundService from '../../audio/soundServise';
 
 class NonPlayableBaseScene extends Scene {
   protected lastSceneKey: string | undefined;
 
   private keyESC!: Phaser.Input.Keyboard.Key;
+
+  soundServise!: SoundService;
 
   protected menuScenes: IMenuScenes = {
     mainMenu: 'MainMenuScene',
@@ -16,8 +20,19 @@ class NonPlayableBaseScene extends Scene {
     super({ key: name });
   }
 
+  preload() {
+    this.initServices();
+  }
+
   create() {
     this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+  }
+
+  initServices(): void {
+    this.soundServise = new SoundService( // @ts-ignore: Unreachable code error
+      this.game.effectsAudioManager, // @ts-ignore: Unreachable code error
+      this.game.musicAudioManager
+      );
   }
 
   getMiddlePositionX() {

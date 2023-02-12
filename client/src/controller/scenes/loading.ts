@@ -1,7 +1,11 @@
 import * as Phaser from 'phaser';
 import Button from '../helpers/button';
+import SoundService from '../audio/soundServise';
 
 import arrow from '../../assets/menu/back_arrow.png';
+import buttonSound from '../../assets/sounds/effects/interface/interface.ogg';
+import cavernMusic from '../../assets/sounds/music/cavernous_desert02.mp3';
+import forestMusic from '../../assets/sounds/music/darkforest.mp3';
 
 class LoadingScene extends Phaser.Scene {
   private cat!: Phaser.GameObjects.Sprite;
@@ -141,6 +145,10 @@ class LoadingScene extends Phaser.Scene {
       'dark-peacefulForestTileMap', // eslint-disable-next-line
       'tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
     );
+
+    this.load.audio('buttonSound', buttonSound);
+    this.load.audio('cavernMusic', cavernMusic);
+    this.load.audio('forestMusic', forestMusic);
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }
