@@ -6,6 +6,10 @@ import arrow from '../../assets/menu/back_arrow.png';
 import buttonSound from '../../assets/sounds/effects/interface/interface.ogg';
 import cavernMusic from '../../assets/sounds/music/cavernous_desert02.mp3';
 import forestMusic from '../../assets/sounds/music/darkforest.mp3';
+import forestMusicScene1 from '../../assets/sounds/music/forest_loop.ogg';
+import pickupCoin1 from '../../assets/sounds/effects/pickup/coin.ogg';
+import pickupCoin2 from '../../assets/sounds/effects/pickup/coin2.ogg';
+import hurtSwing from '../../assets/sounds/effects/hurts/swing.ogg';
 import { ISharedState } from '../../types/interfaces';
 
 class LoadingScene extends Phaser.Scene {
@@ -163,6 +167,10 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('buttonSound', buttonSound);
     this.load.audio('cavernMusic', cavernMusic);
     this.load.audio('forestMusic', forestMusic);
+    this.load.audio('forestMusicScene1', forestMusicScene1);
+    this.load.audio('pickupCoin1', pickupCoin1);
+    this.load.audio('pickupCoin2', pickupCoin2);
+    this.load.audio('hurtSwing', hurtSwing);
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }

@@ -60,6 +60,7 @@ class PlaySceneOne extends SceneBase {
     // if (this.playerX !== null) this.getPlayer().x = this.playerX;
     // if (this.playerY !== null) this.getPlayer().y = this.playerY;
     this.initNPCBehaviour();
+    this.soundServise.playForestMusicScene1();
   }
 
   initNPCBehaviour() {

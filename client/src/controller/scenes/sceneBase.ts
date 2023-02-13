@@ -3,6 +3,7 @@ import DialogueModal from '../actor/dialogueModal';
 import Enemy from '../actor/enemy';
 import Player from '../actor/player';
 import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
+import SoundService from '../audio/soundServise';
 
 class SceneBase extends Phaser.Scene {
   private player!: Player;
@@ -17,9 +18,15 @@ class SceneBase extends Phaser.Scene {
 
   score: number;
 
+  soundServise!: SoundService;
+
   constructor(name: string, protected sharedState: ISharedState) {
     super({ key: name });
     this.score = 0;
+  }
+
+  preload() {
+    this.initServices();
   }
 
   create() {
@@ -51,15 +58,19 @@ class SceneBase extends Phaser.Scene {
     if (type === 'leaf') {
       this.score += 10;
       this.scoreText.setText(`Score: ${this.score}`);
+      this.soundServise.playPickup1();
     }
     if (type === 'can') {
       this.score += 100;
       this.scoreText.setText(`Score: ${this.score}`);
+      this.soundServise.playPickup2();
     }
+    console.log('score');
   }
 
   reduceLife() {
     this.livesText.setText(`Lives: ${this.player.getHPValue()}`);
+    this.soundServise.playHurtSwing();
   }
 
   createPlatforms(platformsKey: string, platformTs: string, platformMap: string, tileImg: string) {
@@ -191,6 +202,13 @@ class SceneBase extends Phaser.Scene {
         this.sharedState.playableScenePaused = this.scene.key;
       }
     }
+  }
+
+  initServices(): void {
+    this.soundServise = new SoundService( // @ts-ignore: Unreachable code error
+      this.game.effectsAudioManager, // @ts-ignore: Unreachable code error
+      this.game.musicAudioManager
+      );
   }
 
   _loadPlayer() {

@@ -22,6 +22,24 @@ class SoundService {
     this.music.play('cavernMusic', soundConfigMusic);
   }
 
+  playPickup1() {
+    this.effects.play('pickupCoin1', soundConfigEffects);
+  }
+
+  playPickup2() {
+    this.effects.play('pickupCoin2', soundConfigEffects);
+  }
+
+  playHurtSwing() {
+    this.effects.stopAll();
+    this.effects.play('hurtSwing', soundConfigEffects);
+  }
+
+  playForestMusicScene1() {
+    // this.music.play('forestMusicScene1', soundConfigMusic);
+    this.music.play('forestMusicScene1', { volume: 0.1 });
+  }
+
   setVolumeMusic(value: number) {
     soundConfigMusic.volume = value;
     this.music.setVolume(soundConfigMusic.volume);
