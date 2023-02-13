@@ -30,6 +30,7 @@ class PlaySceneTwo extends SceneBase {
     // this.addEndpointHandler('PlaySceneThree', 0, 420);7
     this.createEndpoint(map, 'PlaySceneThree', 24, 362);
     this.createHUD();
+    this.soundServise.playCavernMusic();
   }
 
   tileBackgrounds(BGHeight: number) {

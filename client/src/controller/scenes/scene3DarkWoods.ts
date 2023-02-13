@@ -33,6 +33,7 @@ class PlaySceneThree extends SceneBase {
       'dark-peacefulForestTiles', // eslint-disable-line
     );
     this.createFinalEndpoint(map);
+    this.soundServise.playForestMusicScene3();
     // this.addEndpointHandler('PlaySceneNext', 0, 420);
   }
 

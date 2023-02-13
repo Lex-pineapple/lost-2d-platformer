@@ -134,6 +134,7 @@ class SceneBase extends Phaser.Scene {
             this.beginTransition(nextSceneKey, posX, posY);
           },
         });
+      this.soundServise.playDoorSound();
       }
     });
   }

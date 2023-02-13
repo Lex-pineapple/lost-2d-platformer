@@ -18,8 +18,8 @@ class SoundService {
     this.effects.play('buttonSound', soundConfigEffects);
   }
 
-  playCavernMusic() {
-    this.music.play('cavernMusic', soundConfigMusic);
+  playDoorSound() {
+    this.effects.play('doorSound', soundConfigEffects);
   }
 
   playPickup1() {
@@ -36,8 +36,18 @@ class SoundService {
   }
 
   playForestMusicScene1() {
-    // this.music.play('forestMusicScene1', soundConfigMusic);
-    this.music.play('forestMusicScene1', { volume: 0.1 });
+    this.stopAnyMusic();
+    this.music.play('forestMusicScene1', soundConfigMusic);
+  }
+
+  playCavernMusic() {
+    this.stopAnyMusic();
+    this.music.play('cavernMusic', soundConfigMusic);
+  }
+
+  playForestMusicScene3() {
+    this.stopAnyMusic();
+    this.music.play('forestMusicScene3', soundConfigMusic);
   }
 
   setVolumeMusic(value: number) {
@@ -50,6 +60,10 @@ class SoundService {
     soundConfigEffects.volume = value;
     this.effects.setVolume(soundConfigEffects.volume);
     console.log(value);
+  }
+
+  stopAnyMusic() {
+    this.music.stopAll();
   }
 }
 

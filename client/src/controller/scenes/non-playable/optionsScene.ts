@@ -4,6 +4,8 @@ import { Slider } from 'phaser3-rex-plugins/templates/ui/ui-components';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 import { ISharedState } from '../../../types/interfaces';
 
+import { soundConfigMusic, soundConfigEffects } from '../../audio/audioConfigs';
+
 enum EnumLang {
   ru = 'Язык: Русский',
   en = 'Lang: English',
@@ -27,10 +29,12 @@ class OptionsScene extends NonPlayableBaseScene {
     super.create();
     const xAxis = this.getMiddlePositionX();
     const yAxis = this.getMiddlePositionY();
+    const volumeMusic = soundConfigMusic.volume!;
+    const volumeEffects = soundConfigEffects.volume!;
     this.createBackButton(40, 30);
-    this.createSlider(xAxis, yAxis - 50, ' Master Volume', this.changeMasterVolume);
-    this.createSlider(xAxis, yAxis - 25, '  Music Volume', this.changeMusicVolume);
-    this.createSlider(xAxis, yAxis, 'Effects Volume', this.changeMusicVolume);
+    this.createSlider(xAxis, yAxis - 50, ' Master Volume', 1, this.changeMasterVolume);
+    this.createSlider(xAxis, yAxis - 25, '  Music Volume', volumeMusic, this.changeMusicVolume);
+    this.createSlider(xAxis, yAxis, 'Effects Volume', volumeEffects, this.changeEffectsVolume);
     this.createLangButton(xAxis, yAxis + 25);
   }
 
@@ -42,7 +46,7 @@ class OptionsScene extends NonPlayableBaseScene {
       .on('pointerup', this.returnBack.bind(this));
   }
 
-  createSlider(xPos: number, yPos: number, labelText: string, callback: Function) {
+  createSlider(xPos: number, yPos: number, labelText: string, volume: number, callback: Function) {
     const labeLSlider = this.add.text(xPos - 63, yPos, `${labelText}:`);
     labeLSlider.setStyle({ fill: '#ffffff' }).setOrigin(0.5).setAlign('left');
     labeLSlider.width = 100;
@@ -51,7 +55,7 @@ class OptionsScene extends NonPlayableBaseScene {
       y: yPos,
       width: 100,
       height: 10,
-      value: 0.5,
+      value: volume,
       input: 'click',
       track: this.rexUI.add.roundRectangle(0, 0, 0, 0, 5, 0x222222),
       indicator: this.rexUI.add.roundRectangle(0, 0, 0, 0, 5, 0x3afefd),
@@ -69,11 +73,11 @@ class OptionsScene extends NonPlayableBaseScene {
   }
 
   changeMusicVolume(value: number) {
-    return () => value;
+    this.soundServise.setVolumeMusic(value);
   }
 
   changeEffectsVolume(value: number) {
-    return () => value;
+    this.soundServise.setVolumeEffects(value);
   }
 
   createLangButton(xPos: number, yPos: number) {
