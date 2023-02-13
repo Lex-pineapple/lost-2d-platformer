@@ -63,6 +63,7 @@ class Player extends Actor {
     this.getBody().setSize(48, 48);
     this.getBody().setGravityY(1400);
     this.setDepth(1);
+    this.getBody().maxVelocity.setTo(600, 600);
     // this.getBody().setOffset(8, 0);
     this.initAnimations();
   }
