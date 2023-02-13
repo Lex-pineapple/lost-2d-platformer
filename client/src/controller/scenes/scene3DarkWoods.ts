@@ -39,22 +39,24 @@ class PlaySceneThree extends SceneBase {
   tileBackgrounds(BGHeight: number) {
     const gameWidth = +this.game.config.width;
     const gameHeight = +this.game.config.height;
-    this._createBackground('demonForestBG1', 0, gameHeight - BGHeight, 1164);
-    this._createBackground('demonForestBG2', 1164, gameHeight - BGHeight, 2298);
-    this._createBackground('demonForestBG3', 1164 + 2298, gameHeight - BGHeight, 1000);
-    this._createBackground('demonForestBG4', 1164 + 2298 + 1000, gameHeight - BGHeight, 1000);
+    this._createBackground('demonForestBG1', 0, gameHeight - BGHeight, 1164, BGHeight);
+    this._createBackground('demonForestBG2', 1164, gameHeight - BGHeight, 2298, BGHeight);
+    this._createBackground('demonForestBG3', 1164 + 2298, gameHeight - BGHeight, 1000, BGHeight);
+    this._createBackground('demonForestBG4', 1164 + 2298 + 1000, gameHeight - BGHeight, 1000, BGHeight);
     this._createBackground(
       'demonForest-peaceful-skyTransition',
       1164 + 2298 + 1000 + 1000,
       gameHeight - BGHeight,
-      5000
+      5000,
+      BGHeight
     );
-    this._createBackground('peacefulBG1', 1164 + 2298 + 1000 + 5000, gameHeight - BGHeight, 1346);
+    this._createBackground('peacefulBG1', 1164 + 2298 + 1000 + 5000, gameHeight - BGHeight, 1346, BGHeight);
     this._createBackground(
       'peacefulBG2',
       1164 + 2298 + 1000 + 5000 + 1346,
       gameHeight - BGHeight,
-      1174
+      1174,
+      BGHeight
     );
   }
 

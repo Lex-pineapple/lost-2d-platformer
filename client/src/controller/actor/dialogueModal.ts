@@ -126,7 +126,7 @@ class DialogueModal {
     this.graphics.strokeRect(x, y, rectWidth, rectHeight);
   }
 
-  protected createWindow() {
+  createWindow() {
     const gameHeight = this.getGameHeight();
     const gameWidth = this.getGameWidth();
     const positionX = this.scene.cameras.main.worldView.x + this.padding;
@@ -187,12 +187,18 @@ class DialogueModal {
     this.text.setDepth(1);
   }
 
-  _removeWindow() {
+  removeWindow() {
     this.graphics.destroy();
-    this.timedEvent.remove();
-
-    this.text.destroy();
+    if (this.timedEvent) this.timedEvent.remove();
+    if (this.text) this.text.destroy();
     this.created = false;
+  }
+
+  getDialogLines(npcName: string, sceneName: string) {
+    return {
+      idle: this.dialogData[sceneName][npcName].idle,
+      main: this.dialogData[sceneName][npcName].story,
+    }
   }
 
   displayNPCdialogue(npcName: string, sceneName: string) {
@@ -201,14 +207,11 @@ class DialogueModal {
     if (!this.created) {
       this.createWindow();
     }
-    if (this.dialogFinished) {
-      this.setText(idleDialog[0], true);
-    }
     if (this.dialogCounter < mainDialog.length) {
       this.setText(mainDialog[this.dialogCounter], true);
     } else {
       this.dialogFinished = true;
-      this._removeWindow();
+      this.removeWindow();
     }
     this.dialogCounter += 1;
     

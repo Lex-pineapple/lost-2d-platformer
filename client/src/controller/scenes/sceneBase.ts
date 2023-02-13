@@ -1,3 +1,4 @@
+import TouchEventStop from 'phaser3-rex-plugins/plugins/toucheventstop';
 import { ISharedState } from '../../types/interfaces';
 import DialogueModal from '../actor/dialogueModal';
 import Enemy from '../actor/enemy';
@@ -8,6 +9,8 @@ class SceneBase extends Phaser.Scene {
   private player!: Player;
 
   private keyESC!: Phaser.Input.Keyboard.Key;
+
+  keyF!: Phaser.Input.Keyboard.Key;
 
   private scoreText!: Phaser.GameObjects.Text;
 
@@ -24,6 +27,8 @@ class SceneBase extends Phaser.Scene {
 
   create() {
     this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyF = this.input.keyboard.addKey('F');
+
   }
 
   update() {
@@ -31,12 +36,12 @@ class SceneBase extends Phaser.Scene {
   }
 
   createHUD() {
-    this.scoreText = this.add.text(16, 16, 'Score: 0').setPadding(10).setStyle({
+    this.scoreText = this.add.text(16, 16, `Score: ${this.score}`).setPadding(10).setStyle({
       fontSize: '28px',
       backgroundColor: '#073454',
       fill: '#3afefd',
     });
-    this.livesText = this.add.text(300, 16, 'Lives: 3').setPadding(10).setStyle({
+    this.livesText = this.add.text(300, 16, `Lives: ${this.player.getHPValue()}`).setPadding(10).setStyle({
       fontSize: '28px',
       backgroundColor: '#073454',
       fill: '#3afefd',
@@ -71,6 +76,7 @@ class SceneBase extends Phaser.Scene {
     this.physics.add.collider(this.player, platforms);
     return map;
   }
+
 
   createPickups(map: Phaser.Tilemaps.Tilemap, type: string, frame: number) {
     const objectPoints = gameObjectsToObjectPoints(
@@ -199,7 +205,7 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
-    this.player = new Player(this, 24, 100);
+    this.player = new Player(this, 5700, 450-758);
     this._addPlayer();
   }
 
@@ -213,8 +219,8 @@ class SceneBase extends Phaser.Scene {
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5, 0, 100);
   }
 
-  _createBackground(name: string, x: number, y: number, width: number) {
-    this.add.tileSprite(x, y, width, 1920, name).setOrigin(0);
+  _createBackground(name: string, x: number, y: number, width: number, height: number) {
+    this.add.tileSprite(x, y, width, height, name).setOrigin(0);
   }
 
   getPlayer() {
