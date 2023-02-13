@@ -18,7 +18,7 @@ class PlaySceneTwo extends SceneBase {
 
   create() {
     super.create();
-    const worldSize = 9026;
+    const worldSize = 9024;
     const BGHeight = 4800;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     this.tileBackgrounds(BGHeight);

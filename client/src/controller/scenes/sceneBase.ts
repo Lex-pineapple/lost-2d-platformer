@@ -69,7 +69,7 @@ class SceneBase extends Phaser.Scene {
 
   createPlatforms(platformsKey: string, platformTs: string, platformMap: string, tileImg: string) {
     const map = this.make.tilemap({ key: platformsKey });
-    const tileset = map.addTilesetImage(platformTs, tileImg);
+    const tileset = map.addTilesetImage(platformTs, tileImg, 32, 32);
     const platforms = map.createLayer(platformMap, tileset, 0, -1470);
     // // Dont forget to set collision to each tile in tiled!
     platforms.setCollisionByProperty({ collides: true });
@@ -205,7 +205,7 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
-    this.player = new Player(this, 5700, 450-758);
+    this.player = new Player(this, 11000, 450-758);
     this._addPlayer();
   }
 
