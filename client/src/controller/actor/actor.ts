@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 
 class Actor extends Phaser.Physics.Arcade.Sprite {
-  protected hp = 100;
+  protected hp = 1000;
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
     super(scene, x, y, texture, frame);
@@ -13,9 +13,11 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
   }
 
   public getDamage(value?: number): void {
+    this.getBody().velocity.x = 200 * -this.scaleX;
+
     this.scene.tweens.add({
       targets: this,
-      duration: 100,
+      duration: 50,
       repeat: 3,
       yoyo: true,
       alpha: 0.5,
@@ -37,22 +39,15 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
   protected checkFlip(): void {
     if (this.body.velocity.x < 0) {
       this.scaleX = -1;
-      console.log('Flipped');
     } else if (this.body.velocity.x > 0) {
-      console.log('Flipped');
-
       this.scaleX = 1;
     }
   }
 
   protected checkFlipY(): void {
     if (this.body.velocity.y < 0) {
-      console.log('Flipped');
-
       this.scaleX = -1;
     } else {
-      console.log('Flipped');
-
       this.scaleX = 1;
     }
   }

@@ -7,6 +7,8 @@ import PlaySceneOne from './controller/scenes/scene1Forest';
 import PlaySceneTwo from './controller/scenes/scene2Caverns';
 import PlaySceneThree from './controller/scenes/scene3DarkWoods';
 import PauseMenuScene from './controller/scenes/non-playable/pauseMenuScene';
+import { ISharedState } from './types/interfaces';
+import GameOverScene from './controller/scenes/non-playable/gameOverScene';
 
 // import './style.scss';
 // import './assets/images/favicon.ico';
@@ -23,6 +25,7 @@ const scenes = [
   { Cls: MainMenuScene, key: 'MainMenuScene' },
   { Cls: OptionsScene, key: 'OptionsScene' },
   { Cls: PauseMenuScene, key: 'PauseMenuScene' },
+  { Cls: GameOverScene, key: 'GameOverScene' },
 ];
 
 const initScenes = () => scenes.map((Scene) => new Scene.Cls(Scene.key, SHARED_STATE));
@@ -39,7 +42,7 @@ const config: Phaser.Types.Core.GameConfig = {
     default: 'arcade',
     arcade: {
       // gravity: { y: 1400 },
-      debug: false,
+      debug: true,
     },
   },
   plugins: {

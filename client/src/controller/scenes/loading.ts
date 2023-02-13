@@ -6,6 +6,7 @@ import arrow from '../../assets/menu/back_arrow.png';
 import buttonSound from '../../assets/sounds/effects/interface/interface.ogg';
 import cavernMusic from '../../assets/sounds/music/cavernous_desert02.mp3';
 import forestMusic from '../../assets/sounds/music/darkforest.mp3';
+import { ISharedState } from '../../types/interfaces';
 
 class LoadingScene extends Phaser.Scene {
   private cat!: Phaser.GameObjects.Sprite;
@@ -86,6 +87,18 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('can', 'spritesheets/objects/pickupCatCan-small.png');
     this.load.image('plantFinal', 'spritesheets/objects/plant-big.png');
     this.load.image('plantPickupSmall', 'spritesheets/objects/plant-small.png');
+    this.load.image('keyPickup', 'spritesheets/objects/keyPng.png');
+    this.load.image('doorLock', 'spritesheets/objects/doorLock.png');
+
+    this.load.spritesheet('objectPickups', 'spritesheets/objects/PickupObjectMap.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.atlas(
+      'a-enemy-hover',
+      'spritesheets/enemy-hover-atlas.png',
+      'spritesheets/enemy-hover-atlas.json'
+    );
 
     this.load.image('cat', 'spritesheets/cat-idlesprite.png');
     this.load.image('cat-wall-slide', 'spritesheets/catWallSlide.png');
@@ -136,6 +149,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('peacefulBG1', 'backgrounds/PeacefulBG1-start.png');
     this.load.image('peacefulBG2', 'backgrounds/PeacefulBG2.png');
 
+    this.load.image('door', 'spritesheets/objects/door.png');
     this.load.image('startForestTiles', 'tiles/Forets-TileMap/forestTileMap.png');
     this.load.tilemapTiledJSON('startForestTileMap', 'tiles/Forets-TileMap/forestTileMap.json');
     this.load.image('cavernsTiles', 'tiles/Cave-TileMap/caveTileMap-yellow.png');

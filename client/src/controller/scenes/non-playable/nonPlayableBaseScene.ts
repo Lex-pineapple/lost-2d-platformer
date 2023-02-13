@@ -1,4 +1,5 @@
 import { Scene, Sound } from 'phaser';
+import { IMenuScenes, ISharedState, IMenuItem } from '../../../types/interfaces';
 import Button from '../../helpers/button';
 // import AudioMaster from '../../audio/audioManager1';
 import SoundService from '../../audio/soundServise';

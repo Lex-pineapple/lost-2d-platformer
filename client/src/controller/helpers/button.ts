@@ -1,3 +1,5 @@
+import { IMenuItem } from '../../types/interfaces';
+
 class Button {
   private button: Phaser.GameObjects.Text;
 
