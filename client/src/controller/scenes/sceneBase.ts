@@ -1,9 +1,9 @@
 import TouchEventStop from 'phaser3-rex-plugins/plugins/toucheventstop';
-import { ISharedState } from '../../types/interfaces';
-import DialogueModal from '../actor/dialogueModal';
+import { ISharedState, ITutorialFlow } from '../../types/interfaces';
 import Enemy from '../actor/enemy';
 import Player from '../actor/player';
 import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
+import tutorialFlow from '../../assets/data/tutorialFlow';
 
 class SceneBase extends Phaser.Scene {
   private player!: Player;
@@ -28,7 +28,6 @@ class SceneBase extends Phaser.Scene {
   create() {
     this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     this.keyF = this.input.keyboard.addKey('F');
-
   }
 
   update() {
@@ -190,6 +189,90 @@ class SceneBase extends Phaser.Scene {
     });
   }
 
+  createInfoPoints(map: Phaser.Tilemaps.Tilemap) {
+    const infoPoints = gameObjectsToObjectPoints(
+      map.filterObjects('TutorialLayer', (obj) => obj.name === 'infoPoint')
+    );
+    
+    const infoSigns = infoPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'infoSign').setSize(50, 59));
+    infoSigns.forEach((sign, idx) => {
+      let overlapEnd = false;
+      this.physics.add.overlap(this.player, sign, () => {
+        if (!overlapEnd) {
+          this.playTutorial(infoPoints[idx].properties[0].value);
+        }
+        overlapEnd = true;
+      });
+    });
+  }
+
+  makeIntroCamera() {
+    this.cameras.main.y = -2000;
+    this.player.diableKeys()
+    this.time.addEvent({
+      callback: () => {
+        this.cameras.main.y += 5;
+      },
+      repeat: 106,
+    });
+  }
+
+  makeIntro() {
+    this.makeIntroCamera();
+
+    const text = tutorialFlow.walk;
+    const positionX = this.cameras.main.worldView.x + 32;
+    const positionY = this.cameras.main.worldView.y + 32;
+    const textGraphic = this.make.text({
+      x: positionX,
+      y: positionY,
+      text,
+      // style: {
+
+      // }
+    });
+    this.tweens.add({
+      targets: textGraphic,
+      alpha: 1,
+      duration: 300,
+      ease: 'Power2'
+    });
+    this.time.delayedCall(3000, () => {
+      this.tweens.add({
+        targets: textGraphic,
+        alpha: 0,
+        duration: 300,
+        ease: 'Power2',
+        onComplete: () => {
+          textGraphic.destroy();
+          this.player.enableKeys();
+        }
+      });
+    });
+  }
+
+  playTutorial(type: string) {
+    const positionX = this.cameras.main.worldView.x + 32;
+    const positionY = this.cameras.main.worldView.y + 32;
+    const text = tutorialFlow[type as keyof ITutorialFlow];
+    console.log(positionX, positionY);
+    
+    const textGraphic = this.make.text(
+      {
+        x: 32,
+        y: 100,
+        text,
+        style: {
+          wordWrap: { width: +this.sys.game.config.width - 40 },
+        },
+      });
+    textGraphic.scrollFactorX = 0;
+    textGraphic.scrollFactorY = 0;
+    this.time.delayedCall(3000, () => {
+      textGraphic.destroy();
+    });
+  }
+
   checkEsc() {
     if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
       if (!this.scene.isPaused()) {
@@ -206,7 +289,7 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
-    this.player = new Player(this, 11000, 450-758);
+    this.player = new Player(this, 24, 100);
     this._addPlayer();
   }
 
