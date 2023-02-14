@@ -117,7 +117,7 @@ class SceneBase extends Phaser.Scene {
     .setImmovable(true)
     .setBodySize(64, 55);
     this.physics.add.collider(this.player, this.endpoint, (obj1, obj2) => {
-      if (this.player.hasKey) {
+      if (this.player.hasKey && !this.player.collided) {
         this.tweens.add({
           targets: this.endpoint,
           duration: 100,
@@ -131,6 +131,7 @@ class SceneBase extends Phaser.Scene {
           },
         });
       }
+      this.player.collided = true;
     });
   }
 

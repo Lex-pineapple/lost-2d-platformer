@@ -37,6 +37,8 @@ class Player extends Actor {
 
   onPlatform: boolean;
 
+  collided: boolean;
+
   lockedTo: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -59,6 +61,7 @@ class Player extends Actor {
     this.hasKey = true;
     this.onPlatform = false;
     this.lockedTo = null;
+    this.collided = false;
 
     this.getBody().setSize(48, 48);
     this.getBody().setGravityY(1400);
@@ -246,6 +249,7 @@ class Player extends Actor {
       this.enemyCollide = false;
       this.collisionEnd = false;
       this.onPlatform = false;
+      this.collided = false;
     }
     // Affects fall physics!
     
