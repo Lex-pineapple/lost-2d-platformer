@@ -35,6 +35,12 @@ class Player extends Actor {
 
   hasKey: boolean;
 
+  onPlatform: boolean;
+
+  collided: boolean;
+
+  lockedTo: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null;
+
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y, 'cat');
     this.keyA = this.scene.input.keyboard.addKey('A');
@@ -53,10 +59,14 @@ class Player extends Actor {
     this.enemyCollide = false;
     this.collisionEnd = false;
     this.hasKey = true;
+    this.onPlatform = false;
+    this.lockedTo = null;
+    this.collided = false;
 
     this.getBody().setSize(48, 48);
     this.getBody().setGravityY(1400);
     this.setDepth(1);
+    this.getBody().maxVelocity.setTo(600, 600);
     // this.getBody().setOffset(8, 0);
     this.initAnimations();
   }
@@ -103,14 +113,26 @@ class Player extends Actor {
 
   private handleJump() {
     if ((this.canJump && this.body.blocked.down) || this.onWall) {
-      this.body.velocity.y = -this.jumpVelocity;
       if (this.onWall) {
-        // this.body.velocity.x = this.jumpVelocity * this.scaleX;
+        if (!this.keyD?.isDown && !this.keyA?.isDown) {
+          this.scaleX *= -1;
+          if (this.scaleX < 0) {
+            this.getBody().setOffset(48, 0);
+          } else {
+          this.getBody().setOffset(0, 0);
+        } 
+        this.body.velocity.x = 600 * this.scaleX;
+        this.body.velocity.y = -this.jumpVelocity;
+        }
+      } else {
+        this.body.velocity.y = -this.jumpVelocity;
       }
       this.jumped = true;
       this.canJump = false;
       this.onWall = false;
     }
+    // if (!this.keyD?.isDown && !this.keyA?.isDown) {
+    // }
 
     // if (this.getBody().onFloor()) {
     //   this.anims.play('jump');
@@ -157,8 +179,62 @@ class Player extends Actor {
   }
 
   update(): void {
-    console.log(this.x, this.y);
+
+    // Check if player collides with wall
+    this.checkWallCollision();
+
     
+    
+    // Reset velocity to prevent gliding
+    // this.getBody().velocity.x = 0;
+
+    if (!this.body.blocked.none) {
+      this.getBody().velocity.x = 0;
+    }
+    // Check if the player is on ground
+    if (this.body.blocked.down) {
+      this.canJump = true;
+      this.onWall = false;
+      if (this.onWall) this.jumped = false;
+    }
+
+    // Run right on D press
+    if (this.keyD?.isDown && !this.onWall) {
+      
+      if (!this.keySpace?.isDown && !this.body.velocity.y) {
+        this.anims.play('run', true);
+      }
+      this.body.velocity.x = 600;
+      this.checkFlip();
+      this.getBody().setOffset(0, 0);
+    }
+
+    // Run left on A press
+    if (this.keyA?.isDown && !this.onWall) {
+
+      if (!this.keySpace?.isDown && !this.body.velocity.y) {
+        this.anims.play('run', true);
+      }
+      this.body.velocity.x = -600;
+      this.checkFlip();
+      this.getBody().setOffset(48, 0);
+    }
+
+    // Jump on SPACE press
+    if (Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+      this.handleJump();
+    }
+
+    // console.log(this.x, this.y);
+    if (this.lockedTo) {
+      if (this.body.right < this.lockedTo?.body.x || this.body.x > this.lockedTo?.body.right) {
+        this.lockedTo = null;
+        this.onPlatform = false;
+      } else {
+        this.x += this.lockedTo.body.deltaX();
+        this.y += this.lockedTo.body.deltaY();
+      }
+    }
     if (this.enemyCollide && !this.collisionEnd) {
       this.getDamage(1);
       this.collisionEnd = true;
@@ -172,18 +248,15 @@ class Player extends Actor {
       this.setOverlap(false);
       this.enemyCollide = false;
       this.collisionEnd = false;
+      this.onPlatform = false;
+      this.collided = false;
     }
     // Affects fall physics!
-    this.getBody().velocity.x = 0;
-    if (this.body.blocked.down) {
-      this.canJump = true;
-      this.onWall = false;
-      if (this.onWall) this.jumped = false;
-    }
-    this.checkWallCollision();
+    
+    
     if (this.onWall) {
       this.setTexture('cat-wall-slide');
-      this.getBody().setGravityY(600);
+      this.getBody().setGravityY(0);
       this.getBody().setVelocityY(0);
       if (this.body.blocked.left) {
         this.angle = 90;
@@ -197,7 +270,7 @@ class Player extends Actor {
       this.angle = 0;
       this.getBody().setGravityY(1400);
     }
-    if (!this.onWall) {
+    if (!this.onWall && !this.onPlatform) {
       if (this.body.velocity.y > 100) {
         this.anims.stop();
         this.setTexture('cat-jump-3');
@@ -208,25 +281,9 @@ class Player extends Actor {
       }
     }
 
-    // Run left on A press
-    if (this.keyA?.isDown && !this.onWall) {
-      if (!this.keySpace?.isDown && !this.body.velocity.y) {
-        this.anims.play('run', true);
-      }
-      this.body.velocity.x = -600;
-      this.checkFlip();
-      this.getBody().setOffset(48, 0);
-    }
+    
 
-    // Run right on D press
-    if (this.keyD?.isDown && !this.onWall) {
-      if (!this.keySpace?.isDown && !this.body.velocity.y) {
-        this.anims.play('run', true);
-      }
-      this.body.velocity.x = 600;
-      this.checkFlip();
-      this.getBody().setOffset(0, 0);
-    }
+    
 
     if (Phaser.Input.Keyboard.JustDown(this.keyF) && this.overlap) {
       if (this.overlapParams) {
@@ -238,12 +295,7 @@ class Player extends Actor {
       }
       
     }
-
-    // Jump on space press
-    // Set frames based on velocity!!
-    if (this.keySpace?.isDown) {
-      this.handleJump();
-    }
+    
 
     // Idle animation
     if (
