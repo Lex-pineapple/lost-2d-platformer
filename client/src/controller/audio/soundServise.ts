@@ -53,13 +53,11 @@ class SoundService {
   setVolumeMusic(value: number) {
     soundConfigMusic.volume = value;
     this.music.setVolume(soundConfigMusic.volume);
-    console.log(this.music.volume);
   }
 
   setVolumeEffects(value: number) {
     soundConfigEffects.volume = value;
     this.effects.setVolume(soundConfigEffects.volume);
-    console.log(value);
   }
 
   stopAnyMusic() {

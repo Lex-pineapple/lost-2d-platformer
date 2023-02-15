@@ -11,3 +11,7 @@ export const soundConfigMusic: Types.Sound.SoundConfig = {
   mute: false,
   loop: true,
 };
+
+export const soundConfigMaster: Types.Sound.SoundConfig = {
+  volume: 0.5,
+};
