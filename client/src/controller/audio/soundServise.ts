@@ -40,6 +40,10 @@ class SoundService {
     this.music.play('forestMusicScene1', soundConfigMusic);
   }
 
+  playDialogEffect() {
+    this.effects.play('dialogSound', soundConfigEffects);
+  }
+
   playCavernMusic() {
     this.stopAnyMusic();
     this.music.play('cavernMusic', soundConfigMusic);

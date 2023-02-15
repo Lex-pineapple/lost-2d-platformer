@@ -1,7 +1,4 @@
 import * as Phaser from 'phaser';
-import Button from '../helpers/button';
-import SoundService from '../audio/soundServise';
-
 import arrow from '../../assets/menu/back_arrow.png';
 import buttonSound from '../../assets/sounds/effects/interface/interface.ogg';
 import cavernMusic from '../../assets/sounds/music/cavernous_desert02.mp3';
@@ -12,6 +9,7 @@ import pickupCoin1 from '../../assets/sounds/effects/pickup/coin.ogg';
 import pickupCoin2 from '../../assets/sounds/effects/pickup/coin2.ogg';
 import hurtSwing from '../../assets/sounds/effects/hurts/swing.ogg';
 import doorSound from '../../assets/sounds/effects/world/door.ogg';
+import dialogSound from '../../assets/sounds/effects/dialog/fast_single_v4.ogg';
 import { ISharedState } from '../../types/interfaces';
 
 class LoadingScene extends Phaser.Scene {
@@ -177,6 +175,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('pickupCoin2', pickupCoin2);
     this.load.audio('hurtSwing', hurtSwing);
     this.load.audio('doorSound', doorSound);
+    this.load.audio('dialogSound', dialogSound);
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }

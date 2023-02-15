@@ -1,4 +1,5 @@
 import dialogFlow from '../../assets/data/dialogFlow';
+import SoundService from '../audio/soundServise';
 
 interface DialogueModalConfig {
   borderThickness?: number;
@@ -66,6 +67,8 @@ class DialogueModal {
 
   created: boolean;
 
+  soundServise!: SoundService;
+
   // closeBtn: any;
 
   constructor(scene: Phaser.Scene, config: DialogueModalConfig) {
@@ -93,6 +96,10 @@ class DialogueModal {
     // this.closeBtn;
     // Create the dialog window
     // this.createWindow();
+    this.soundServise = new SoundService( // @ts-ignore: Unreachable code error
+    this.scene.game.effectsAudioManager, // @ts-ignore: Unreachable code error
+    this.scene.game.musicAudioManager
+    );
   }
 
   protected getGameWidth() {
@@ -163,7 +170,9 @@ class DialogueModal {
 
   _animateText() {
     this.eventCounter += 1;
-    this.text.setText(this.text.text + this.dialog[this.eventCounter - 1]);
+    const symbol = this.dialog[this.eventCounter - 1];
+    this.text.setText(this.text.text + symbol);
+    if (symbol !== ' ') this.soundServise.playDialogEffect();
     if (this.eventCounter === this.dialog.length) {
       this.timedEvent.remove();
     }
