@@ -6,7 +6,7 @@ import arrow from '../../assets/menu/back_arrow.png';
 import buttonSound from '../../assets/sounds/effects/interface/interface.ogg';
 import cavernMusic from '../../assets/sounds/music/cavernous_desert02.mp3';
 import forestMusic from '../../assets/sounds/music/darkforest.mp3';
-import forestMusicScene1 from '../../assets/sounds/music/forest_loop.ogg';
+import forestMusicScene1 from '../../assets/sounds/music/moonlight_shadow.mp3';
 import forestMusicScene3 from '../../assets/sounds/ambience/forest.mp3';
 import pickupCoin1 from '../../assets/sounds/effects/pickup/coin.ogg';
 import pickupCoin2 from '../../assets/sounds/effects/pickup/coin2.ogg';
