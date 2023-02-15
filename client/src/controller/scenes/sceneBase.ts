@@ -1,14 +1,17 @@
-import { ISharedState } from '../../types/interfaces';
-import DialogueModal from '../actor/dialogueModal';
+import TouchEventStop from 'phaser3-rex-plugins/plugins/toucheventstop';
+import { ISharedState, ITutorialFlow } from '../../types/interfaces';
 import Enemy from '../actor/enemy';
 import Player from '../actor/player';
 import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
+import tutorialFlow from '../../assets/data/tutorialFlow';
 import SoundService from '../audio/soundServise';
 
 class SceneBase extends Phaser.Scene {
   private player!: Player;
 
   private keyESC!: Phaser.Input.Keyboard.Key;
+
+  keyF!: Phaser.Input.Keyboard.Key;
 
   private scoreText!: Phaser.GameObjects.Text;
 
@@ -31,6 +34,7 @@ class SceneBase extends Phaser.Scene {
 
   create() {
     this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyF = this.input.keyboard.addKey('F');
   }
 
   update() {
@@ -38,12 +42,12 @@ class SceneBase extends Phaser.Scene {
   }
 
   createHUD() {
-    this.scoreText = this.add.text(16, 16, 'Score: 0').setPadding(10).setStyle({
+    this.scoreText = this.add.text(16, 16, `Score: ${this.score}`).setPadding(10).setStyle({
       fontSize: '28px',
       backgroundColor: '#073454',
       fill: '#3afefd',
     });
-    this.livesText = this.add.text(300, 16, 'Lives: 3').setPadding(10).setStyle({
+    this.livesText = this.add.text(300, 16, `Lives: ${this.player.getHPValue()}`).setPadding(10).setStyle({
       fontSize: '28px',
       backgroundColor: '#073454',
       fill: '#3afefd',
@@ -75,7 +79,7 @@ class SceneBase extends Phaser.Scene {
 
   createPlatforms(platformsKey: string, platformTs: string, platformMap: string, tileImg: string) {
     const map = this.make.tilemap({ key: platformsKey });
-    const tileset = map.addTilesetImage(platformTs, tileImg);
+    const tileset = map.addTilesetImage(platformTs, tileImg, 32, 32);
     const platforms = map.createLayer(platformMap, tileset, 0, -1470);
     // // Dont forget to set collision to each tile in tiled!
     platforms.setCollisionByProperty({ collides: true });
@@ -121,7 +125,7 @@ class SceneBase extends Phaser.Scene {
     .setImmovable(true)
     .setBodySize(64, 55);
     this.physics.add.collider(this.player, this.endpoint, (obj1, obj2) => {
-      if (this.player.hasKey) {
+      if (this.player.hasKey && !this.player.collided) {
         this.tweens.add({
           targets: this.endpoint,
           duration: 100,
@@ -136,6 +140,7 @@ class SceneBase extends Phaser.Scene {
         });
       this.soundServise.playDoorSound();
       }
+      this.player.collided = true;
     });
   }
 
@@ -194,6 +199,91 @@ class SceneBase extends Phaser.Scene {
     });
   }
 
+  createInfoPoints(map: Phaser.Tilemaps.Tilemap) {
+    const infoPoints = gameObjectsToObjectPoints(
+      map.filterObjects('TutorialLayer', (obj) => obj.name === 'infoPoint')
+    );
+
+    const infoSigns = infoPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'infoSign').setSize(50, 59));
+    infoSigns.forEach((sign, idx) => {
+      let overlapEnd = false;
+      this.physics.add.overlap(this.player, sign, () => {
+        if (!overlapEnd) {
+          this.playTutorial(infoPoints[idx].properties[0].value);
+        }
+        overlapEnd = true;
+      });
+    });
+  }
+
+  makeIntroCamera() {
+    this.cameras.main.y = -2000;
+    this.player.diableKeys();
+    this.time.addEvent({
+      callback: () => {
+        this.cameras.main.y += 5;
+      },
+      repeat: 106,
+    });
+  }
+
+  makeIntro() {
+    this.makeIntroCamera();
+
+    const text = tutorialFlow.walk;
+    const positionX = this.cameras.main.worldView.x + 32;
+    const positionY = this.cameras.main.worldView.y + 32;
+    const textGraphic = this.make.text({
+      x: positionX,
+      y: positionY,
+      text,
+      // style: {
+
+      // }
+    });
+    this.tweens.add({
+      targets: textGraphic,
+      alpha: 1,
+      duration: 300,
+      ease: 'Power2',
+    });
+    this.time.delayedCall(3000, () => {
+      this.tweens.add({
+        targets: textGraphic,
+        alpha: 0,
+        duration: 300,
+        ease: 'Power2',
+        onComplete: () => {
+          textGraphic.destroy();
+          this.player.enableKeys();
+        },
+      });
+    });
+  }
+
+  playTutorial(type: string) {
+    const positionX = this.cameras.main.worldView.x + 32;
+    const positionY = this.cameras.main.worldView.y + 32;
+    const text = tutorialFlow[type as keyof ITutorialFlow];
+    console.log(positionX, positionY);
+
+    const textGraphic = this.make.text(
+      {
+        x: 32,
+        y: 100,
+        text,
+        style: {
+          wordWrap: { width: +this.sys.game.config.width - 40 },
+        },
+      }
+);
+    textGraphic.scrollFactorX = 0;
+    textGraphic.scrollFactorY = 0;
+    this.time.delayedCall(3000, () => {
+      textGraphic.destroy();
+    });
+  }
+
   checkEsc() {
     if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
       if (!this.scene.isPaused()) {
@@ -231,8 +321,8 @@ class SceneBase extends Phaser.Scene {
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5, 0, 100);
   }
 
-  _createBackground(name: string, x: number, y: number, width: number) {
-    this.add.tileSprite(x, y, width, 1920, name).setOrigin(0);
+  _createBackground(name: string, x: number, y: number, width: number, height: number) {
+    this.add.tileSprite(x, y, width, height, name).setOrigin(0);
   }
 
   getPlayer() {

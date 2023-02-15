@@ -3,6 +3,7 @@ import { IPlayerPosition, ISharedState } from '../../types/interfaces';
 import DialogueModal from '../actor/dialogueModal';
 import NPC from '../actor/npc';
 import Player from '../actor/player';
+import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import SceneBase from './sceneBase';
 
 class PlaySceneOne extends SceneBase {
@@ -56,56 +57,77 @@ class PlaySceneOne extends SceneBase {
     this.createKey(map);
     // this.createEndpoint(map, 'PlaySceneTwo', 24, 3274);
     this.createEndpoint(map, 'PlaySceneTwo', 7986, -1238);
+    this.createMovingPlatforms(map);
 
     // if (this.playerX !== null) this.getPlayer().x = this.playerX;
     // if (this.playerY !== null) this.getPlayer().y = this.playerY;
     this.initNPCBehaviour();
+    this.createInfoPoints(map);
+    // this.makeIntro();
     this.soundServise.playForestMusicScene1();
   }
 
   initNPCBehaviour() {
-    const NPC1 = new NPC(this, 'Cat1', 5750, 450 - 758, 'cat');
-    const NPC2 = new NPC(this, 'Cat2', 8400, 450 - 1494, 'cat');
-    // const NPC3 = new NPC(this, 'Cat1', 1940, -300, 'cat');
-    // const NPC4 = new NPC(this, 'Cat1', 1940, -300, 'cat');
+    const NPCArr = [];
+    NPCArr.push(new NPC(this, 'NPC1', 5810, -310, 'cat', 'PlaySceneOne'));
+    NPCArr.push(new NPC(this, 'NPC2', 5812, -1142, 'cat', 'PlaySceneOne'));
+    NPCArr.push(new NPC(this, 'NPC4', 7266, -1142, 'cat', 'PlaySceneOne'));
+    NPCArr.push(new NPC(this, 'NPC4', 8378, -1046, 'cat', 'PlaySceneOne'));
 
-    this.physics.add.overlap(this.getPlayer(), NPC1, () => {
-      this.getPlayer().setOverlap(true);
-      this.getPlayer().getOverlapSprite('NPC1', 'PlaySceneOne');
-      // this.getPlayer().getOverlapSprite('NPC2', 'PlaySceneOne');
-
-      // this.input.keyboard.enabled = false;
-      // this.dialogueModal.displayNPCdialogue('NPC1', 'PlaySceneOne');
+    NPCArr.forEach((npc) => {
+      this.physics.add.overlap(this.getPlayer(), npc, () => {
+        if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+          this.getPlayer().diableKeys();
+          npc.displayDialog();
+          if (npc.dialogFinished) {
+            this.getPlayer().enableKeys();
+          }
+        }
+      });
     });
   }
 
   tileBackgrounds(BGHeight: number) {
     const gameWidth = +this.game.config.width;
     const gameHeight = +this.game.config.height;
-    this._createBackground('forestBG1', 0, gameHeight - BGHeight, 1920);
-    this._createBackground('forestBG2', 1920, gameHeight - BGHeight, 2745);
-    this._createBackground('forestBG3', 1920 + 2745, gameHeight - BGHeight, 6343);
+    this._createBackground('forestBG1', 0, gameHeight - BGHeight, 1920, BGHeight);
+    this._createBackground('forestBG2', 1920, gameHeight - BGHeight, 2745, BGHeight);
+    this._createBackground('forestBG3', 1920 + 2745, gameHeight - BGHeight, 6343, BGHeight);
   }
 
-  // createPlatforms() {
-  //   const map = this.make.tilemap({ key: 'startForestTileMap' });
-  //   const tileset = map.addTilesetImage('startForestTileset', 'startForestTiles');
-  //   const platforms = map.createLayer('startForestMap', tileset, 0, -1470);
+  // INCREDIBLY ASS-BACKWARDS! redo or remove?
+  createMovingPlatforms(map: Phaser.Tilemaps.Tilemap) {
+    const platformPoints = gameObjectsToObjectPoints(
+      map.filterObjects('MovingLayer', (obj) => obj.name === 'movingPlatformPoint')
+    );
+    const platforms = platformPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'movingPlatform').setSize(160, 32).setImmovable(true)
+    // .setVelocity(0, 100),
+    ); // eslint-disable-line
+    platforms[0].body.setAllowGravity(false);
+    this.physics.add.collider(this.getPlayer(), platforms[0], () => {
+      // this.player.body.velocity.y = 0;
+      if (!this.getPlayer().onPlatform) {
+        this.tweens.timeline({
+          targets: platforms[0].body.velocity,
+          delay: 300,
+          // loop: 0,
+          ease: 'Linear',
+          duration: 11600,
+          tweens: [
+            {
+              y: 300,
+            },
+            ],
+            onComplete: () => {
+              platforms[0].body.velocity.y = 0;
+            },
+          });
+        }
+        this.getPlayer().onPlatform = true;
+    });
 
-  //   // // Dont forget to set collision to each tile in tiled!
-  //   platforms.setCollisionByProperty({ collides: true });
-  //   this.physics.add.collider(this.player, platforms);
-  // }
-
-  // _setCamera(worldWidth: number, worldHeight: number) {
-  //   this.cameras.main.setBounds(0, -1470, worldWidth, worldHeight, true);
-  //   this.physics.world.setBounds(0, -1470, worldWidth, worldHeight, true, true, false);
-  //   this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
-  // }
-
-  // _createBackground(name: string, x: number, y: number, width: number) {
-  //   this.add.tileSprite(x, y, width, 1920, name).setOrigin(0);
-  // }
+    platforms[1].body.setAllowGravity(false);
+  }
 
   update(): void {
     this.checkEsc();

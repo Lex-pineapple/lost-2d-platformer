@@ -1,4 +1,5 @@
 import { IPlayerPosition, ISharedState } from '../../types/interfaces';
+import NPC from '../actor/npc';
 import SceneBase from './sceneBase';
 
 class PlaySceneTwo extends SceneBase {
@@ -17,7 +18,7 @@ class PlaySceneTwo extends SceneBase {
 
   create() {
     super.create();
-    const worldSize = 9000;
+    const worldSize = 9024;
     const BGHeight = 4800;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     this.tileBackgrounds(BGHeight);
@@ -30,34 +31,34 @@ class PlaySceneTwo extends SceneBase {
     // this.addEndpointHandler('PlaySceneThree', 0, 420);7
     this.createEndpoint(map, 'PlaySceneThree', 24, 362);
     this.createHUD();
+    this.initNPCBehaviour();
     this.soundServise.playCavernMusic();
   }
 
   tileBackgrounds(BGHeight: number) {
     const gameWidth = +this.game.config.width;
     const gameHeight = +this.game.config.height;
-    this._createBackground('cavernBG', 0, gameHeight - BGHeight, 9000);
+    this._createBackground('cavernBG', 0, gameHeight - BGHeight, 9000, BGHeight);
   }
 
-  // createPlatforms() {
-  //   const map = this.make.tilemap({ key: 'startForestTileMap' });
-  //   const tileset = map.addTilesetImage('startForestTileset', 'startForestTiles');
-  //   const platforms = map.createLayer('startForestMap', tileset, 0, -1470);
+  initNPCBehaviour() {
+    const NPCArr = [];
+    NPCArr.push(new NPC(this, 'NPC1', 6600, 3274, 'cat', 'PlaySceneTwo'));
+    NPCArr.push(new NPC(this, 'NPC2', 6144, 650, 'cat', 'PlaySceneTwo'));
+    NPCArr.push(new NPC(this, 'NPC3', 6160, 106, 'cat', 'PlaySceneTwo'));
 
-  //   // // Dont forget to set collision to each tile in tiled!
-  //   platforms.setCollisionByProperty({ collides: true });
-  //   this.physics.add.collider(this.player, platforms);
-  // }
-
-  // _setCamera(worldWidth: number, worldHeight: number) {
-  //   this.cameras.main.setBounds(0, -1470, worldWidth, worldHeight, true);
-  //   this.physics.world.setBounds(0, -1470, worldWidth, worldHeight, true, true, false);
-  //   this.cameras.main.startFollow(this.player, true, 0.5, 0.5);
-  // }
-
-  // _createBackground(name: string, x: number, y: number, width: number) {
-  //   this.add.tileSprite(x, y, width, 1920, name).setOrigin(0);
-  // }
+    NPCArr.forEach((npc) => {
+      this.physics.add.overlap(this.getPlayer(), npc, () => {
+        if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+          this.getPlayer().diableKeys();
+          npc.displayDialog();
+          if (npc.dialogFinished) {
+            this.getPlayer().enableKeys();
+          }
+        }
+      });
+    });
+  }
 
   update(): void {
     this.checkEsc();

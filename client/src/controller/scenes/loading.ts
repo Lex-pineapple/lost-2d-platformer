@@ -95,6 +95,8 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('plantPickupSmall', 'spritesheets/objects/plant-small.png');
     this.load.image('keyPickup', 'spritesheets/objects/keyPng.png');
     this.load.image('doorLock', 'spritesheets/objects/doorLock.png');
+    this.load.image('movingPlatform', 'spritesheets/objects/movingPlatform.png');
+    this.load.image('infoSign', 'spritesheets/objects/infoSign.png');
 
     this.load.spritesheet('objectPickups', 'spritesheets/objects/PickupObjectMap.png', {
       frameWidth: 32,

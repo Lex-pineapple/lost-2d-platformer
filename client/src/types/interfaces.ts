@@ -29,6 +29,7 @@ export interface IMenuItem {
 }
 
 export type ObjectPoint = {
+  properties: IProperty[];
   height: number;
   id: number;
   name: string;
@@ -41,7 +42,21 @@ export type ObjectPoint = {
   y: number;
 };
 
+export interface IProperty {
+  name: string;
+  type: string;
+  value: string;
+}
+
 export interface IPlayerPosition {
   playerX: number;
   playerY: number;
+}
+
+export interface ITutorialFlow {
+  walk: string;
+  jump: string;
+  stick: string;
+  enemy: string;
+  dialog: string;
 }
