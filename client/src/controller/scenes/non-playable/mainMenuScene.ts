@@ -33,6 +33,7 @@ class MainMenuScene extends NonPlayableBaseScene {
     super.create();
     this.createTitle();
     this.createMenu(this, this.menu, 25);
+    this.soundServise.stopAnyMusic();
   }
 
   createTitle() {

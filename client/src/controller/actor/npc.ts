@@ -20,7 +20,7 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     y: number,
     texture: string,
     sceneName: string,
-    frame?: string | number,
+    frame?: string | number
   ) {
     super(scene, x, y, texture, frame);
     this.scene = scene;

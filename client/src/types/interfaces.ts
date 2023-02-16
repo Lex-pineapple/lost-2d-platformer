@@ -59,4 +59,4 @@ export interface ITutorialFlow {
   stick: string;
   enemy: string;
   dialog: string;
-};
+}

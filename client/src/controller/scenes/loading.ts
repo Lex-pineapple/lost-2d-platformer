@@ -1,7 +1,15 @@
 import * as Phaser from 'phaser';
-import Button from '../helpers/button';
-
 import arrow from '../../assets/menu/back_arrow.png';
+import buttonSound from '../../assets/sounds/effects/interface/interface.ogg';
+import cavernMusic from '../../assets/sounds/music/cavernous_desert02.mp3';
+import forestMusic from '../../assets/sounds/music/darkforest.mp3';
+import forestMusicScene1 from '../../assets/sounds/music/moonlight_shadow.mp3';
+import forestMusicScene3 from '../../assets/sounds/ambience/forest.mp3';
+import pickupCoin1 from '../../assets/sounds/effects/pickup/coin.ogg';
+import pickupCoin2 from '../../assets/sounds/effects/pickup/coin2.ogg';
+import hurtSwing from '../../assets/sounds/effects/hurts/swing.ogg';
+import doorSound from '../../assets/sounds/effects/world/door.ogg';
+import dialogSound from '../../assets/sounds/effects/dialog/fast_single_v4.ogg';
 import { ISharedState } from '../../types/interfaces';
 
 class LoadingScene extends Phaser.Scene {
@@ -88,8 +96,6 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('movingPlatform', 'spritesheets/objects/movingPlatform.png');
     this.load.image('infoSign', 'spritesheets/objects/infoSign.png');
 
-
-
     this.load.spritesheet('objectPickups', 'spritesheets/objects/PickupObjectMap.png', {
       frameWidth: 32,
       frameHeight: 32,
@@ -159,7 +165,17 @@ class LoadingScene extends Phaser.Scene {
       'dark-peacefulForestTileMap', // eslint-disable-next-line
       'tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
     );
-    
+
+    this.load.audio('buttonSound', buttonSound);
+    this.load.audio('cavernMusic', cavernMusic);
+    this.load.audio('forestMusic', forestMusic);
+    this.load.audio('forestMusicScene1', forestMusicScene1);
+    this.load.audio('forestMusicScene3', forestMusicScene3);
+    this.load.audio('pickupCoin1', pickupCoin1);
+    this.load.audio('pickupCoin2', pickupCoin2);
+    this.load.audio('hurtSwing', hurtSwing);
+    this.load.audio('doorSound', doorSound);
+    this.load.audio('dialogSound', dialogSound);
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }

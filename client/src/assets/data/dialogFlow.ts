@@ -22,7 +22,7 @@ const dialogFlow = {
     NPC3: {
       story: ["Wow you're back! Are you looking for the elder? He is just down the path. I would have shown you but  I've been waiting for the flower delivery all day and can't really and can't really leave my home..."],
       idle: [
-        "Oh flowers... on my window...",
+        'Oh flowers... on my window...',
         "What is taking them so long? I'm growing impatient!",
       ],
     },
@@ -57,7 +57,7 @@ const dialogFlow = {
       ],
     },
     NPC3: {
-      story: ['Hm? The woods? Go up. Up. Up. Beware of the monster.', 
+      story: ['Hm? The woods? Go up. Up. Up. Beware of the monster.',
       'Mmm... mmm...',
       '...'],
       idle: [
@@ -76,6 +76,6 @@ const dialogFlow = {
         '...',
       ],
     },
-  }
+  },
 };
 export default dialogFlow;
