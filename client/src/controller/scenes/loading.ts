@@ -1,5 +1,7 @@
 import * as Phaser from 'phaser';
 import arrow from '../../assets/menu/back_arrow.png';
+import goldenCup from '../../assets/menu/titles/golden-cup_less.png';
+import winMessage from '../../assets/menu/titles/you-win-white.png';
 import buttonSound from '../../assets/sounds/effects/interface/interface.ogg';
 import cavernMusic from '../../assets/sounds/music/cavernous_desert02.mp3';
 import forestMusic from '../../assets/sounds/music/darkforest.mp3';
@@ -165,6 +167,9 @@ class LoadingScene extends Phaser.Scene {
       'dark-peacefulForestTileMap', // eslint-disable-next-line
       'tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
     );
+
+    this.load.image('goldenCup', goldenCup);
+    this.load.image('winMessage', winMessage);
 
     this.load.audio('buttonSound', buttonSound);
     this.load.audio('cavernMusic', cavernMusic);

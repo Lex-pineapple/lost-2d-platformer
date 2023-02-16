@@ -9,6 +9,7 @@ import PlaySceneThree from './controller/scenes/scene3DarkWoods';
 import PauseMenuScene from './controller/scenes/non-playable/pauseMenuScene';
 import { ISharedState } from './types/interfaces';
 import GameOverScene from './controller/scenes/non-playable/gameOverScene';
+import WinnerScene from './controller/scenes/non-playable/winnerScene';
 
 // import './style.scss';
 // import './assets/images/favicon.ico';
@@ -26,6 +27,7 @@ const scenes = [
   { Cls: OptionsScene, key: 'OptionsScene' },
   { Cls: PauseMenuScene, key: 'PauseMenuScene' },
   { Cls: GameOverScene, key: 'GameOverScene' },
+  { Cls: WinnerScene, key: 'WinnerScene' },
 ];
 
 const initScenes = () => scenes.map((Scene) => new Scene.Cls(Scene.key, SHARED_STATE));
