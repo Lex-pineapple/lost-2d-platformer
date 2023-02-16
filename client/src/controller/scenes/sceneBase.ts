@@ -4,6 +4,7 @@ import Enemy from '../actor/enemy';
 import Player from '../actor/player';
 import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import tutorialFlow from '../../assets/data/tutorialFlow';
+import SoundService from '../audio/soundServise';
 
 class SceneBase extends Phaser.Scene {
   private player!: Player;
@@ -20,9 +21,15 @@ class SceneBase extends Phaser.Scene {
 
   score: number;
 
+  soundServise!: SoundService;
+
   constructor(name: string, protected sharedState: ISharedState) {
     super({ key: name });
     this.score = 0;
+  }
+
+  preload() {
+    this.initServices();
   }
 
   create() {
@@ -55,15 +62,19 @@ class SceneBase extends Phaser.Scene {
     if (type === 'leaf') {
       this.score += 10;
       this.scoreText.setText(`Score: ${this.score}`);
+      this.soundServise.playPickup1();
     }
     if (type === 'can') {
       this.score += 100;
       this.scoreText.setText(`Score: ${this.score}`);
+      this.soundServise.playPickup2();
     }
+    console.log('score');
   }
 
   reduceLife() {
     this.livesText.setText(`Lives: ${this.player.getHPValue()}`);
+    this.soundServise.playHurtSwing();
   }
 
   createPlatforms(platformsKey: string, platformTs: string, platformMap: string, tileImg: string) {
@@ -76,13 +87,11 @@ class SceneBase extends Phaser.Scene {
     return map;
   }
 
-
   createPickups(map: Phaser.Tilemaps.Tilemap, type: string, frame: number) {
     const objectPoints = gameObjectsToObjectPoints(
       map.filterObjects('EntityLayer', (obj) => obj.name === `${type}Point`)
     );
-    const pickups = objectPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'objectPickups', frame).setScale(1.5).setSize(16, 16),
-    );
+    const pickups = objectPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'objectPickups', frame).setScale(1.5).setSize(16, 16));
     pickups.forEach((leaf) => {
       this.physics.add.overlap(this.player, leaf, (obj1, obj2) => {
         obj2.destroy();
@@ -129,6 +138,7 @@ class SceneBase extends Phaser.Scene {
             this.beginTransition(nextSceneKey, posX, posY);
           },
         });
+      this.soundServise.playDoorSound();
       }
       this.player.collided = true;
     });
@@ -193,7 +203,7 @@ class SceneBase extends Phaser.Scene {
     const infoPoints = gameObjectsToObjectPoints(
       map.filterObjects('TutorialLayer', (obj) => obj.name === 'infoPoint')
     );
-    
+
     const infoSigns = infoPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'infoSign').setSize(50, 59));
     infoSigns.forEach((sign, idx) => {
       let overlapEnd = false;
@@ -208,7 +218,7 @@ class SceneBase extends Phaser.Scene {
 
   makeIntroCamera() {
     this.cameras.main.y = -2000;
-    this.player.diableKeys()
+    this.player.diableKeys();
     this.time.addEvent({
       callback: () => {
         this.cameras.main.y += 5;
@@ -235,7 +245,7 @@ class SceneBase extends Phaser.Scene {
       targets: textGraphic,
       alpha: 1,
       duration: 300,
-      ease: 'Power2'
+      ease: 'Power2',
     });
     this.time.delayedCall(3000, () => {
       this.tweens.add({
@@ -246,7 +256,7 @@ class SceneBase extends Phaser.Scene {
         onComplete: () => {
           textGraphic.destroy();
           this.player.enableKeys();
-        }
+        },
       });
     });
   }
@@ -256,7 +266,7 @@ class SceneBase extends Phaser.Scene {
     const positionY = this.cameras.main.worldView.y + 32;
     const text = tutorialFlow[type as keyof ITutorialFlow];
     console.log(positionX, positionY);
-    
+
     const textGraphic = this.make.text(
       {
         x: 32,
@@ -265,7 +275,8 @@ class SceneBase extends Phaser.Scene {
         style: {
           wordWrap: { width: +this.sys.game.config.width - 40 },
         },
-      });
+      }
+);
     textGraphic.scrollFactorX = 0;
     textGraphic.scrollFactorY = 0;
     this.time.delayedCall(3000, () => {
@@ -282,6 +293,13 @@ class SceneBase extends Phaser.Scene {
         this.sharedState.playableScenePaused = this.scene.key;
       }
     }
+  }
+
+  initServices(): void {
+    this.soundServise = new SoundService( // @ts-ignore: Unreachable code error
+      this.game.effectsAudioManager, // @ts-ignore: Unreachable code error
+      this.game.musicAudioManager
+      );
   }
 
   _loadPlayer() {

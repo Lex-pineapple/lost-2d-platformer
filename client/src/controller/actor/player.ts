@@ -120,7 +120,7 @@ class Player extends Actor {
             this.getBody().setOffset(48, 0);
           } else {
           this.getBody().setOffset(0, 0);
-        } 
+        }
         this.body.velocity.x = 600 * this.scaleX;
         this.body.velocity.y = -this.jumpVelocity;
         }
@@ -138,7 +138,7 @@ class Player extends Actor {
     //   this.anims.play('jump');
     // }
   }
-  
+
   setOverlap(variab: boolean) {
     this.overlap = variab;
   }
@@ -179,12 +179,9 @@ class Player extends Actor {
   }
 
   update(): void {
-
     // Check if player collides with wall
     this.checkWallCollision();
 
-    
-    
     // Reset velocity to prevent gliding
     // this.getBody().velocity.x = 0;
 
@@ -200,7 +197,6 @@ class Player extends Actor {
 
     // Run right on D press
     if (this.keyD?.isDown && !this.onWall) {
-      
       if (!this.keySpace?.isDown && !this.body.velocity.y) {
         this.anims.play('run', true);
       }
@@ -211,7 +207,6 @@ class Player extends Actor {
 
     // Run left on A press
     if (this.keyA?.isDown && !this.onWall) {
-
       if (!this.keySpace?.isDown && !this.body.velocity.y) {
         this.anims.play('run', true);
       }
@@ -243,7 +238,7 @@ class Player extends Actor {
     if (this.body.embedded) {
       this.body.touching.none = false;
     }
-  
+
     if (this.body.touching.none && !this.body.wasTouching.none) {
       this.setOverlap(false);
       this.enemyCollide = false;
@@ -252,8 +247,7 @@ class Player extends Actor {
       this.collided = false;
     }
     // Affects fall physics!
-    
-    
+
     if (this.onWall) {
       this.setTexture('cat-wall-slide');
       this.getBody().setGravityY(0);
@@ -281,10 +275,6 @@ class Player extends Actor {
       }
     }
 
-    
-
-    
-
     if (Phaser.Input.Keyboard.JustDown(this.keyF) && this.overlap) {
       if (this.overlapParams) {
         this.diableKeys();
@@ -293,9 +283,7 @@ class Player extends Actor {
       if (!this.dialogueModal.created) {
         this.enableKeys();
       }
-      
     }
-    
 
     // Idle animation
     if (

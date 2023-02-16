@@ -32,6 +32,7 @@ class PlaySceneTwo extends SceneBase {
     this.createEndpoint(map, 'PlaySceneThree', 24, 362);
     this.createHUD();
     this.initNPCBehaviour();
+    this.soundServise.playCavernMusic();
   }
 
   tileBackgrounds(BGHeight: number) {

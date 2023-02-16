@@ -25,7 +25,7 @@ const scenes = [
   { Cls: MainMenuScene, key: 'MainMenuScene' },
   { Cls: OptionsScene, key: 'OptionsScene' },
   { Cls: PauseMenuScene, key: 'PauseMenuScene' },
-  { Cls: GameOverScene, key: 'GameOverScene' }
+  { Cls: GameOverScene, key: 'GameOverScene' },
 ];
 
 const initScenes = () => scenes.map((Scene) => new Scene.Cls(Scene.key, SHARED_STATE));
@@ -60,6 +60,17 @@ const config: Phaser.Types.Core.GameConfig = {
   },
   // canvasStyle: `display: block; width: 100%; height: 100%`,
   autoFocus: true,
+  audio: {
+    disableWebAudio: true,
+  },
+  callbacks: {
+    preBoot(game) {
+      // @ts-ignore
+      game.effectsAudioManager = Phaser.Sound.SoundManagerCreator.create(game); // eslint-disable-line
+      // @ts-ignore
+      game.musicAudioManager = Phaser.Sound.SoundManagerCreator.create(game); // eslint-disable-line
+    },
+  },
 
   // callbacks: {
   //   postBoot: () => {

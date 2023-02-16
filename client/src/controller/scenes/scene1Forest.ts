@@ -64,6 +64,7 @@ class PlaySceneOne extends SceneBase {
     this.initNPCBehaviour();
     this.createInfoPoints(map);
     // this.makeIntro();
+    this.soundServise.playForestMusicScene1();
   }
 
   initNPCBehaviour() {
@@ -101,7 +102,7 @@ class PlaySceneOne extends SceneBase {
     );
     const platforms = platformPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'movingPlatform').setSize(160, 32).setImmovable(true)
     // .setVelocity(0, 100),
-    );
+    ); // eslint-disable-line
     platforms[0].body.setAllowGravity(false);
     this.physics.add.collider(this.getPlayer(), platforms[0], () => {
       // this.player.body.velocity.y = 0;
@@ -114,14 +115,13 @@ class PlaySceneOne extends SceneBase {
           duration: 11600,
           tweens: [
             {
-              y: 300
+              y: 300,
             },
             ],
             onComplete: () => {
               platforms[0].body.velocity.y = 0;
-            }
+            },
           });
-          
         }
         this.getPlayer().onPlatform = true;
     });
