@@ -152,6 +152,7 @@ class SceneBase extends Phaser.Scene {
 
   beginTransition(nextSceneKey: string, posX: number, posY: number) {
     this.player.diableKeys();
+    this.sharedState.playerHP = String(this.player.getHPValue());
     this.cameras.main.fadeOut(1000, 0, 0, 0);
     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
       this.handleEndpointChange(nextSceneKey, posX, posY);
@@ -289,7 +290,11 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
-    this.player = new Player(this, 24, 100);
+    if (this.sharedState.playerHP) {
+      this.player = new Player(this, 10000, 100, +this.sharedState.playerHP);
+    } else {
+      this.player = new Player(this, 10000, 100, 3);
+    }
     this._addPlayer();
   }
 

@@ -1071,7 +1071,7 @@
   <object id="91" name="movingPlatformPoint" x="10736" y="128">
    <point/>
   </object>
-  <object id="92" name="movingPlatformPoint" x="10176" y="768">
+  <object id="92" name="movingPlatformPoint" x="10016" y="800">
    <point/>
   </object>
  </objectgroup>

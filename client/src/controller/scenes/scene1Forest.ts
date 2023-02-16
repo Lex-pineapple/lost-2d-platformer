@@ -126,7 +126,33 @@ class PlaySceneOne extends SceneBase {
         this.getPlayer().onPlatform = true;
     });
 
+    this.tweens.timeline({
+      targets: platforms[1].body.velocity,
+      delay: 2500,
+      loop: -1,
+      ease: 'Linear',
+      duration: 2500,
+      tweens: [
+        {
+          x: 50
+        },
+        {
+          x: -50
+        }
+        ],
+        onComplete: () => {
+          platforms[1].body.velocity.x = 0;
+        }
+      });
     platforms[1].body.setAllowGravity(false);
+    this.physics.add.collider(this.getPlayer(), platforms[1], () => {
+      this.getPlayer().body.velocity.x = 0;
+      // if (!this.getPlayer().onPlatform) {
+        
+          
+      //   }
+      //   this.getPlayer().onPlatform = true;
+    });
   }
 
   update(): void {
