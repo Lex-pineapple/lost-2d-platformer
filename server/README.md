@@ -4,8 +4,7 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-  <p align="center">Built with NestJS – a progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
+  <p align="center">Built with <a href="http://nestjs.com" target="_blank">NestJS</a> – a progressive Node.js framework for building efficient and scalable server-side applications.</p>
 
 ## Setup and Running
 

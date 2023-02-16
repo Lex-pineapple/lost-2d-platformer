@@ -1,61 +1,48 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { PatchPlayerDto } from './dto/patch-player.dto';
 import { PlayerModel } from './player.model/player.model';
 
 @Injectable()
 export class PlayersService {
-  private players: PlayerModel[] = [
-    { id: '1', name: 'Player 1', score: 500, livesLeft: 2, lastLevel: 2 },
-    { id: '2', name: 'Player 2', score: 450, livesLeft: 2, lastLevel: 2 },
-    { id: '3', name: 'Player 3', score: 400, livesLeft: 2, lastLevel: 2 },
-    { id: '4', name: 'Player 4', score: 350, livesLeft: 2, lastLevel: 2 },
-    { id: '5', name: 'Player 5', score: 300, livesLeft: 2, lastLevel: 2 },
-  ];
+  constructor(@InjectModel(PlayerModel) private playerRepository: typeof PlayerModel) {}
 
-  async create(dto: CreatePlayerDto) {
-    const playerObj = { id: Math.trunc(Math.random() * 100000).toString(), ...dto };
-    this.players.push(playerObj);
-    return this.players[this.players.length - 1];
+  async create(dto: CreatePlayerDto): Promise<PlayerModel> {
+    const player = await this.playerRepository.create(dto);
+    return player;
   }
 
-  async findById(id: string) {
-    return this.players.find((player) => player.id === id);
+  async findById(id: string): Promise<PlayerModel | null> {
+    return this.playerRepository.findOne({ where: { id } });
   }
 
-  async getAll() {
-    return [...this.players];
+  async getAll(): Promise<PlayerModel[]> {
+    return this.playerRepository.findAll();
   }
 
-  async updateById(id: string, dto: CreatePlayerDto) {
-    const playerIndex = this.players.findIndex((player) => player.id === id);
+  async updateById(id: string, dto: CreatePlayerDto): Promise<PlayerModel | null> {
+    const player = await this.playerRepository.findOne({ where: { id } });
 
-    if (playerIndex >= 0) {
-      this.players[playerIndex] = { ...this.players[playerIndex], ...dto };
-      return { ...this.players[playerIndex] };
+    if (player) {
+      return await player.update(dto);
     } else {
       return null;
     }
   }
 
-  async patchById(id: string, dto: PatchPlayerDto) {
-    const playerIndex = this.players.findIndex((player) => player.id === id);
+  async patchById(id: string, dto: PatchPlayerDto): Promise<PlayerModel | null> {
+    const player = await this.playerRepository.findOne({ where: { id } });
 
-    if (playerIndex >= 0) {
-      this.players[playerIndex] = { ...this.players[playerIndex], ...dto };
-      return { ...this.players[playerIndex] };
+    if (player) {
+      return await player.update(dto);
     } else {
       return null;
     }
   }
 
-  async deleteById(id: string) {
-    const playerIndex = this.players.findIndex((player) => player.id === id);
-
-    if (playerIndex >= 0) {
-      return this.players.splice(playerIndex, 1);
-    } else {
-      return null;
-    }
+  async deleteById(id: string): Promise<boolean> {
+    const result = await this.playerRepository.destroy({ where: { id } });
+    return result > 0;
   }
 }
