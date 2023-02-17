@@ -1,5 +1,7 @@
 import * as Phaser from 'phaser';
 import arrow from '../../assets/menu/back_arrow.png';
+import winnerBackground from '../../assets/menu/background/winnerBackground.png';
+import speechBubble from '../../assets/menu/speech-bubble.png';
 import goldenCup from '../../assets/menu/titles/golden-cup_less.png';
 import winMessage from '../../assets/menu/titles/you-win-white.png';
 import buttonSound from '../../assets/sounds/effects/interface/interface.ogg';
@@ -170,6 +172,8 @@ class LoadingScene extends Phaser.Scene {
 
     this.load.image('goldenCup', goldenCup);
     this.load.image('winMessage', winMessage);
+    this.load.image('winnerBackground', winnerBackground);
+    this.load.image('speechBubble', speechBubble);
 
     this.load.audio('buttonSound', buttonSound);
     this.load.audio('cavernMusic', cavernMusic);

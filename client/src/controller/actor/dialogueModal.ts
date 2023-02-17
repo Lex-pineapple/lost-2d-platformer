@@ -9,6 +9,9 @@ interface DialogueModalConfig {
   windowColor?: number;
   windowHeight?: number;
   padding?: number;
+  paddingX?: number;
+  paddingY?: number;
+  fontSize?: string;
   closeBtnColor?: string;
   dialogSpeed?: number;
 }
@@ -38,6 +41,12 @@ class DialogueModal {
   windowHeight: number;
 
   padding: number;
+
+  paddingX: number;
+
+  paddingY: number;
+
+  fontSize: string;
 
   closeBtnColor: string;
 
@@ -80,6 +89,9 @@ class DialogueModal {
     this.windowColor = config.windowColor || 0x303030;
     this.windowHeight = config.windowHeight || 150;
     this.padding = config.padding || 32;
+    this.paddingX = config.paddingX || 32;
+    this.paddingY = config.paddingY || 32;
+    this.fontSize = config.fontSize || '16px';
     this.closeBtnColor = config.closeBtnColor || 'darkgoldenrod';
     this.dialogSpeed = config.dialogSpeed || 3;
     this.eventCounter = 0;
@@ -96,10 +108,10 @@ class DialogueModal {
     // this.closeBtn;
     // Create the dialog window
     // this.createWindow();
-    this.soundServise = new SoundService( // @ts-ignore: Unreachable code error
+/*     this.soundServise = new SoundService( // @ts-ignore: Unreachable code error
     this.scene.game.effectsAudioManager, // @ts-ignore: Unreachable code error
     this.scene.game.musicAudioManager
-    );
+    ); */
   }
 
   protected getGameWidth() {
@@ -149,6 +161,10 @@ class DialogueModal {
   }
 
   setText(text: string, animate: boolean) {
+    this.soundServise = new SoundService( // @ts-ignore: Unreachable code error
+    this.scene.game.effectsAudioManager, // @ts-ignore: Unreachable code error
+    this.scene.game.musicAudioManager
+    );
     this.eventCounter = 0;
     this.dialog = text.split('');
     if (this.timedEvent) {
@@ -182,14 +198,15 @@ class DialogueModal {
     if (this.text) this.text.destroy();
     const x = this.padding + 10;
     const y = this.windowHeight - 10;
-    const positionX = this.scene.cameras.main.worldView.x + this.padding + 10;
-    const positionY = this.scene.cameras.main.worldView.y + this.padding + 10;
+    const positionX = this.scene.cameras.main.worldView.x + this.paddingX + 10;
+    const positionY = this.scene.cameras.main.worldView.y + this.paddingY + 10;
     this.text = this.scene.make.text({
       x: positionX,
       y: positionY,
       text,
       style: {
         wordWrap: { width: this.getGameWidth() - this.padding * 2 - 25 },
+        fontSize: this.fontSize,
       },
     });
     this.text.setDepth(1);
