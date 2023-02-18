@@ -32,6 +32,15 @@ abstract class Page {
       targetEl.append(this.container);
     }
   }
+
+  clear() {
+    Utils.clearElContents(this.container);
+  }
+
+  destroy() {
+    this.clear();
+    this.container.remove();
+  }
 }
 
 export default Page;

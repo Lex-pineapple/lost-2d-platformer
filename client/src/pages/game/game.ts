@@ -9,11 +9,12 @@ class GamePage extends Page {
   constructor() {
     super();
 
-    // this.container.append(gameBoxEl);
-    // this.game = new Game(gameBoxEl);
-
     this.game = new Game();
     this.game.render(this.container, ElementPosition.BEFORE_END);
+  }
+
+  destroyGame() {
+    this.game.destroyGame();
   }
 }
 

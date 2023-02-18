@@ -34,16 +34,26 @@ export const PagePaths = {
   },
 };
 
+type Pages = {
+  gamePage: null | GamePage
+};
+
+const pages: Pages = {
+  gamePage: null,
+};
+
 export const Routes: Route[] = [
   {
     path: PagePaths.GamePage.path,
     identifier: PagePaths.GamePage.identifier,
     title: 'Game',
     renderPage(outletEl) {
-      const page = new GamePage();
+      if (pages.gamePage) pages.gamePage.destroyGame();
 
-      if (page) {
-        page.render(outletEl);
+      pages.gamePage = new GamePage();
+
+      if (pages.gamePage) {
+        pages.gamePage.render(outletEl);
       }
     },
   },
@@ -52,6 +62,8 @@ export const Routes: Route[] = [
     identifier: PagePaths.HighscorePage.identifier,
     title: 'High Score',
     renderPage(outletEl) {
+      if (pages.gamePage) pages.gamePage.destroyGame();
+
       const page = new HighscorePage();
 
       if (page) {
@@ -64,6 +76,8 @@ export const Routes: Route[] = [
     identifier: PagePaths.AboutPage.identifier,
     title: 'About authors',
     renderPage(outletEl) {
+      if (pages.gamePage) pages.gamePage.destroyGame();
+
       const page = new AboutPage();
 
       if (page) {
@@ -78,6 +92,8 @@ const defaultRoute: Route = {
   identifier: PagePaths.NotFoundPage.identifier,
   title: 'Not Found',
   renderPage(outletEl) {
+    if (pages.gamePage) pages.gamePage.destroyGame();
+
     const page = new NotFoundPage('');
 
     if (page) {

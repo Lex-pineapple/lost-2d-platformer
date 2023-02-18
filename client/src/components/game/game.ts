@@ -26,6 +26,8 @@ class Game extends Component {
 
   private gameBoxEl: HTMLElement;
 
+  private game: Phaser.Game | null = null;
+
   constructor() {
     super();
     this.gameEl = Utils.createEl('section', ['page__game', 'game']);
@@ -159,8 +161,12 @@ class Game extends Component {
     // window.onresize = () => window.sizeChanged();
 
     // window.onload = function onWindowLoad() {
-      const game = new Phaser.Game(config);
+      this.game = new Phaser.Game(config);
     // };
+  }
+
+  destroyGame() {
+    if (this.game) this.game.destroy(true);
   }
 }
 
