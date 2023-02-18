@@ -1,7 +1,12 @@
-export type StateData = {};
+import Game from '../components/game/game';
+
+export type StateData = {
+  game: Game | null
+};
 
 export class State {
   static #data: StateData = {
+    game: null,
   };
 
   static get data() {

@@ -19,6 +19,23 @@ import Component from '../_/component';
 import Utils from '../../app/utils';
 import { ElementPosition } from '../../app/types';
 
+interface CustomGame extends Phaser.Game {
+  effectsAudioManager: null
+    | Phaser.Sound.NoAudioSoundManager
+    | Phaser.Sound.HTML5AudioSoundManager
+    | Phaser.Sound.WebAudioSoundManager;
+  musicAudioManager: null
+    | Phaser.Sound.NoAudioSoundManager
+    | Phaser.Sound.HTML5AudioSoundManager
+    | Phaser.Sound.WebAudioSoundManager;
+}
+
+type TypedSoundManagerCreator = typeof Phaser.Sound.SoundManagerCreator;
+
+interface CustomSoundManager extends TypedSoundManagerCreator {
+  create: typeof Phaser.Sound.SoundManagerCreator;
+}
+
 class Game extends Component {
   protected content: HTMLElement;
 
@@ -130,10 +147,10 @@ class Game extends Component {
       },
       callbacks: {
         preBoot(game) {
-          // @ts-ignore
-          game.effectsAudioManager = Phaser.Sound.SoundManagerCreator.create(game); // eslint-disable-line
-          // @ts-ignore
-          game.musicAudioManager = Phaser.Sound.SoundManagerCreator.create(game); // eslint-disable-line
+          const customGame = game as CustomGame;
+          const customSoundManager = Phaser.Sound.SoundManagerCreator as CustomSoundManager;
+          customGame.effectsAudioManager = customSoundManager.create(game);
+          customGame.musicAudioManager = customSoundManager.create(game);
         },
       },
 
@@ -165,8 +182,37 @@ class Game extends Component {
     // };
   }
 
-  destroyGame() {
-    if (this.game) this.game.destroy(true);
+  destroy() {
+    if (this.game) {
+      this.game.destroy(true);
+      this.game = null;
+    }
+  }
+
+  sleep() {
+    if (this.game) {
+      this.game.sound.stopAll();
+
+      if ('musicAudioManager' in this.game) {
+        const customGame = this.game as CustomGame;
+        if (customGame.musicAudioManager) customGame.musicAudioManager.pauseAll();
+      }
+
+      this.game.loop.sleep();
+    }
+  }
+
+  wake() {
+    if (this.game) {
+      this.game.sound.resumeAll();
+
+      if ('musicAudioManager' in this.game) {
+        const customGame = this.game as CustomGame;
+        if (customGame.musicAudioManager) customGame.musicAudioManager.resumeAll();
+      }
+
+      this.game.loop.wake();
+    }
   }
 }
 

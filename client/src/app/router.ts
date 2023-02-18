@@ -3,6 +3,7 @@ import NotFoundPage from '../pages/not-found/not-found';
 import GamePage from '../pages/game/game';
 import HighscorePage from '../pages/highscore/highscore';
 import AboutPage from '../pages/about/about';
+import { State } from './state';
 
 type Params = {
   [key: string]: string;
@@ -34,26 +35,20 @@ export const PagePaths = {
   },
 };
 
-type Pages = {
-  gamePage: null | GamePage
-};
-
-const pages: Pages = {
-  gamePage: null,
-};
-
 export const Routes: Route[] = [
   {
     path: PagePaths.GamePage.path,
     identifier: PagePaths.GamePage.identifier,
     title: 'Game',
     renderPage(outletEl) {
-      if (pages.gamePage) pages.gamePage.destroyGame();
+      const page = new GamePage();
 
-      pages.gamePage = new GamePage();
+      if (page) {
+        if (State.data.game) {
+          State.data.game.wake();
+        }
 
-      if (pages.gamePage) {
-        pages.gamePage.render(outletEl);
+        page.render(outletEl);
       }
     },
   },
@@ -62,11 +57,13 @@ export const Routes: Route[] = [
     identifier: PagePaths.HighscorePage.identifier,
     title: 'High Score',
     renderPage(outletEl) {
-      if (pages.gamePage) pages.gamePage.destroyGame();
-
       const page = new HighscorePage();
 
       if (page) {
+        if (State.data.game) {
+          State.data.game.sleep();
+        }
+
         page.render(outletEl);
       }
     },
@@ -76,11 +73,13 @@ export const Routes: Route[] = [
     identifier: PagePaths.AboutPage.identifier,
     title: 'About authors',
     renderPage(outletEl) {
-      if (pages.gamePage) pages.gamePage.destroyGame();
-
       const page = new AboutPage();
 
       if (page) {
+        if (State.data.game) {
+          State.data.game.sleep();
+        }
+
         page.render(outletEl);
       }
     },
@@ -92,11 +91,13 @@ const defaultRoute: Route = {
   identifier: PagePaths.NotFoundPage.identifier,
   title: 'Not Found',
   renderPage(outletEl) {
-    if (pages.gamePage) pages.gamePage.destroyGame();
-
     const page = new NotFoundPage('');
 
     if (page) {
+      if (State.data.game) {
+        State.data.game.sleep();
+      }
+
       page.render(outletEl);
     }
   },
