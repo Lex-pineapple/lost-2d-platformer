@@ -174,7 +174,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('pickupCoin1', 'sounds/effects/pickup/coin.ogg');
     this.load.audio('pickupCoin2', 'sounds/effects/pickup/coin2.ogg');
     this.load.audio('hurtSwing', 'sounds/effects/hurts/swing.ogg');
-    this.load.audio('doorSound', 'assets/sounds/effects/world/door.ogg');
+    this.load.audio('doorSound', 'sounds/effects/world/door.ogg');
     this.load.audio('dialogSound', 'sounds/effects/dialog/fast_single_v4.ogg');
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
