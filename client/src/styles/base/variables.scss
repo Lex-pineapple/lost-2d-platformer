@@ -1,4 +1,4 @@
-$font: 'Arial', sans-serif;
+$font: 'B612 Mono', 'Arial', sans-serif;
 
 $mobile-width: 320px;
 $mobile-mini-width: 335px;
@@ -25,6 +25,7 @@ $black: #000000;
 $grey: #98a2b3;
 $grey-dark: #101828;
 $grey-darker: #667085;
+$grey-lighter: #f2f4f7;
 $grey-spirit: #f5f5f5;
 $transparent: rgba(255, 255, 255, 0);
 $bg: $grey-spirit;
@@ -47,6 +48,7 @@ $text-dark: $grey-dark;
 $text-light: $white;
 $text-grey: $grey;
 $text-grey-darker: $grey-darker;
+$text-grey-lighter: $grey-lighter;
 
 $basic-transition: color 0.3s, background-color 0.3s, border-color 0.3s, box-shadow 0.3s, opacity 0.3s;
 
