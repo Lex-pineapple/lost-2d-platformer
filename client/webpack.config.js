@@ -2,18 +2,43 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+
+const ManifestPluginFilter = (file) => {
+  // only .js files
+  return file.name && /\.js$/.test(file.name);
+};
+
+const ManifestPluginMap = (file) => {
+  // remove .js ext
+  if (file.name && /\.js$/.test(file.name)) {
+    file.name = file.name.slice(0, -3);
+  }
+
+  return file;
+};
+
+const ManifestPluginOption = {
+  writeToFileEmit: true,
+  fileName: 'manifest.json',
+  map: ManifestPluginMap,
+  filter: ManifestPluginFilter,
+};
 
 /********************************************************************
  *        Client Config
  ********************************************************************/
 const clientConfig = {
-  entry: path.resolve(__dirname, 'src', 'index.ts'),
+  entry: {
+    login: path.resolve(__dirname, 'src', 'login'),
+    main: path.resolve(__dirname, 'src', 'main'),
+  },
   output: {
-    filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash].js',
     assetModuleFilename: '[name][ext]',
     clean: true,
+    publicPath: '/',
   },
   target: 'web',
   // mode: 'development',
@@ -57,10 +82,28 @@ const clientConfig = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
+    new WebpackManifestPlugin(ManifestPluginOption),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src', 'index.html'),
+      title: 'Lost 2D Platformer',
+      template: path.resolve(__dirname, 'src', 'pages', 'index.html'),
+      inject: true,
+      chunks: ['login'],
       filename: 'index.html',
     }),
+    // new HtmlWebpackPlugin({
+    //   title: 'Lost 2D Platformer',
+    //   template: path.resolve(__dirname, 'src', 'pages', 'login.html'),
+    //   inject: true,
+    //   chunks: ['login'],
+    //   filename: 'login.html',
+    // }),
+    // new HtmlWebpackPlugin({
+    //   title: 'Lost 2D Platformer',
+    //   template: path.resolve(__dirname, 'src', 'pages', 'index.html'),
+    //   inject: true,
+    //   chunks: ['main'],
+    //   filename: 'index.html',
+    // }),
     // new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [

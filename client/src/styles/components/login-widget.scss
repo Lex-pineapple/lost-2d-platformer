@@ -1,0 +1,97 @@
+.login-widget {
+  &__inner {
+    max-width: 520px;
+    // background-color: $white;
+    // border: 1px solid #dddddd;
+    border-radius: 0.25rem;
+    padding: 2rem 3rem;
+    margin: 0 auto;
+
+    // background: rgba(53, 53, 53, 0.47);
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(62px);
+  }
+
+  &__title {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  &__title,
+  .label {
+    color: $grey-spirit;
+  }
+
+  .form__decor {
+    margin-bottom: 24px;
+  }
+
+  .form__decor-img {
+    display: block;
+    max-width: 100%;
+    height: 60px;
+    margin: 0 auto;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    color: #333333;
+    background-color: $white;
+    // border: 1px solid rgb(180, 180, 180);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    appearance: none;
+
+    &:focus {
+      outline: none;
+      // border: 1px solid $grey-dark;
+      border: 1px solid #00282e;
+      background-clip: padding-box;
+    }
+  }
+
+  input.input-error {
+    border: 1px solid $red;
+  }
+
+  .input.input-error:focus {
+    border: 1px solid $red;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .error-message {
+    font-size: 0.85rem;
+    color: $red;
+  }
+
+  .form__group {
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+
+    & ~ .button {
+      margin-top: 24px;
+    }
+  }
+
+  .button {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    color: $white;
+    background-color: $primary-color;
+    border: 0;
+    padding: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(110%);
+    }
+  }
+}

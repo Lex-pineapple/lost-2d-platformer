@@ -9,13 +9,13 @@ const clientConfig = {
     port: 8080,
     open: true,
     // hot: false,
-    // liveReload: true,
-    historyApiFallback: true,
-    // historyApiFallback: {
-    //   rewrites: [
-    //     { from: /./, to: '/index.html' }, // all requests to index.html
-    //   ],
-    // },
+    // historyApiFallback: true,
+    liveReload: true,
+    historyApiFallback: {
+      rewrites: [
+        { from: /./, to: '/index.html' }, // all requests to index.html
+      ],
+    },
   },
 };
 
