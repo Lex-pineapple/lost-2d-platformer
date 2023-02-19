@@ -1,5 +1,7 @@
 import * as Phaser from 'phaser';
 // import arrow from '../../../../assets/menu/back_arrow.png';
+// import winnerBackground from '../../assets/menu/background/winnerBackground.png';
+// import speechBubble from '../../assets/menu/speech-bubble-longest.png';
 // import buttonSound from '../../../../assets/sounds/effects/interface/interface.ogg';
 // import cavernMusic from '../../../../assets/sounds/music/cavernous_desert02.mp3';
 // import forestMusic from '../../../../assets/sounds/music/darkforest.mp3';
@@ -165,6 +167,8 @@ class LoadingScene extends Phaser.Scene {
       'dark-peacefulForestTileMap', // eslint-disable-next-line
       'tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
     );
+    this.load.image('winnerBackground', 'menu/background/winnerBackground.png');
+    this.load.image('speechBubble', 'menu/speech-bubble-longest.png');
 
     this.load.audio('buttonSound', 'sounds/effects/interface/interface.ogg');
     this.load.audio('cavernMusic', 'sounds/music/cavernous_desert02.mp3');

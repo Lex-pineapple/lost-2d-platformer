@@ -14,6 +14,7 @@ import PlaySceneTwo from './controller/scenes/scene2Caverns';
 import PlaySceneThree from './controller/scenes/scene3DarkWoods';
 import PauseMenuScene from './controller/scenes/non-playable/pauseMenuScene';
 import GameOverScene from './controller/scenes/non-playable/gameOverScene';
+import WinnerScene from './controller/scenes/non-playable/winnerScene';
 import { ISharedState } from '../../types/interfaces';
 import Component from '../_/component';
 import Utils from '../../app/utils';
@@ -107,6 +108,7 @@ class Game extends Component {
       { Cls: OptionsScene, key: 'OptionsScene' },
       { Cls: PauseMenuScene, key: 'PauseMenuScene' },
       { Cls: GameOverScene, key: 'GameOverScene' },
+      { Cls: WinnerScene, key: 'WinnerScene' },
     ];
 
     const initScenes = () => scenes.map((Scene) => new Scene.Cls(Scene.key, SHARED_STATE));
