@@ -13,7 +13,6 @@ class Player extends Actor {
 
   private keyW: Phaser.Input.Keyboard.Key;
 
-
   private keySpace: Phaser.Input.Keyboard.Key;
 
   onWall: boolean;
@@ -42,6 +41,8 @@ class Player extends Actor {
 
   collided: boolean;
 
+  canStick: boolean;
+
   lockedTo: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null;
 
   constructor(scene: Phaser.Scene, x: number, y: number, hp: number) {
@@ -58,7 +59,7 @@ class Player extends Actor {
     this.onWall = false;
     this.canJump = true;
     this.jumped = false;
-    this.jumpVelocity = 600;
+    this.jumpVelocity = 700;
     this.runVelocity = 600;
     this.overlap = false;
     this.dialogueModal = new DialogueModal(this.scene, {});
@@ -68,11 +69,12 @@ class Player extends Actor {
     this.onPlatform = false;
     this.lockedTo = null;
     this.collided = false;
+    this.canStick = true;
 
     this.getBody().setSize(48, 48);
     this.getBody().setGravityY(1400);
     this.setDepth(1);
-    this.getBody().maxVelocity.setTo(600, 600);
+    this.getBody().maxVelocity.setTo(700, 700);
     // this.getBody().setOffset(8, 0);
     this.initAnimations();
   }
@@ -113,8 +115,8 @@ class Player extends Actor {
   }
 
   private checkWallCollision() {
-    if (this.body.blocked.right && !this.body.blocked.down) this.onWall = true;
-    else if (this.body.blocked.left && !this.body.blocked.down) this.onWall = true;
+    if (this.body.blocked.right && !this.body.blocked.down && this.canStick) this.onWall = true;
+    else if (this.body.blocked.left && !this.body.blocked.down && this.canStick) this.onWall = true;
   }
 
   private handleJump() {
@@ -127,7 +129,7 @@ class Player extends Actor {
           } else {
           this.getBody().setOffset(0, 0);
         }
-        this.body.velocity.x = 600 * this.scaleX;
+        this.body.velocity.x = 300 * this.scaleX;
         this.body.velocity.y = -this.jumpVelocity;
         }
       } else {
@@ -185,13 +187,14 @@ class Player extends Actor {
   }
 
   update(): void {
+    console.log(this.x, this.y);
+    // console.log(this.canStick);    
+
     // Check if player collides with wall
     this.checkWallCollision();
 
     // Reset velocity to prevent gliding
     // this.getBody().velocity.x = 0;
-
-    console.log(this.body.blocked.none);
     
     if (!this.body.blocked.none) {
       this.getBody().velocity.x = 0;
@@ -253,6 +256,10 @@ class Player extends Actor {
       this.collisionEnd = false;
       this.onPlatform = false;
       this.collided = false;
+    }
+
+    if (this.body.blocked.none) {
+      this.canStick = true;
     }
     // Affects fall physics!
 

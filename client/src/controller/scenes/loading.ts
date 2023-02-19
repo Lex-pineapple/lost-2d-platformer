@@ -88,12 +88,17 @@ class LoadingScene extends Phaser.Scene {
 
   preload(): void {
     this.load.baseURL = 'assets/';
-    this.load.image('can', 'spritesheets/objects/pickupCatCan-small.png');
+    this.load.image('canPickup', 'spritesheets/objects/pickupCatCan-small.png');
     this.load.image('plantFinal', 'spritesheets/objects/plant-big.png');
-    this.load.image('plantPickupSmall', 'spritesheets/objects/plant-small.png');
+    this.load.image('leafPickup', 'spritesheets/objects/plant-small.png');
     this.load.image('keyPickup', 'spritesheets/objects/keyPng.png');
     this.load.image('doorLock', 'spritesheets/objects/doorLock.png');
     this.load.image('movingPlatform', 'spritesheets/objects/movingPlatform.png');
+    this.load.image('movingPlatform2', 'spritesheets/objects/movingPlatform2.png');
+    this.load.image('flowerPickup', 'spritesheets/objects/flowerPickup.png');
+    this.load.image('healthCanPickup', 'spritesheets/objects/healthCan.png');
+
+
     this.load.image('infoSign', 'spritesheets/objects/infoSign.png');
 
     this.load.spritesheet('objectPickups', 'spritesheets/objects/PickupObjectMap.png', {
@@ -130,6 +135,21 @@ class LoadingScene extends Phaser.Scene {
       'spritesheets/NPC/npc1-sit-atlas.png',
       'spritesheets/NPC/npc1-sit-atlas.json'
     );
+    this.load.atlas(
+      'a-npc-sleep',
+      'spritesheets/NPC/cat-sleep-atlas.png',
+      'spritesheets/NPC/cat-sleep-atlas.json'
+    );
+    this.load.atlas(
+      'a-npc-lie',
+      'spritesheets/NPC/cat-lie-atlas.png',
+      'spritesheets/NPC/cat-lie-atlas.json'
+    );
+    this.load.atlas(
+      'a-npc-black-cat-sit',
+      'spritesheets/NPC/black-cat-sit-atlas.png',
+      'spritesheets/NPC/black-cat-sit-atlas.json'
+    );
     this.load.image('cat-jump-1', 'spritesheets/cat-jump-frames/cat-jump-1.png');
     this.load.image('cat-jump-2', 'spritesheets/cat-jump-frames/cat-jump-2.png');
     this.load.image('cat-jump-3', 'spritesheets/cat-jump-frames/cat-jump-3.png');
@@ -148,6 +168,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('demonForestBG2', 'backgrounds/DemonForestBG2-transition.png');
     this.load.image('demonForestBG3', 'backgrounds/DemonForestBG3.png');
     this.load.image('demonForestBG4', 'backgrounds/DemonForestBG4-moon.png');
+    this.load.image('demonForestBG5', 'backgrounds/DemonForestBG5-cut.png');
     this.load.image(
       'demonForest-peaceful-skyTransition', // eslint-disable-next-line
       'backgrounds/demonForest-peacefulForest-transition.png',

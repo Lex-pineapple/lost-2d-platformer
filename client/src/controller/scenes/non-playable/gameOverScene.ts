@@ -5,7 +5,7 @@ class GameOverScene extends NonPlayableBaseScene {
   private previousScene!: string;
 
   private menu: IMenuItem[] = [
-    { sceneKey: null, text: 'Restart', textGameObj: null },
+    { sceneKey: 'PlaySceneOne', text: 'Restart', textGameObj: null },
     {
       sceneKey: 'MainMenuScene',
       text: 'Main Menu',

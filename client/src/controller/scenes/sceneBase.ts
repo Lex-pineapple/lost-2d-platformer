@@ -6,6 +6,13 @@ import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import tutorialFlow from '../../assets/data/tutorialFlow';
 import SoundService from '../audio/soundServise';
 
+interface collidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody {
+  properties?: {
+    collides: boolean;
+    noStick?: boolean;
+  }
+}
+
 class SceneBase extends Phaser.Scene {
   private player!: Player;
 
@@ -25,7 +32,7 @@ class SceneBase extends Phaser.Scene {
 
   constructor(name: string, protected sharedState: ISharedState) {
     super({ key: name });
-    this.score = 0;
+    this.score = (sharedState.totalScore) ? +sharedState.totalScore : 0;
   }
 
   preload() {
@@ -69,7 +76,15 @@ class SceneBase extends Phaser.Scene {
       this.scoreText.setText(`Score: ${this.score}`);
       this.soundServise.playPickup2();
     }
-    console.log('score');
+    if (type === 'flower') {
+      this.score += 30;
+      this.scoreText.setText(`Score: ${this.score}`);
+      this.soundServise.playPickup1();
+    }
+    if (type === 'healthCan') {
+      this.player.increaseHP();
+      this.livesText.setText(`Lives: ${this.player.getHPValue()}`);
+    }
   }
 
   reduceLife() {
@@ -83,15 +98,20 @@ class SceneBase extends Phaser.Scene {
     const platforms = map.createLayer(platformMap, tileset, 0, -1470);
     // // Dont forget to set collision to each tile in tiled!
     platforms.setCollisionByProperty({ collides: true });
-    this.physics.add.collider(this.player, platforms);
+    this.physics.add.collider(this.player, platforms, (obj1, obj2: collidedObject) => {
+      if (obj2.properties?.noStick) {
+        this.player.canStick = false;
+      }
+    });
+    
     return map;
   }
 
-  createPickups(map: Phaser.Tilemaps.Tilemap, type: string, frame: number) {
+  createPickups(map: Phaser.Tilemaps.Tilemap, type: string) {
     const objectPoints = gameObjectsToObjectPoints(
       map.filterObjects('EntityLayer', (obj) => obj.name === `${type}Point`)
     );
-    const pickups = objectPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'objectPickups', frame).setScale(1.5).setSize(16, 16));
+    const pickups = objectPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), `${type}Pickup`).setScale(1.5).setSize(16, 16));
     pickups.forEach((leaf) => {
       this.physics.add.overlap(this.player, leaf, (obj1, obj2) => {
         obj2.destroy();
@@ -105,10 +125,10 @@ class SceneBase extends Phaser.Scene {
       map.filterObjects('FunctionalLayer', (obj) => obj.name === 'keyPoint')
     );
 
-    const key = this.physics.add.sprite(keyPoint[0].x, 450 - (1920 - keyPoint[0].y), 'keyPickup')
-    .setScale(1)
+    const key = this.physics.add.sprite(keyPoint[0].x - 20, 450 - (1920 - keyPoint[0].y) - 20, 'keyPickup')
+    .setScale(2)
     .setImmovable(true)
-    .setBodySize(64, 55);
+    .setBodySize(8, 17);
     this.physics.add.overlap(this.player, key, (obj1, obj2) => {
       this.player.hasKey = true;
       obj2.destroy();
@@ -198,6 +218,7 @@ class SceneBase extends Phaser.Scene {
         }
       });
     });
+    return enemies;
   }
 
   createInfoPoints(map: Phaser.Tilemaps.Tilemap) {
@@ -210,7 +231,7 @@ class SceneBase extends Phaser.Scene {
       let overlapEnd = false;
       this.physics.add.overlap(this.player, sign, () => {
         if (!overlapEnd) {
-          this.playTutorial(infoPoints[idx].properties[0].value);
+          this.playTutorial(infoPoints[idx].properties[0].value as string);
         }
         overlapEnd = true;
       });
@@ -280,7 +301,7 @@ class SceneBase extends Phaser.Scene {
 );
     textGraphic.scrollFactorX = 0;
     textGraphic.scrollFactorY = 0;
-    this.time.delayedCall(3000, () => {
+    this.time.delayedCall(5000, () => {
       textGraphic.destroy();
     });
   }
@@ -309,7 +330,7 @@ class SceneBase extends Phaser.Scene {
 
   _spawnCharacters() {
     if (this.sharedState.playerHP) {
-      this.player = new Player(this, 10000, 100, +this.sharedState.playerHP);
+      this.player = new Player(this, 5982, -1142, +this.sharedState.playerHP);
     } else {
       this.player = new Player(this, 10000, 100, 3);
     }
@@ -322,7 +343,7 @@ class SceneBase extends Phaser.Scene {
 
   _setCamera(worldWidth: number, worldHeight: number) {
     this.cameras.main.setBounds(0, -1470, worldWidth, worldHeight, true);
-    this.physics.world.setBounds(0, -1470, worldWidth + 500, worldHeight, true, true, false);
+    this.physics.world.setBounds(0, -1470, worldWidth + 500, worldHeight + 64, true, true, false);
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5, 0, 100);
   }
 

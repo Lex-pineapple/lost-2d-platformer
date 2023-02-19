@@ -45,7 +45,7 @@ export type ObjectPoint = {
 export interface IProperty {
   name: string;
   type: string;
-  value: string;
+  value: string | boolean;
 }
 
 export interface IPlayerPosition {

@@ -1,0 +1,313 @@
+{
+	"textures": [
+		{
+			"image": "black-cat-sit-atlas",
+			"format": "RGBA8888",
+			"size": {
+				"w": 79,
+				"h": 350
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "black-cat-sit-1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 44
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 44
+					}
+				},
+				{
+					"filename": "black-cat-sit-2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 44
+					},
+					"frame": {
+						"x": 0,
+						"y": 44,
+						"w": 39,
+						"h": 44
+					}
+				},
+				{
+					"filename": "black-cat-sit-3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 44
+					},
+					"frame": {
+						"x": 0,
+						"y": 88,
+						"w": 39,
+						"h": 44
+					}
+				},
+				{
+					"filename": "black-cat-sit-4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 44
+					},
+					"frame": {
+						"x": 0,
+						"y": 132,
+						"w": 39,
+						"h": 44
+					}
+				},
+				{
+					"filename": "black-cat-sit-5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 44
+					},
+					"frame": {
+						"x": 0,
+						"y": 176,
+						"w": 39,
+						"h": 44
+					}
+				},
+				{
+					"filename": "black-cat-sit-6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 44
+					},
+					"frame": {
+						"x": 0,
+						"y": 220,
+						"w": 39,
+						"h": 44
+					}
+				},
+				{
+					"filename": "black-cat-sit-7.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 44
+					},
+					"frame": {
+						"x": 0,
+						"y": 264,
+						"w": 39,
+						"h": 44
+					}
+				},
+				{
+					"filename": "black-cat-sit-10.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 42
+					},
+					"frame": {
+						"x": 0,
+						"y": 308,
+						"w": 40,
+						"h": 42
+					}
+				},
+				{
+					"filename": "black-cat-sit-11.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 42
+					},
+					"frame": {
+						"x": 39,
+						"y": 0,
+						"w": 40,
+						"h": 42
+					}
+				},
+				{
+					"filename": "black-cat-sit-12.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 42
+					},
+					"frame": {
+						"x": 39,
+						"y": 42,
+						"w": 40,
+						"h": 42
+					}
+				},
+				{
+					"filename": "black-cat-sit-13.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 42
+					},
+					"frame": {
+						"x": 39,
+						"y": 84,
+						"w": 40,
+						"h": 42
+					}
+				},
+				{
+					"filename": "black-cat-sit-14.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 42
+					},
+					"frame": {
+						"x": 39,
+						"y": 126,
+						"w": 40,
+						"h": 42
+					}
+				},
+				{
+					"filename": "black-cat-sit-8.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 42
+					},
+					"frame": {
+						"x": 39,
+						"y": 168,
+						"w": 40,
+						"h": 42
+					}
+				},
+				{
+					"filename": "black-cat-sit-9.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 42
+					},
+					"frame": {
+						"x": 39,
+						"y": 210,
+						"w": 40,
+						"h": 42
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7"
+	}
+}

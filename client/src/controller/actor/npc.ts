@@ -20,6 +20,7 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     y: number,
     texture: string,
     sceneName: string,
+    type: string,
     frame?: string | number
   ) {
     super(scene, x, y, texture, frame);
@@ -28,13 +29,14 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.getBody().setCollideWorldBounds(true);
-    this.initAnimation();
+    this.createAnimation();
     this.flipX = true;
     this.dialogFinished = false;
     this.dialogCounter = 0;
     this.sceneName = sceneName;
     this.dialogueModal = new DialogueModal(this.scene, {});
     this.getBody().setSize(128, 64);
+    this.initAnimation(type);
     // this.getBody().setOffset(11, 9);
     // .setOrigin(0.5, 1)
     // .setDepth(2);
@@ -43,7 +45,16 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     // .setCollideWorldBounds(true)
   }
 
-  private initAnimation() {
+  private initAnimation(type: string) {
+    this.anims.play(type, true);
+  }
+
+  flip() {
+    this.scaleX = -1;
+    this.getBody().setOffset(48, 0);
+  }
+
+  private createAnimation() {
     this.scene.anims.create({
       key: 'sit',
       frames: this.scene.anims.generateFrameNames('a-npc1-sit', {
@@ -55,7 +66,39 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
       frameRate: 3,
       repeat: -1,
     });
-    this.anims.play('sit', true);
+    this.scene.anims.create({
+      key: 'sleep',
+      frames: this.scene.anims.generateFrameNames('a-npc-sleep', {
+        prefix: 'cat-sleep-frames-',
+        suffix: '.png',
+        start: 1,
+        end: 2,
+      }),
+      frameRate: 1,
+      repeat: -1,
+    });
+    this.scene.anims.create({
+      key: 'lie',
+      frames: this.scene.anims.generateFrameNames('a-npc-lie', {
+        prefix: 'cat-lie-frames-',
+        suffix: '.png',
+        start: 1,
+        end: 3,
+      }),
+      frameRate: 2,
+      repeat: -1,
+    });
+    this.scene.anims.create({
+      key: 'black-cat-sit',
+      frames: this.scene.anims.generateFrameNames('a-npc-black-cat-sit', {
+        prefix: 'black-cat-sit-',
+        suffix: '.png',
+        start: 1,
+        end: 14,
+      }),
+      frameRate: 2,
+      repeat: -1,
+    });
   }
 
   getName() {
