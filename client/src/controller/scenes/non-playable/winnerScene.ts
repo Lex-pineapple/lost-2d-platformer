@@ -2,7 +2,7 @@ import NonPlayableBaseScene from './nonPlayableBaseScene';
 import DialogueModal from '../../actor/dialogueModal';
 import { ISharedState } from '../../../types/interfaces';
 
-const testScore = 6666;
+const testScore = 6666; // fix: change this to shared state score
 
 const dialogArr = ['Congratulations!', 'You finished the game!', `Your score: ${testScore}`, 'Back to main menu?'];
 
@@ -14,14 +14,17 @@ class WinnerScene extends NonPlayableBaseScene {
   constructor(name: string, protected sharedState: ISharedState) {
     super('WinnerScene', sharedState);
     this.dialogueModal = new DialogueModal(this, {
-      paddingX: 320,
-      paddingY: 85,
+      paddingX: 300,
+      paddingY: 87,
       fontSize: '28px',
     });
     this.messageCounter = 0;
   }
 
   create() {
+    super.create();
+    this.messageCounter = 0;
+    this.cameras.main.fadeIn(1000, 0, 0, 0);
     const xAxis = this.getMiddlePositionX();
     const yAxis = this.getMiddlePositionY();
     this.add.image(xAxis, yAxis, 'winnerBackground');
@@ -32,12 +35,15 @@ class WinnerScene extends NonPlayableBaseScene {
         this.displayWinnerMessage();
       }
     });
+    this.soundServise.playVictoryMusic();
   }
 
   displayWinnerMessage() {
     if (this.messageCounter < dialogArr.length) {
       this.dialogueModal.setText(dialogArr[this.messageCounter], true);
     } else {
+      this.soundServise.stopAnyEffects();
+      this.scene.stop('WinnerScene');
       this.scene.start('MainMenuScene');
     }
     this.messageCounter += 1;

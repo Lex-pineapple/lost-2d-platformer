@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import arrow from '../../assets/menu/back_arrow.png';
 import winnerBackground from '../../assets/menu/background/winnerBackground.png';
-import speechBubble from '../../assets/menu/speech-bubble.png';
+import speechBubble from '../../assets/menu/speech-bubble-longest.png';
 import goldenCup from '../../assets/menu/titles/golden-cup_less.png';
 import winMessage from '../../assets/menu/titles/you-win-white.png';
 import buttonSound from '../../assets/sounds/effects/interface/interface.ogg';
@@ -9,6 +9,7 @@ import cavernMusic from '../../assets/sounds/music/cavernous_desert02.mp3';
 import forestMusic from '../../assets/sounds/music/darkforest.mp3';
 import forestMusicScene1 from '../../assets/sounds/music/moonlight_shadow.mp3';
 import forestMusicScene3 from '../../assets/sounds/ambience/forest.mp3';
+import victoryMusic from '../../assets/sounds/music/victory.ogg';
 import pickupCoin1 from '../../assets/sounds/effects/pickup/coin.ogg';
 import pickupCoin2 from '../../assets/sounds/effects/pickup/coin2.ogg';
 import hurtSwing from '../../assets/sounds/effects/hurts/swing.ogg';
@@ -185,6 +186,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('hurtSwing', hurtSwing);
     this.load.audio('doorSound', doorSound);
     this.load.audio('dialogSound', dialogSound);
+    this.load.audio('victoryMusic', victoryMusic);
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }
