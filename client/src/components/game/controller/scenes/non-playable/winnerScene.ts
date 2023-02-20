@@ -2,14 +2,12 @@ import NonPlayableBaseScene from './nonPlayableBaseScene';
 import DialogueModal from '../../actor/dialogueModal';
 import { ISharedState } from '../../../../../types/interfaces';
 
-const testScore = 6666; // fix: change this to shared state score
-
-const dialogArr = ['Congratulations!', 'You finished the game!', `Your score: ${testScore}`, 'Back to main menu?'];
-
 class WinnerScene extends NonPlayableBaseScene {
   private dialogueModal!: DialogueModal;
 
-  messageCounter: number;
+  private messageCounter: number;
+
+  private dialogArr: Array<string>;
 
   constructor(name: string, protected sharedState: ISharedState) {
     super('WinnerScene', sharedState);
@@ -19,6 +17,7 @@ class WinnerScene extends NonPlayableBaseScene {
       fontSize: '28px',
     });
     this.messageCounter = 0;
+    this.dialogArr = ['Congratulations!', 'You finished the game!', `Your score: ${this.sharedState.score}`, 'Back to main menu?'];
   }
 
   create() {
@@ -39,8 +38,8 @@ class WinnerScene extends NonPlayableBaseScene {
   }
 
   displayWinnerMessage() {
-    if (this.messageCounter < dialogArr.length) {
-      this.dialogueModal.setText(dialogArr[this.messageCounter], true);
+    if (this.messageCounter < this.dialogArr.length) {
+      this.dialogueModal.setText(this.dialogArr[this.messageCounter], true);
     } else {
       this.soundServise.stopAnyEffects();
       this.scene.stop('WinnerScene');

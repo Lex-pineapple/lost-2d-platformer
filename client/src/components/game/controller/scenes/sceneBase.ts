@@ -139,6 +139,8 @@ class SceneBase extends Phaser.Scene {
           },
         });
       this.soundServise.playDoorSound();
+      this.saveScoreToSharedState();
+      console.log(this.sharedState.score);
       }
       this.player.collided = true;
     });
@@ -157,6 +159,7 @@ class SceneBase extends Phaser.Scene {
       this.player.diableKeys();
       this.player.disableRun();
       console.log('Win!!!!!!!!!!!!');
+      this.saveScoreToSharedState();
     });
   }
 
@@ -307,7 +310,7 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
-    this.player = new Player(this, 24, 100);
+    this.player = new Player(this, 10500, 100);
     this._addPlayer();
   }
 
@@ -327,6 +330,15 @@ class SceneBase extends Phaser.Scene {
 
   getPlayer() {
     return this.player;
+  }
+
+  saveScoreToSharedState() {
+    if (!this.sharedState.score) {
+      this.sharedState.score = String(this.score);
+    } else {
+      const prevScore = Number(this.sharedState.score);
+      this.sharedState.score = String(prevScore + this.score);
+    }
   }
 }
 
