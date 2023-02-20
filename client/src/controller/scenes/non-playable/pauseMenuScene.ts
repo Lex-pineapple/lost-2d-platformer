@@ -1,6 +1,7 @@
 import { IMenuItem, ISharedState } from '../../../types/interfaces';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 
+
 class PauseMenuScene extends NonPlayableBaseScene {
   private menu: IMenuItem[] = [
     {
@@ -34,6 +35,9 @@ class PauseMenuScene extends NonPlayableBaseScene {
   //   this.previousScene = data.key;
   //   this.menu[0].sceneKey = this.previousScene;
   // }
+
+  preload() {
+  }
 
   create() {
     super.create();

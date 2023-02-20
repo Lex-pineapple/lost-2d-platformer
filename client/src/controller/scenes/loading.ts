@@ -97,6 +97,8 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('movingPlatform2', 'spritesheets/objects/movingPlatform2.png');
     this.load.image('flowerPickup', 'spritesheets/objects/flowerPickup.png');
     this.load.image('healthCanPickup', 'spritesheets/objects/healthCan.png');
+    this.load.image('livesHUD', 'spritesheets/objects/livesHUD.png');
+    this.load.image('rectangleHUD', 'spritesheets/objects/rectangleHUD.png');
 
 
     this.load.image('infoSign', 'spritesheets/objects/infoSign.png');

@@ -1,8 +1,10 @@
 import { GameObjects } from 'phaser';
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin';
+
 import { Slider } from 'phaser3-rex-plugins/templates/ui/ui-components';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 import { ISharedState } from '../../../types/interfaces';
+
 
 import { soundConfigMusic, soundConfigEffects, soundConfigMaster } from '../../audio/audioConfigs';
 
@@ -35,6 +37,8 @@ class OptionsScene extends NonPlayableBaseScene {
 
   create() {
     super.create();
+
+    
     const xAxis = this.getMiddlePositionX();
     const yAxis = this.getMiddlePositionY();
     const volumeMusic = soundConfigMusic.volume!;

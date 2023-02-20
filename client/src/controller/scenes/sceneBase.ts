@@ -49,16 +49,27 @@ class SceneBase extends Phaser.Scene {
   }
 
   createHUD() {
+    const livesHUD = this.add.image(700, 16, 'livesHUD').setOrigin(0, 0);
+    const rectangleHUD = this.add.image(16, 16, 'rectangleHUD').setOrigin(0, 0);
+
     this.scoreText = this.add.text(16, 16, `Score: ${this.score}`).setPadding(10).setStyle({
       fontSize: '28px',
-      backgroundColor: '#073454',
-      fill: '#3afefd',
+      stroke: '#e9642b',
+      strokeThickness: 1,
+      // backgroundColor: '#073454',
+      fill: '#e9642b',
     });
-    this.livesText = this.add.text(300, 16, `Lives: ${this.player.getHPValue()}`).setPadding(10).setStyle({
+    this.livesText = this.add.text(748, 16, `${this.player.getHPValue()}`).setPadding(10).setStyle({
       fontSize: '28px',
-      backgroundColor: '#073454',
-      fill: '#3afefd',
+      stroke: '#e9642b',
+      strokeThickness: 1,
+      // backgroundColor: '#073454',
+      fill: '#e9642b',
     });
+    livesHUD.scrollFactorX = 0;
+    livesHUD.scrollFactorY = 0;
+    rectangleHUD.scrollFactorX = 0;
+    rectangleHUD.scrollFactorY = 0;
     this.scoreText.scrollFactorX = 0;
     this.scoreText.scrollFactorY = 0;
     this.livesText.scrollFactorX = 0;
