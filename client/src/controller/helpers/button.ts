@@ -12,20 +12,23 @@ class Button {
   ) {
     this.button = ctx.add.text(x, y, label);
     this.button
-      .setFixedSize(150, 0)
+      .setFixedSize(200, 0)
       .setAlign('center')
       .setOrigin(0.5)
       .setPadding(10)
       .setStyle({
-        backgroundColor: '#073454',
-        fill: '#3afefd',
+        backgroundColor: '#ffffff',
+        fill: '#0d7575',
+        stroke: '#0d7575',
+        fontFamily: 'sans-serif',
+        strokeThickness: 0.5,
       })
       .setInteractive({
         useHandCursor: true,
       })
       .on('pointerup', () => callback())
-      .on('pointerover', () => this.button.setStyle({ fill: '#00EDEC' }))
-      .on('pointerout', () => this.button.setStyle({ fill: '#3afefd' }));
+      .on('pointerover', () => this.button.setStyle({ fill: '#29c2c2', stroke: '#29c2c2' }))
+      .on('pointerout', () => this.button.setStyle({ fill: '#0d7575', stroke: '#0d7575' }));
   }
 
   getObj() {

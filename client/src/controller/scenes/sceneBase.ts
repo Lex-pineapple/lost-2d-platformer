@@ -94,12 +94,12 @@ class SceneBase extends Phaser.Scene {
     }
     if (type === 'healthCan') {
       this.player.increaseHP();
-      this.livesText.setText(`Lives: ${this.player.getHPValue()}`);
+      this.livesText.setText(`${this.player.getHPValue()}`);
     }
   }
 
   reduceLife() {
-    this.livesText.setText(`Lives: ${this.player.getHPValue()}`);
+    this.livesText.setText(`${this.player.getHPValue()}`);
     this.soundServise.playHurtSwing();
   }
 
@@ -114,7 +114,6 @@ class SceneBase extends Phaser.Scene {
         this.player.canStick = false;
       }
     });
-    
     return map;
   }
 
@@ -239,12 +238,11 @@ class SceneBase extends Phaser.Scene {
 
     const infoSigns = infoPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'infoSign').setSize(50, 59));
     infoSigns.forEach((sign, idx) => {
-      let overlapEnd = false;
       this.physics.add.overlap(this.player, sign, () => {
-        if (!overlapEnd) {
+        if (!this.player.collided) {
           this.playTutorial(infoPoints[idx].properties[0].value as string);
+          this.player.collided = true;
         }
-        overlapEnd = true;
       });
     });
   }
@@ -300,7 +298,7 @@ class SceneBase extends Phaser.Scene {
     const text = tutorialFlow[type as keyof ITutorialFlow];
     console.log(positionX, positionY);
 
-    const textGraphic = this.make.text(
+    this.player.tutorialText = this.make.text(
       {
         x: 32,
         y: 100,
@@ -310,11 +308,8 @@ class SceneBase extends Phaser.Scene {
         },
       }
 );
-    textGraphic.scrollFactorX = 0;
-    textGraphic.scrollFactorY = 0;
-    this.time.delayedCall(5000, () => {
-      textGraphic.destroy();
-    });
+    this.player.tutorialText.scrollFactorX = 0;
+    this.player.tutorialText.scrollFactorY = 0;
   }
 
   checkEsc() {

@@ -43,6 +43,8 @@ class Player extends Actor {
 
   canStick: boolean;
 
+  tutorialText!: Phaser.GameObjects.Text;
+
   lockedTo: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null;
 
   constructor(scene: Phaser.Scene, x: number, y: number, hp: number) {
@@ -60,7 +62,7 @@ class Player extends Actor {
     this.canJump = true;
     this.jumped = false;
     this.jumpVelocity = 700;
-    this.runVelocity = 600;
+    this.runVelocity = 400;
     this.overlap = false;
     this.dialogueModal = new DialogueModal(this.scene, {});
     this.enemyCollide = false;
@@ -71,11 +73,11 @@ class Player extends Actor {
     this.collided = false;
     this.canStick = true;
 
-    this.getBody().setSize(48, 48);
+    this.getBody().setSize(40, 32);
     this.getBody().setGravityY(1400);
     this.setDepth(1);
     this.getBody().maxVelocity.setTo(700, 700);
-    // this.getBody().setOffset(8, 0);
+    this.getBody().setOffset(6, 16);
     this.initAnimations();
   }
 
@@ -125,11 +127,11 @@ class Player extends Actor {
         if (!this.keyD?.isDown && !this.keyA?.isDown) {
           this.scaleX *= -1;
           if (this.scaleX < 0) {
-            this.getBody().setOffset(48, 0);
+            this.getBody().setOffset(40, 16);
           } else {
-          this.getBody().setOffset(0, 0);
+          this.getBody().setOffset(0, 16);
         }
-        this.body.velocity.x = 300 * this.scaleX;
+        this.body.velocity.x = this.runVelocity * this.scaleX;
         this.body.velocity.y = -this.jumpVelocity;
         }
       } else {
@@ -145,6 +147,12 @@ class Player extends Actor {
     // if (this.getBody().onFloor()) {
     //   this.anims.play('jump');
     // }
+  }
+
+  checkCollision() {
+    if (!this.collided && this.tutorialText) {
+      this.tutorialText.destroy();
+    }
   }
 
   setOverlap(variab: boolean) {
@@ -188,6 +196,7 @@ class Player extends Actor {
 
   update(): void {
     console.log(this.x, this.y);
+    this.checkCollision();
     // console.log(this.canStick);    
 
     // Check if player collides with wall
@@ -211,9 +220,9 @@ class Player extends Actor {
       if (!this.keySpace?.isDown && !this.body.velocity.y) {
         this.anims.play('run', true);
       }
-      this.body.velocity.x = 600;
+      this.body.velocity.x = this.runVelocity;
       this.checkFlip();
-      this.getBody().setOffset(0, 0);
+      this.getBody().setOffset(0, 16);
     }
 
     // Run left on A press
@@ -221,9 +230,9 @@ class Player extends Actor {
       if (!this.keySpace?.isDown && !this.body.velocity.y) {
         this.anims.play('run', true);
       }
-      this.body.velocity.x = -600;
+      this.body.velocity.x = -this.runVelocity;
       this.checkFlip();
-      this.getBody().setOffset(48, 0);
+      this.getBody().setOffset(48, 16);
     }
 
     // Jump on SPACE press
@@ -242,7 +251,7 @@ class Player extends Actor {
       }
     }
     if (this.enemyCollide && !this.collisionEnd) {
-      this.getDamage(1);
+      this.getDamage(1, !this.onWall);
       this.collisionEnd = true;
     }
 

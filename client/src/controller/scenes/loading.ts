@@ -47,11 +47,20 @@ class LoadingScene extends Phaser.Scene {
     const height = 20;
     const xStart = x - width / 2;
     const yStart = y - height / 2;
+    const loadingText = this.add.text(x, y - 100, 'Now Loading')
+      .setOrigin(0.5)
+      .setStyle({
+        fontSize: '24px',
+        strokeThickness: 0.5,
+      });
     const progressText = this.add
       .text(x, y - 50, '')
       .setOrigin(0.5)
       .setStyle({
         fontSize: '24px',
+        // stroke: '#599191',
+        // fontFamily: 'sans-serif',
+        strokeThickness: 0.5,
       });
 
     const borderOffset = 2;
@@ -71,17 +80,18 @@ class LoadingScene extends Phaser.Scene {
     });
     border.strokeRectShape(borderRect);
     const progressBar = this.add.graphics();
-
+    
     const updateProgressBar = function (percentage: number) { // eslint-disable-line
       progressBar.clear();
       progressBar.fillStyle(0x3afefd, 1);
       progressBar.fillRect(xStart, yStart, percentage * width, height);
       progressText.setText(`${Math.ceil(percentage * 100)}%`);
     };
-
+    
     this.load.on('progress', updateProgressBar);
     this.load.once('complete', () => {
       this.load.off('progress', updateProgressBar);
+      loadingText.setText('Done');
       this.scene.start('MainMenuScene');
     });
   }
@@ -99,7 +109,9 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('healthCanPickup', 'spritesheets/objects/healthCan.png');
     this.load.image('livesHUD', 'spritesheets/objects/livesHUD.png');
     this.load.image('rectangleHUD', 'spritesheets/objects/rectangleHUD.png');
-
+    this.load.image('frontBG', 'backgrounds/FrontBG.png');
+    this.load.image('frontBGBlurred', 'backgrounds/FrontBGBlurred.png');
+    this.load.image('frontBGcatSprite', 'spritesheets/FrontBG-catSprite.png');
 
     this.load.image('infoSign', 'spritesheets/objects/infoSign.png');
 
