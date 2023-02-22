@@ -1,6 +1,6 @@
 import DialogueModal from './dialogueModal';
 import randomGenerator from '../helpers/randomGenerator';
-import { INPCDialogData } from '../../types/interfaces';
+import { INPCDialogData } from '../../../../types/interfaces';
 
 class NPC extends Phaser.Physics.Arcade.Sprite {
   name: string;

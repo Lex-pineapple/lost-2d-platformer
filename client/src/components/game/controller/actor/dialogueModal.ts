@@ -1,5 +1,5 @@
-import dialogFlow from '../../assets/data/dialogFlow';
-import { INPCDialogData } from '../../types/interfaces';
+import dialogFlow from '../../../../assets/data/dialogFlow';
+import { INPCDialogData } from '../../../../types/interfaces';
 import SoundService from '../audio/soundServise';
 
 interface DialogueModalConfig {
