@@ -1,0 +1,38 @@
+.game {
+  &__headline {
+    margin-bottom: 40px;
+  }
+
+  canvas {
+    display: block;
+  }
+
+  p:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  &__cols {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 28px;
+  }
+
+  // &__col--one {
+  // padding-top: 8px;
+  // }
+
+  &__col--one,
+  &__col--two {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+  }
+
+  &__epilogue {
+    max-width: 800px;
+  }
+}

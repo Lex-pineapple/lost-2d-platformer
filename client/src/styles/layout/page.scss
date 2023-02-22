@@ -1,35 +1,55 @@
 .page {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding-bottom: 0;
 }
 
-// .page__header {
-//   margin-bottom: 40px;
+.page__header {
+  margin-bottom: 40px;
 
-//   @include laptop {
-//     margin-bottom: 32px;
-//   }
+  @include laptop {
+    margin-bottom: 32px;
+  }
 
-//   @include tablet {
-//     margin-bottom: 20px;
-//   }
-// }
+  @include tablet {
+    margin-bottom: 20px;
+  }
+}
 
-// .page__title {
-//   margin-bottom: 40px;
+.page__title {
+  margin-bottom: 40px;
 
-//   @include laptop {
-//     margin-bottom: 32px;
-//   }
+  @include laptop {
+    margin-bottom: 32px;
+  }
 
-//   @include tablet {
-//     margin-bottom: 20px;
-//   }
-// }
+  @include tablet {
+    margin-bottom: 20px;
+  }
+}
 
-// .page__main {
-//   margin-bottom: 80px;
-// }
+.page__main {
+  margin-bottom: 60px;
+}
 
-// .page__footer {
-//   margin-top: auto;
-// }
+.page__footer {
+  margin-top: auto;
+}
+
+.page--login {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: url('/assets/forest.png') top center no-repeat;
+  // background-size: 100% auto;
+  background-size: cover;
+
+  .page__main {
+    width: 100%;
+    margin-bottom: 0;
+  }
+}
