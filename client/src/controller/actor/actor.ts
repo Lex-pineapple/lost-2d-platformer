@@ -18,17 +18,18 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
       this.getBody().velocity.y = -200;
     }
 
+    
+    this.hp -= value;
     this.scene.tweens.add({
       targets: this,
       duration: 50,
       repeat: 3,
       yoyo: true,
       alpha: 0.5,
-      onStart: () => {
-        if (value) {
-          this.hp -= value;
-        }
-      },
+      // onStart: () => {
+      //   if (value) {
+      //   }
+      // },
       onComplete: () => {
         this.setAlpha(1);
       },

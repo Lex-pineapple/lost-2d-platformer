@@ -45,6 +45,8 @@ class Player extends Actor {
 
   tutorialText!: Phaser.GameObjects.Text;
 
+  enemyOverlap: boolean;
+
   lockedTo: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null;
 
   constructor(scene: Phaser.Scene, x: number, y: number, hp: number) {
@@ -72,6 +74,7 @@ class Player extends Actor {
     this.lockedTo = null;
     this.collided = false;
     this.canStick = true;
+    this.enemyOverlap = false;
 
     this.getBody().setSize(40, 32);
     this.getBody().setGravityY(1400);
@@ -195,7 +198,7 @@ class Player extends Actor {
   }
 
   update(): void {
-    console.log(this.x, this.y);
+    // console.log(this.x, this.y);
     this.checkCollision();
     // console.log(this.canStick);    
 
@@ -250,10 +253,10 @@ class Player extends Actor {
         this.y += this.lockedTo.body.deltaY();
       }
     }
-    if (this.enemyCollide && !this.collisionEnd) {
-      this.getDamage(1, !this.onWall);
-      this.collisionEnd = true;
-    }
+    // if (this.enemyCollide && !this.collisionEnd) {
+    //   this.getDamage(1, !this.onWall);
+    //   this.collisionEnd = true;
+    // }
 
     if (this.body.embedded) {
       this.body.touching.none = false;
@@ -265,6 +268,7 @@ class Player extends Actor {
       this.collisionEnd = false;
       this.onPlatform = false;
       this.collided = false;
+      this.enemyOverlap = false;
     }
 
     if (this.body.blocked.none) {

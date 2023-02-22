@@ -15,7 +15,7 @@ import GameOverScene from './controller/scenes/non-playable/gameOverScene';
 
 const SHARED_STATE: ISharedState = {
   playableScenePaused: null,
-  playerHP: '1000',
+  playerHP: '100',
   totalScore: '0',
 };
 

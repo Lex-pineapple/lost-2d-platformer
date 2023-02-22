@@ -186,15 +186,20 @@ class PlaySceneThree extends SceneBase {
     console.log(this.getPlayer().getHPValue());
 
     this.physics.add.overlap(this.getPlayer(), zone, () => {
-      this.reduceLife();
-      console.log(this.getPlayer().getHPValue());
-      this.getPlayer().enemyCollide = true;
-      if (this.getPlayer().getHPValue() <= 0) {
-        this.cameras.main.fadeOut(200, 0, 0, 0);
+      if (!this.getPlayer().enemyOverlap) {
+        this.getPlayer().enemyCollide = true;
+        this.getPlayer().getDamage(1, false);
+        this.reduceLife();
+        if (this.getPlayer().getHPValue() <= 0) {
+          this.cameras.main.fadeOut(200, 0, 0, 0);
           this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
             this.scene.start('GameOverScene');
           });
         }
+        this.getPlayer().enemyOverlap = true;
+        this.restorePlayer();
+
+      }
       // this.time.delayedCall(400, this.restorePlayer);
     });
       // zone.body.setAllowGravity(false);
@@ -202,28 +207,40 @@ class PlaySceneThree extends SceneBase {
     const zone1 = this.add.zone(6528, 450, 256, 32);
     this.physics.world.enable(zone1);
     this.physics.add.overlap(this.getPlayer(), zone1, () => {
-      this.reduceLife();
-      this.getPlayer().enemyCollide = true;
-      if (this.getPlayer().getHPValue() <= 0) {
-        this.cameras.main.fadeOut(200, 0, 0, 0);
+      if (!this.getPlayer().enemyOverlap) {
+        this.getPlayer().enemyCollide = true;
+        this.getPlayer().getDamage(1, false);
+        this.reduceLife();
+        if (this.getPlayer().getHPValue() <= 0) {
+          this.cameras.main.fadeOut(200, 0, 0, 0);
           this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
             this.scene.start('GameOverScene');
           });
         }
+        this.getPlayer().enemyOverlap = true;
+        this.restorePlayer();
+
+      }
       // this.time.delayedCall(400, this.restorePlayer);
     });
     const zone2 = this.add.zone(2208, 450, 576, 32);
     this.physics.world.enable(zone2);
     this.physics.add.overlap(this.getPlayer(), zone2, () => {
-      this.reduceLife();
-      this.getPlayer().enemyCollide = true;
-      if (this.getPlayer().getHPValue() <= 0) {
-        this.cameras.main.fadeOut(200, 0, 0, 0);
+      if (!this.getPlayer().enemyOverlap) {
+        this.getPlayer().enemyCollide = true;
+        this.getPlayer().getDamage(1, false);
+        this.reduceLife();
+        if (this.getPlayer().getHPValue() <= 0) {
+
+          this.cameras.main.fadeOut(200, 0, 0, 0);
           this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
             this.scene.start('GameOverScene');
           });
         }
-      // this.time.delayedCall(400, this.restorePlayer);
+        this.getPlayer().enemyOverlap = true;
+
+      }
+      this.restorePlayer();
     });
   }
 

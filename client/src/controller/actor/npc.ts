@@ -1,4 +1,6 @@
 import DialogueModal from './dialogueModal';
+import randomGenerator from '../helpers/randomGenerator';
+import { INPCDialogData } from '../../types/interfaces';
 
 class NPC extends Phaser.Physics.Arcade.Sprite {
   name: string;
@@ -9,9 +11,13 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
 
   dialogueModal!: DialogueModal;
 
-  dialogFinished: boolean;
+  mainDialogFinished: boolean;
 
-  dialogCounter: number;
+  idleDialogFinished: boolean;
+
+  mainDialogCounter: number;
+
+  idleDialogCounter: number;
 
   constructor(
     scene: Phaser.Scene,
@@ -31,8 +37,10 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     this.getBody().setCollideWorldBounds(true);
     this.createAnimation();
     this.flipX = true;
-    this.dialogFinished = false;
-    this.dialogCounter = 0;
+    this.mainDialogFinished = false;
+    this.idleDialogFinished = true;
+    this.mainDialogCounter = 0;
+    this.idleDialogCounter = 0;
     this.sceneName = sceneName;
     this.dialogueModal = new DialogueModal(this.scene, {});
     this.getBody().setSize(128, 64);
@@ -109,19 +117,57 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
     return this.sceneName;
   }
 
-  displayDialog() {
+  initDialog() {
     const npcDialog = this.dialogueModal.getDialogLines(this.name, this.sceneName);
+    console.log(!this.dialogueModal.created);
+    
     if (!this.dialogueModal.created) {
       this.dialogueModal.createWindow();
     }
-    if (this.dialogCounter < npcDialog.main.length) {
-      this.dialogueModal.setText(npcDialog.main[this.dialogCounter], true);
+    if (this.mainDialogFinished) {
+      this.displayDialog('idle', npcDialog);
     } else {
-      this.dialogFinished = true;
-      this.dialogueModal.removeWindow();
+      this.displayDialog('story', npcDialog);
     }
-    this.dialogCounter += 1;
   }
+
+  displayDialog(key: string, dialogLines: INPCDialogData) {
+    if (key === 'story') {
+      if (this.mainDialogCounter < dialogLines.story.length) {
+        this.dialogueModal.setText(dialogLines.story[this.mainDialogCounter], true);
+      } else {
+        this.mainDialogFinished = true;
+        this.dialogueModal.removeWindow();
+        this.idleDialogFinished = true;
+      }
+      this.mainDialogCounter += 1;
+    } else if (key === 'idle') {
+      if (this.idleDialogCounter < 1) {
+        const randNum = randomGenerator(dialogLines.idle.length);
+        this.idleDialogFinished = false;
+        this.dialogueModal.setText(dialogLines.idle[randNum], true);
+        this.idleDialogCounter += 1;
+      } else {
+        this.idleDialogFinished = true;
+        this.dialogueModal.removeWindow();
+        this.idleDialogCounter = 0;
+      }
+    }
+  }
+
+  // displayDialog() {
+  //   const npcDialog = this.dialogueModal.getDialogLines(this.name, this.sceneName);
+  //   if (!this.dialogueModal.created) {
+  //     this.dialogueModal.createWindow();
+  //   }
+  //   if (this.mainDialogCounter < npcDialog.main.length) {
+  //     this.dialogueModal.setText(npcDialog.main[this.mainDialogCounter], true);
+  //   } else {
+  //     this.mainDialogFinished = true;
+  //     this.dialogueModal.removeWindow();
+  //   }
+  //   this.mainDialogCounter += 1;
+  // }
 
   protected getBody(): Phaser.Physics.Arcade.Body {
     return this.body as Phaser.Physics.Arcade.Body;

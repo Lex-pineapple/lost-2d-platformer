@@ -26,13 +26,12 @@ class SceneBase extends Phaser.Scene {
 
   protected endpoint!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
-  score: number;
+  score!: number;
 
   soundServise!: SoundService;
 
   constructor(name: string, protected sharedState: ISharedState) {
     super({ key: name });
-    this.score = (sharedState.totalScore) ? +sharedState.totalScore : 0;
   }
 
   preload() {
@@ -49,6 +48,8 @@ class SceneBase extends Phaser.Scene {
   }
 
   createHUD() {
+    this.score = (this.sharedState.totalScore) ? +this.sharedState.totalScore : 0;
+
     const livesHUD = this.add.image(700, 16, 'livesHUD').setOrigin(0, 0);
     const rectangleHUD = this.add.image(16, 16, 'rectangleHUD').setOrigin(0, 0);
 
@@ -218,14 +219,20 @@ class SceneBase extends Phaser.Scene {
     const enemies = enemyPoints.map((point) => new Enemy(this, point.x, 450 - (1920 - point.y), 'cat'));
     enemies.forEach((enemy) => {
       this.physics.add.overlap(this.player, enemy, () => {
-        this.reduceLife();
-        this.player.enemyCollide = true;
-        if (this.getPlayer().getHPValue() <= 0) {
-          this.cameras.main.fadeOut(200, 0, 0, 0);
-          this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-            this.scene.start('GameOverScene');
-          });
+        if (!this.player.enemyOverlap) {
+          this.player.enemyCollide = true;
+          this.player.getDamage(1, !this.player.onWall);
+          console.log(this.getPlayer().getHPValue());
+          
+          this.reduceLife();
+          if (this.getPlayer().getHPValue() <= 0) {
+            this.cameras.main.fadeOut(200, 0, 0, 0);
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+              this.scene.start('GameOverScene');
+            });
+          }
         }
+        this.player.enemyOverlap = true;
       });
     });
     return enemies;
@@ -336,7 +343,7 @@ class SceneBase extends Phaser.Scene {
 
   _spawnCharacters() {
     if (this.sharedState.playerHP) {
-      this.player = new Player(this, 5982, -1142, +this.sharedState.playerHP);
+      this.player = new Player(this, 100, 200, +this.sharedState.playerHP);
     } else {
       this.player = new Player(this, 10000, 100, 3);
     }
@@ -349,7 +356,7 @@ class SceneBase extends Phaser.Scene {
 
   _setCamera(worldWidth: number, worldHeight: number) {
     this.cameras.main.setBounds(0, -1470, worldWidth, worldHeight, true);
-    this.physics.world.setBounds(0, -1470, worldWidth + 500, worldHeight + 64, true, true, false);
+    this.physics.world.setBounds(0, -1470, worldWidth + 500, worldHeight + 64, true, true, true);
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5, 0, 100);
   }
 

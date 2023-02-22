@@ -60,3 +60,8 @@ export interface ITutorialFlow {
   enemy: string;
   dialog: string;
 }
+
+export interface INPCDialogData {
+  story: string[];
+  idle: string[];
+}

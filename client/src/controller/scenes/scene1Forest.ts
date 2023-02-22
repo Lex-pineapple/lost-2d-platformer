@@ -82,8 +82,8 @@ class PlaySceneOne extends SceneBase {
       this.physics.add.overlap(this.getPlayer(), npc, () => {
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
           this.getPlayer().diableKeys();
-          npc.displayDialog();
-          if (npc.dialogFinished) {
+          npc.initDialog();
+          if (npc.mainDialogFinished && npc.idleDialogFinished) {
             this.getPlayer().enableKeys();
           }
         }
