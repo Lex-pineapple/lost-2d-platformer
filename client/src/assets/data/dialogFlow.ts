@@ -12,7 +12,9 @@ const dialogFlow = {
       ],
     },
     NPC2: {
-      story: [],
+      story: ['...',
+      '...',
+      '...Hng...Catnip...'],
       idle: [
         '...',
         '...',
