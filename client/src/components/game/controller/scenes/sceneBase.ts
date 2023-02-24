@@ -6,6 +6,13 @@ import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import tutorialFlow from '../../../../assets/data/tutorialFlow';
 import SoundService from '../audio/soundServise';
 
+interface ICollidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody {
+  properties?: {
+    collides: boolean;
+    noStick?: boolean;
+  }
+}
+
 class SceneBase extends Phaser.Scene {
   private player!: Player;
 
@@ -19,13 +26,12 @@ class SceneBase extends Phaser.Scene {
 
   protected endpoint!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
-  score: number;
+  score!: number;
 
   soundServise!: SoundService;
 
   constructor(name: string, protected sharedState: ISharedState) {
     super({ key: name });
-    this.score = 0;
   }
 
   preload() {
@@ -42,16 +48,29 @@ class SceneBase extends Phaser.Scene {
   }
 
   createHUD() {
+    this.score = (this.sharedState.totalScore) ? +this.sharedState.totalScore : 0;
+
+    const livesHUD = this.add.image(700, 16, 'livesHUD').setOrigin(0, 0);
+    const rectangleHUD = this.add.image(16, 16, 'rectangleHUD').setOrigin(0, 0);
+
     this.scoreText = this.add.text(16, 16, `Score: ${this.score}`).setPadding(10).setStyle({
       fontSize: '28px',
-      backgroundColor: '#073454',
-      fill: '#3afefd',
+      stroke: '#e9642b',
+      strokeThickness: 1,
+      // backgroundColor: '#073454',
+      fill: '#e9642b',
     });
-    this.livesText = this.add.text(300, 16, `Lives: ${this.player.getHPValue()}`).setPadding(10).setStyle({
+    this.livesText = this.add.text(748, 16, `${this.player.getHPValue()}`).setPadding(10).setStyle({
       fontSize: '28px',
-      backgroundColor: '#073454',
-      fill: '#3afefd',
+      stroke: '#e9642b',
+      strokeThickness: 1,
+      // backgroundColor: '#073454',
+      fill: '#e9642b',
     });
+    livesHUD.scrollFactorX = 0;
+    livesHUD.scrollFactorY = 0;
+    rectangleHUD.scrollFactorX = 0;
+    rectangleHUD.scrollFactorY = 0;
     this.scoreText.scrollFactorX = 0;
     this.scoreText.scrollFactorY = 0;
     this.livesText.scrollFactorX = 0;
@@ -69,11 +88,19 @@ class SceneBase extends Phaser.Scene {
       this.scoreText.setText(`Score: ${this.score}`);
       this.soundServise.playPickup2();
     }
-    console.log('score');
+    if (type === 'flower') {
+      this.score += 30;
+      this.scoreText.setText(`Score: ${this.score}`);
+      this.soundServise.playPickup1();
+    }
+    if (type === 'healthCan') {
+      this.player.increaseHP();
+      this.livesText.setText(`${this.player.getHPValue()}`);
+    }
   }
 
   reduceLife() {
-    this.livesText.setText(`Lives: ${this.player.getHPValue()}`);
+    this.livesText.setText(`${this.player.getHPValue()}`);
     this.soundServise.playHurtSwing();
   }
 
@@ -83,15 +110,19 @@ class SceneBase extends Phaser.Scene {
     const platforms = map.createLayer(platformMap, tileset, 0, -1470);
     // // Dont forget to set collision to each tile in tiled!
     platforms.setCollisionByProperty({ collides: true });
-    this.physics.add.collider(this.player, platforms);
+    this.physics.add.collider(this.player, platforms, (obj1, obj2: ICollidedObject) => {
+      if (obj2.properties?.noStick) {
+        this.player.canStick = false;
+      }
+    });
     return map;
   }
 
-  createPickups(map: Phaser.Tilemaps.Tilemap, type: string, frame: number) {
+  createPickups(map: Phaser.Tilemaps.Tilemap, type: string) {
     const objectPoints = gameObjectsToObjectPoints(
       map.filterObjects('EntityLayer', (obj) => obj.name === `${type}Point`)
     );
-    const pickups = objectPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'objectPickups', frame).setScale(1.5).setSize(16, 16));
+    const pickups = objectPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), `${type}Pickup`).setScale(1.5).setSize(16, 16));
     pickups.forEach((leaf) => {
       this.physics.add.overlap(this.player, leaf, (obj1, obj2) => {
         obj2.destroy();
@@ -105,10 +136,10 @@ class SceneBase extends Phaser.Scene {
       map.filterObjects('FunctionalLayer', (obj) => obj.name === 'keyPoint')
     );
 
-    const key = this.physics.add.sprite(keyPoint[0].x, 450 - (1920 - keyPoint[0].y), 'keyPickup')
-    .setScale(1)
+    const key = this.physics.add.sprite(keyPoint[0].x - 20, 450 - (1920 - keyPoint[0].y) - 20, 'keyPickup')
+    .setScale(2)
     .setImmovable(true)
-    .setBodySize(64, 55);
+    .setBodySize(8, 17);
     this.physics.add.overlap(this.player, key, (obj1, obj2) => {
       this.player.hasKey = true;
       obj2.destroy();
@@ -165,6 +196,7 @@ class SceneBase extends Phaser.Scene {
 
   beginTransition(nextSceneKey: string, posX: number, posY: number) {
     this.player.diableKeys();
+    this.sharedState.playerHP = String(this.player.getHPValue());
     this.cameras.main.fadeOut(1000, 0, 0, 0);
     this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
       this.handleEndpointChange(nextSceneKey, posX, posY);
@@ -190,16 +222,23 @@ class SceneBase extends Phaser.Scene {
     const enemies = enemyPoints.map((point) => new Enemy(this, point.x, 450 - (1920 - point.y), 'cat'));
     enemies.forEach((enemy) => {
       this.physics.add.overlap(this.player, enemy, () => {
-        this.reduceLife();
-        this.player.enemyCollide = true;
-        if (this.getPlayer().getHPValue() <= 0) {
-          this.cameras.main.fadeOut(200, 0, 0, 0);
-          this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-            this.scene.start('GameOverScene');
-          });
+        if (!this.player.enemyOverlap) {
+          this.player.enemyCollide = true;
+          this.player.getDamage(1, !this.player.onWall);
+          console.log(this.getPlayer().getHPValue());
+
+          this.reduceLife();
+          if (this.getPlayer().getHPValue() <= 0) {
+            this.cameras.main.fadeOut(200, 0, 0, 0);
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+              this.scene.start('GameOverScene');
+            });
+          }
         }
+        this.player.enemyOverlap = true;
       });
     });
+    return enemies;
   }
 
   createInfoPoints(map: Phaser.Tilemaps.Tilemap) {
@@ -209,12 +248,11 @@ class SceneBase extends Phaser.Scene {
 
     const infoSigns = infoPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'infoSign').setSize(50, 59));
     infoSigns.forEach((sign, idx) => {
-      let overlapEnd = false;
       this.physics.add.overlap(this.player, sign, () => {
-        if (!overlapEnd) {
-          this.playTutorial(infoPoints[idx].properties[0].value);
+        if (!this.player.collided) {
+          this.playTutorial(infoPoints[idx].properties[0].value as string);
+          this.player.collided = true;
         }
-        overlapEnd = true;
       });
     });
   }
@@ -270,7 +308,7 @@ class SceneBase extends Phaser.Scene {
     const text = tutorialFlow[type as keyof ITutorialFlow];
     console.log(positionX, positionY);
 
-    const textGraphic = this.make.text(
+    this.player.tutorialText = this.make.text(
       {
         x: 32,
         y: 100,
@@ -280,11 +318,8 @@ class SceneBase extends Phaser.Scene {
         },
       }
 );
-    textGraphic.scrollFactorX = 0;
-    textGraphic.scrollFactorY = 0;
-    this.time.delayedCall(3000, () => {
-      textGraphic.destroy();
-    });
+    this.player.tutorialText.scrollFactorX = 0;
+    this.player.tutorialText.scrollFactorY = 0;
   }
 
   checkEsc() {
@@ -310,7 +345,11 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
-    this.player = new Player(this, 10500, 100);
+    if (this.sharedState.playerHP) {
+      this.player = new Player(this, 100, 200, +this.sharedState.playerHP);
+    } else {
+      this.player = new Player(this, 10000, 100, 3);
+    }
     this._addPlayer();
   }
 
@@ -320,7 +359,7 @@ class SceneBase extends Phaser.Scene {
 
   _setCamera(worldWidth: number, worldHeight: number) {
     this.cameras.main.setBounds(0, -1470, worldWidth, worldHeight, true);
-    this.physics.world.setBounds(0, -1470, worldWidth + 500, worldHeight, true, true, false);
+    this.physics.world.setBounds(0, -1470, worldWidth + 500, worldHeight + 64, true, true, true);
     this.cameras.main.startFollow(this.player, true, 0.5, 0.5, 0, 100);
   }
 

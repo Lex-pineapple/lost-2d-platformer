@@ -45,7 +45,7 @@ export type ObjectPoint = {
 export interface IProperty {
   name: string;
   type: string;
-  value: string;
+  value: string | boolean;
 }
 
 export interface IPlayerPosition {
@@ -59,4 +59,9 @@ export interface ITutorialFlow {
   stick: string;
   enemy: string;
   dialog: string;
+}
+
+export interface INPCDialogData {
+  story: string[];
+  idle: string[];
 }

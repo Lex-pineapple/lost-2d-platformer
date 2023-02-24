@@ -80,6 +80,36 @@ class NonPlayableBaseScene extends Scene {
     });
   }
 
+  createTitle(text: string) {
+    this.add.text(this.getMiddlePositionX(), 40, text, {
+      fontSize: '32px',
+      color: '#ffffff',
+      stroke: '#ffffff',
+      fontFamily: 'sans-serif',
+      strokeThickness: 0.5,
+    }).setOrigin(0.5, 0.5);
+  }
+
+  styleMenu(width: number) {
+    const gameWidth = +this.game.config.width;
+    const gameHeight = +this.game.config.height;
+    const menuRectangle = this.add.rectangle(
+      gameWidth / 2,
+      gameHeight / 2,
+      width,
+      450,
+      0xffffff,
+      0.2
+      );
+    this.add.text(700, 420, 'ver. 1.0', {
+      fontSize: '18px',
+      color: '#599191',
+      stroke: '#599191',
+      fontFamily: 'sans-serif',
+      strokeThickness: 0.2,
+    });
+  }
+
   update() {
     this.checkEsc();
   }

@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { IPlayerPosition, ISharedState } from '../../../../types/interfaces';
 
 import DialogueModal from '../actor/dialogueModal';
+import Enemy from '../actor/enemy';
 import NPC from '../actor/npc';
 import Player from '../actor/player';
 import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
@@ -51,13 +52,14 @@ class PlaySceneOne extends SceneBase {
       'startForestTiles' // name of exported tiles file
     );
 
-    this.createPickups(map, 'leaf', 2);
-    this.createPickups(map, 'can', 0);
-    this.createEnemies(map);
+    this.createPickups(map, 'leaf');
+    this.createPickups(map, 'can');
+    const enemyArr = this.createEnemies(map);
+    this.initEnemyMovement(enemyArr);
     this.createHUD();
     this.createKey(map);
     // this.createEndpoint(map, 'PlaySceneTwo', 24, 3274);
-    this.createEndpoint(map, 'PlaySceneTwo', 7986, -1238);
+    this.createEndpoint(map, 'PlaySceneTwo', 7956, -1238);
     this.createMovingPlatforms(map);
 
     // if (this.playerX !== null) this.getPlayer().x = this.playerX;
@@ -70,21 +72,170 @@ class PlaySceneOne extends SceneBase {
 
   initNPCBehaviour() {
     const NPCArr = [];
-    NPCArr.push(new NPC(this, 'NPC1', 5810, -310, 'cat', 'PlaySceneOne'));
-    NPCArr.push(new NPC(this, 'NPC2', 5812, -1142, 'cat', 'PlaySceneOne'));
-    NPCArr.push(new NPC(this, 'NPC4', 7266, -1142, 'cat', 'PlaySceneOne'));
-    NPCArr.push(new NPC(this, 'NPC4', 8378, -1046, 'cat', 'PlaySceneOne'));
+    NPCArr.push(new NPC(this, 'NPC1', 5810, -310, 'cat', 'PlaySceneOne', 'sit'));
+    NPCArr.push(new NPC(this, 'NPC2', 5812, -1137, 'cat', 'PlaySceneOne', 'sleep'));
+    NPCArr.push(new NPC(this, 'NPC3', 7266, -1132, 'cat', 'PlaySceneOne', 'lie'));
+    NPCArr.push(new NPC(this, 'NPC4', 8378, -1046, 'cat', 'PlaySceneOne', 'sit'));
+    NPCArr[1].flip();
+    NPCArr[1].tint = 0xD68571;
 
     NPCArr.forEach((npc) => {
       this.physics.add.overlap(this.getPlayer(), npc, () => {
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
           this.getPlayer().diableKeys();
-          npc.displayDialog();
-          if (npc.dialogFinished) {
+          npc.initDialog();
+          if (npc.mainDialogFinished && npc.idleDialogFinished) {
             this.getPlayer().enableKeys();
           }
         }
       });
+    });
+  }
+
+  initEnemyMovement(enemies: Enemy[]) {
+    this.tweens.timeline({
+      targets: enemies[0].body.velocity,
+      loop: -1,
+      delay: 500,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: 20, duration: 500, delay: 500,
+        },
+        {
+          y: -20, duration: 500, delay: 500,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[1].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: 20, duration: 500, delay: 500,
+        },
+        {
+          y: -20, duration: 500, delay: 500,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[2].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: 40, duration: 500, delay: 500,
+        },
+        {
+          y: -40, duration: 500, delay: 500,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[6].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: 40, duration: 1000, delay: 1000,
+        },
+        {
+          y: -40, duration: 1000, delay: 1000,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[7].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: -40, duration: 1000, delay: 1000,
+        },
+        {
+          y: 40, duration: 1000, delay: 1000,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[8].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: -40, duration: 1000, delay: 1000,
+        },
+        {
+          y: 40, duration: 1000, delay: 1000,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[9].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: 40, duration: 1000, delay: 1000,
+        },
+        {
+          y: -40, duration: 1000, delay: 1000,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[10].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          x: -40, duration: 2000, delay: 2000,
+        },
+        {
+          x: 40, duration: 2000, delay: 2000,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[11].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: 40, duration: 1000, delay: 1000,
+        },
+        {
+          y: -40, duration: 1000, delay: 1000,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[12].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: -40, duration: 1000, delay: 1000,
+        },
+        {
+          y: 40, duration: 1000, delay: 1000,
+        },
+        ],
+    });
+    this.tweens.timeline({
+      targets: enemies[13].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: -60, duration: 1000, delay: 1000,
+        },
+        {
+          y: 60, duration: 1000, delay: 1000,
+        },
+        ],
     });
   }
 
@@ -96,12 +247,11 @@ class PlaySceneOne extends SceneBase {
     this._createBackground('forestBG3', 1920 + 2745, gameHeight - BGHeight, 6343, BGHeight);
   }
 
-  // INCREDIBLY ASS-BACKWARDS! redo or remove?
   createMovingPlatforms(map: Phaser.Tilemaps.Tilemap) {
     const platformPoints = gameObjectsToObjectPoints(
       map.filterObjects('MovingLayer', (obj) => obj.name === 'movingPlatformPoint')
     );
-    const platforms = platformPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'movingPlatform').setSize(160, 32).setImmovable(true)
+    const platforms = platformPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'movingPlatform').setSize(138, 16).setImmovable(true)
     // .setVelocity(0, 100),
     ); // eslint-disable-line
     platforms[0].body.setAllowGravity(false);
@@ -127,7 +277,51 @@ class PlaySceneOne extends SceneBase {
         this.getPlayer().onPlatform = true;
     });
 
+    this.tweens.timeline({
+      targets: platforms[1].body.velocity,
+      delay: 2500,
+      loop: -1,
+      ease: 'Linear',
+      duration: 2500,
+      tweens: [
+        {
+          x: 50,
+        },
+        {
+          x: -50,
+        },
+        ],
+        onComplete: () => {
+          platforms[1].body.velocity.x = 0;
+        },
+      });
     platforms[1].body.setAllowGravity(false);
+    this.physics.add.collider(this.getPlayer(), platforms[1], () => {
+      this.getPlayer().body.velocity.x = 0;
+      this.getPlayer().canStick = false;
+    });
+
+    this.tweens.timeline({
+      targets: platforms[2].body.velocity,
+      loop: -1,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: -50, duration: 3000, delay: 3000,
+        },
+        {
+          y: 50, duration: 3000, delay: 3000,
+        },
+        ],
+        onComplete: () => {
+          platforms[2].body.velocity.x = 0;
+        },
+      });
+    platforms[2].body.setAllowGravity(false);
+    this.physics.add.collider(this.getPlayer(), platforms[2], () => {
+      this.getPlayer().body.velocity.x = 0;
+      this.getPlayer().canStick = false;
+    });
   }
 
   update(): void {

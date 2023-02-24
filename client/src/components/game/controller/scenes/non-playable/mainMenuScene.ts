@@ -31,13 +31,31 @@ class MainMenuScene extends NonPlayableBaseScene {
 
   create() {
     super.create();
-    this.createTitle();
+    this.makeBG();
+    this.styleMenu(200);
+    this.createTitle('Main Menu');
     this.createMenu(this, this.menu, 25);
     this.soundServise.stopAnyMusic();
   }
 
-  createTitle() {
-    this.add.text(15, 10, 'Main Menu', { color: '#ffffff' });
+  makeBG() {
+    this.add.image(0, 0, 'frontBG').setOrigin(0, 0);
+    const catSprite = this.physics.add.sprite(700, 300, 'frontBGcatSprite');
+
+    this.tweens.timeline({
+      targets: catSprite.body.velocity,
+      loop: -1,
+      yoyo: true,
+      ease: 'Power1',
+      tweens: [
+        {
+          y: -50, duration: 400,
+        },
+        {
+          y: 50, duration: 400,
+        },
+        ],
+    });
   }
 
   update() {

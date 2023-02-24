@@ -12,20 +12,23 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
     this.getBody().setBounceY(0);
   }
 
-  public getDamage(value?: number): void {
-    this.getBody().velocity.x = 200 * -this.scaleX;
+  public getDamage(value: number, type: boolean): void {
+    if (type) {
+      this.getBody().velocity.x = 200 * this.scaleX;
+      this.getBody().velocity.y = -200;
+    }
 
+    this.hp -= value;
     this.scene.tweens.add({
       targets: this,
       duration: 50,
       repeat: 3,
       yoyo: true,
       alpha: 0.5,
-      onStart: () => {
-        if (value) {
-          this.hp -= value;
-        }
-      },
+      // onStart: () => {
+      //   if (value) {
+      //   }
+      // },
       onComplete: () => {
         this.setAlpha(1);
       },
@@ -34,6 +37,10 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
 
   public getHPValue(): number {
     return this.hp;
+  }
+
+  increaseHP() {
+    this.hp += 1;
   }
 
   protected checkFlip(): void {

@@ -37,12 +37,9 @@ class PauseMenuScene extends NonPlayableBaseScene {
 
   create() {
     super.create();
-    this.createTitle();
+    this.styleMenu(200);
+    this.createTitle('Pasued');
     this.createMenu(this, this.menu, 100);
-  }
-
-  createTitle() {
-    this.add.text(this.getMiddlePositionX(), 25, 'Pause', { color: '#ffffff' }).setOrigin(0.5);
   }
 
   update() {

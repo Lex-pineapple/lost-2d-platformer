@@ -1,0 +1,82 @@
+{
+	"textures": [
+		{
+			"image": "cat-lie-atlas",
+			"format": "RGBA8888",
+			"size": {
+				"w": 117,
+				"h": 29
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "cat-lie-frames-1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 29
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 29
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 29
+					}
+				},
+				{
+					"filename": "cat-lie-frames-2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 29
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 29
+					},
+					"frame": {
+						"x": 39,
+						"y": 0,
+						"w": 39,
+						"h": 29
+					}
+				},
+				{
+					"filename": "cat-lie-frames-3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 29
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 29
+					},
+					"frame": {
+						"x": 78,
+						"y": 0,
+						"w": 39,
+						"h": 29
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7"
+	}
+}

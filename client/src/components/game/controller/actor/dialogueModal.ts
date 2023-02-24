@@ -1,4 +1,5 @@
 import dialogFlow from '../../../../assets/data/dialogFlow';
+import { INPCDialogData } from '../../../../types/interfaces';
 import SoundService from '../audio/soundServise';
 
 interface DialogueModalConfig {
@@ -20,11 +21,6 @@ interface IDialogData {
   [PlaySceneOne: string]: {
     [NPC: string]: INPCDialogData;
   };
-}
-
-interface INPCDialogData {
-  story: string[];
-  idle: string[];
 }
 
 class DialogueModal {
@@ -221,8 +217,8 @@ class DialogueModal {
 
   getDialogLines(npcName: string, sceneName: string) {
     return {
+      story: this.dialogData[sceneName][npcName].story,
       idle: this.dialogData[sceneName][npcName].idle,
-      main: this.dialogData[sceneName][npcName].story,
     };
   }
 
