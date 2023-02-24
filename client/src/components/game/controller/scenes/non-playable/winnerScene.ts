@@ -1,13 +1,24 @@
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 import DialogueModal from '../../actor/dialogueModal';
-import { ISharedState } from '../../../../../types/interfaces';
+import { IMenuItem, ISharedState } from '../../../../../types/interfaces';
 
 class WinnerScene extends NonPlayableBaseScene {
   private dialogueModal!: DialogueModal;
 
+  private speechBubble!: Phaser.GameObjects.Sprite;
+
   private messageCounter: number;
 
   private dialogArr: Array<string>;
+
+  private menu: IMenuItem[] = [
+    {
+      sceneKey: 'MainMenuScene',
+      text: 'Main Menu',
+      textGameObj: null,
+      handleEvents: this.returnToMainMenu.bind(this),
+    },
+  ];
 
   constructor(name: string, protected sharedState: ISharedState) {
     super('WinnerScene', sharedState);
@@ -27,7 +38,7 @@ class WinnerScene extends NonPlayableBaseScene {
     const xAxis = this.getMiddlePositionX();
     const yAxis = this.getMiddlePositionY();
     this.add.image(xAxis, yAxis, 'winnerBackground');
-    this.add.sprite(xAxis + 95, yAxis - 90, 'speechBubble');
+    this.speechBubble = this.add.sprite(xAxis + 95, yAxis - 90, 'speechBubble');
     this.displayWinnerMessage();
     this.input.keyboard.on('keydown', (event: KeyboardEvent) => {
       if (event.key === 'f') {
@@ -41,9 +52,9 @@ class WinnerScene extends NonPlayableBaseScene {
     if (this.messageCounter < this.dialogArr.length) {
       this.dialogueModal.setText(this.dialogArr[this.messageCounter], true);
     } else {
-      this.soundServise.stopAnyEffects();
-      this.scene.stop('WinnerScene');
-      this.scene.start('MainMenuScene');
+      this.speechBubble.destroy();
+      this.dialogueModal.setText('', false);
+      this.createMenu(this, this.menu, 150);
     }
     this.messageCounter += 1;
   }

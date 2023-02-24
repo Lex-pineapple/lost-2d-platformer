@@ -142,6 +142,10 @@ class NonPlayableBaseScene extends Scene {
       this.soundServise.playSoundButton();
     }
   }
+
+  returnToMainMenu() {
+    this.scene.start('MainMenuScene');
+  }
 }
 
 export default NonPlayableBaseScene;

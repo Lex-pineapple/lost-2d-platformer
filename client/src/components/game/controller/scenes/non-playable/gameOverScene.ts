@@ -40,10 +40,6 @@ class GameOverScene extends NonPlayableBaseScene {
       })
       .setOrigin(0.5);
   }
-
-  returnToMainMenu() {
-    this.scene.start('MainMenuScene');
-  }
 }
 
 export default GameOverScene;
