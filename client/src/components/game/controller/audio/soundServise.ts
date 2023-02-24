@@ -54,6 +54,16 @@ class SoundService {
     this.music.play('forestMusicScene3', soundConfigMusic);
   }
 
+  playVictoryMusic() {
+    this.stopAnyMusic();
+    this.music.play('victoryMusic', { volume: soundConfigMusic.volume });
+  }
+
+  playGameOverMusic() {
+    this.stopAnyMusic();
+    this.music.play('gamoOverMusic', { volume: soundConfigMusic.volume });
+  }
+
   setVolumeMusic(value: number) {
     soundConfigMusic.volume = value;
     this.music.setVolume(soundConfigMusic.volume);
@@ -66,6 +76,10 @@ class SoundService {
 
   stopAnyMusic() {
     this.music.stopAll();
+  }
+
+  stopAnyEffects() {
+    this.effects.stopAll();
   }
 }
 

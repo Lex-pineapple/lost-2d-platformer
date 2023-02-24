@@ -41,7 +41,7 @@ class MainMenuScene extends NonPlayableBaseScene {
   makeBG() {
     this.add.image(0, 0, 'frontBG').setOrigin(0, 0);
     const catSprite = this.physics.add.sprite(700, 300, 'frontBGcatSprite');
-    
+
     this.tweens.timeline({
       targets: catSprite.body.velocity,
       loop: -1,
@@ -53,7 +53,7 @@ class MainMenuScene extends NonPlayableBaseScene {
         },
         {
           y: 50, duration: 400,
-        }
+        },
         ],
     });
   }

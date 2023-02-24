@@ -1,5 +1,7 @@
 import * as Phaser from 'phaser';
 // import arrow from '../../../../assets/menu/back_arrow.png';
+// import winnerBackground from '../../assets/menu/background/winnerBackground.png';
+// import speechBubble from '../../assets/menu/speech-bubble-longest.png';
 // import buttonSound from '../../../../assets/sounds/effects/interface/interface.ogg';
 // import cavernMusic from '../../../../assets/sounds/music/cavernous_desert02.mp3';
 // import forestMusic from '../../../../assets/sounds/music/darkforest.mp3';
@@ -80,14 +82,14 @@ class LoadingScene extends Phaser.Scene {
     });
     border.strokeRectShape(borderRect);
     const progressBar = this.add.graphics();
-    
+
     const updateProgressBar = function (percentage: number) { // eslint-disable-line
       progressBar.clear();
       progressBar.fillStyle(0x3afefd, 1);
       progressBar.fillRect(xStart, yStart, percentage * width, height);
       progressText.setText(`${Math.ceil(percentage * 100)}%`);
     };
-    
+
     this.load.on('progress', updateProgressBar);
     this.load.once('complete', () => {
       this.load.off('progress', updateProgressBar);
@@ -200,6 +202,10 @@ class LoadingScene extends Phaser.Scene {
       'dark-peacefulForestTileMap', // eslint-disable-next-line
       'tiles/Forets-TileMap/dark-peacefulForestTileMap.json'
     );
+    this.load.image('winnerBackground', 'menu/background/winnerBackground.png');
+    this.load.image('speechBubble', 'menu/speech-bubble-longest.png');
+    this.load.image('gameOverBackground', 'menu/background/gameOverBackground.png');
+    this.load.image('gameOverSprite', 'menu/titles/game_over_green.png');
 
     this.load.audio('buttonSound', 'sounds/effects/interface/interface.ogg');
     this.load.audio('cavernMusic', 'sounds/music/cavernous_desert02.mp3');
@@ -211,6 +217,8 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('hurtSwing', 'sounds/effects/hurts/swing.ogg');
     this.load.audio('doorSound', 'sounds/effects/world/door.ogg');
     this.load.audio('dialogSound', 'sounds/effects/dialog/fast_single_v4.ogg');
+    this.load.audio('victoryMusic', 'sounds/music/victory.ogg');
+    this.load.audio('gamoOverMusic', 'sounds/music/game_over.mp3');
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }

@@ -101,15 +101,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          x: 100
+          x: 100,
         },
         {
-          x: -100
-        }
+          x: -100,
+        },
         ],
         onComplete: () => {
           platforms[0].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms[1].body.velocity,
@@ -119,15 +119,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          x: -100
+          x: -100,
         },
         {
-          x: 100
-        }
+          x: 100,
+        },
         ],
         onComplete: () => {
           platforms[1].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms[2].body.velocity,
@@ -137,15 +137,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          y: -100
+          y: -100,
         },
         {
-          y: 100
-        }
+          y: 100,
+        },
         ],
         onComplete: () => {
           platforms[2].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms[3].body.velocity,
@@ -155,15 +155,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2000,
       tweens: [
         {
-          x: -100
+          x: -100,
         },
         {
-          x: 100
-        }
+          x: 100,
+        },
         ],
         onComplete: () => {
           platforms[3].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms[4].body.velocity,
@@ -173,15 +173,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          y: -100
+          y: -100,
         },
         {
-          y: 100
-        }
+          y: 100,
+        },
         ],
         onComplete: () => {
           platforms[4].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms[5].body.velocity,
@@ -191,15 +191,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 3000,
       tweens: [
         {
-          y: -100
+          y: -100,
         },
         {
-          y: 100
-        }
+          y: 100,
+        },
         ],
         onComplete: () => {
           platforms[5].body.velocity.x = 0;
-        }
+        },
     });
 
     this.tweens.timeline({
@@ -210,15 +210,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 3000,
       tweens: [
         {
-          y: 100
+          y: 100,
         },
         {
-          y: -100
-        }
+          y: -100,
+        },
         ],
         onComplete: () => {
           platforms2[0].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms2[1].body.velocity,
@@ -228,15 +228,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          x: 100
+          x: 100,
         },
         {
-          x: -100
-        }
+          x: -100,
+        },
         ],
         onComplete: () => {
           platforms2[1].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms2[2].body.velocity,
@@ -246,15 +246,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          x: -100
+          x: -100,
         },
         {
-          x: 100
-        }
+          x: 100,
+        },
         ],
         onComplete: () => {
           platforms2[2].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms2[3].body.velocity,
@@ -264,15 +264,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          y: 100
+          y: 100,
         },
         {
-          y: -100
-        }
+          y: -100,
+        },
         ],
         onComplete: () => {
           platforms2[3].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms2[4].body.velocity,
@@ -282,15 +282,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          y: -100
+          y: -100,
         },
         {
-          y: 100
-        }
+          y: 100,
+        },
         ],
         onComplete: () => {
           platforms2[4].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms2[5].body.velocity,
@@ -300,15 +300,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          y: 100
+          y: 100,
         },
         {
-          y: -100
-        }
+          y: -100,
+        },
         ],
         onComplete: () => {
           platforms2[5].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms2[6].body.velocity,
@@ -318,15 +318,15 @@ class PlaySceneTwo extends SceneBase {
       duration: 1000,
       tweens: [
         {
-          y: -100
+          y: -100,
         },
         {
-          y: 100
-        }
+          y: 100,
+        },
         ],
         onComplete: () => {
           platforms2[6].body.velocity.x = 0;
-        }
+        },
     });
   }
 

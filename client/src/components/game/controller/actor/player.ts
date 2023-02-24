@@ -200,14 +200,14 @@ class Player extends Actor {
   update(): void {
     // console.log(this.x, this.y);
     this.checkCollision();
-    // console.log(this.canStick);    
+    // console.log(this.canStick);
 
     // Check if player collides with wall
     this.checkWallCollision();
 
     // Reset velocity to prevent gliding
     // this.getBody().velocity.x = 0;
-    
+
     if (!this.body.blocked.none) {
       this.getBody().velocity.x = 0;
     }

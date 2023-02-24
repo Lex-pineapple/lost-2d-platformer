@@ -100,11 +100,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: 20, duration: 500, delay: 500
+          y: 20, duration: 500, delay: 500,
         },
         {
-          y: -20, duration: 500, delay: 500
-        }
+          y: -20, duration: 500, delay: 500,
+        },
         ],
     });
     this.tweens.timeline({
@@ -113,11 +113,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: 20, duration: 500, delay: 500
+          y: 20, duration: 500, delay: 500,
         },
         {
-          y: -20, duration: 500, delay: 500
-        }
+          y: -20, duration: 500, delay: 500,
+        },
         ],
     });
     this.tweens.timeline({
@@ -126,11 +126,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: 40, duration: 500, delay: 500
+          y: 40, duration: 500, delay: 500,
         },
         {
-          y: -40, duration: 500, delay: 500
-        }
+          y: -40, duration: 500, delay: 500,
+        },
         ],
     });
     this.tweens.timeline({
@@ -139,11 +139,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: 40, duration: 1000, delay: 1000
+          y: 40, duration: 1000, delay: 1000,
         },
         {
-          y: -40, duration: 1000, delay: 1000
-        }
+          y: -40, duration: 1000, delay: 1000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -152,11 +152,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: -40, duration: 1000, delay: 1000
+          y: -40, duration: 1000, delay: 1000,
         },
         {
-          y: 40, duration: 1000, delay: 1000
-        }
+          y: 40, duration: 1000, delay: 1000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -165,11 +165,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: -40, duration: 1000, delay: 1000
+          y: -40, duration: 1000, delay: 1000,
         },
         {
-          y: 40, duration: 1000, delay: 1000
-        }
+          y: 40, duration: 1000, delay: 1000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -178,11 +178,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: 40, duration: 1000, delay: 1000
+          y: 40, duration: 1000, delay: 1000,
         },
         {
-          y: -40, duration: 1000, delay: 1000
-        }
+          y: -40, duration: 1000, delay: 1000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -191,11 +191,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: -40, duration: 2000, delay: 2000
+          x: -40, duration: 2000, delay: 2000,
         },
         {
-          x: 40, duration: 2000, delay: 2000
-        }
+          x: 40, duration: 2000, delay: 2000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -204,11 +204,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: 40, duration: 1000, delay: 1000
+          y: 40, duration: 1000, delay: 1000,
         },
         {
-          y: -40, duration: 1000, delay: 1000
-        }
+          y: -40, duration: 1000, delay: 1000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -217,11 +217,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: -40, duration: 1000, delay: 1000
+          y: -40, duration: 1000, delay: 1000,
         },
         {
-          y: 40, duration: 1000, delay: 1000
-        }
+          y: 40, duration: 1000, delay: 1000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -230,11 +230,11 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: -60, duration: 1000, delay: 1000
+          y: -60, duration: 1000, delay: 1000,
         },
         {
-          y: 60, duration: 1000, delay: 1000
-        }
+          y: 60, duration: 1000, delay: 1000,
+        },
         ],
     });
   }
@@ -285,15 +285,15 @@ class PlaySceneOne extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          x: 50
+          x: 50,
         },
         {
-          x: -50
-        }
+          x: -50,
+        },
         ],
         onComplete: () => {
           platforms[1].body.velocity.x = 0;
-        }
+        },
       });
     platforms[1].body.setAllowGravity(false);
     this.physics.add.collider(this.getPlayer(), platforms[1], () => {
@@ -307,15 +307,15 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: -50, duration: 3000, delay: 3000
+          y: -50, duration: 3000, delay: 3000,
         },
         {
-          y: 50, duration: 3000, delay: 3000
-        }
+          y: 50, duration: 3000, delay: 3000,
+        },
         ],
         onComplete: () => {
           platforms[2].body.velocity.x = 0;
-        }
+        },
       });
     platforms[2].body.setAllowGravity(false);
     this.physics.add.collider(this.getPlayer(), platforms[2], () => {

@@ -120,7 +120,7 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
   initDialog() {
     const npcDialog = this.dialogueModal.getDialogLines(this.name, this.sceneName);
     console.log(!this.dialogueModal.created);
-    
+
     if (!this.dialogueModal.created) {
       this.dialogueModal.createWindow();
     }

@@ -57,7 +57,7 @@ class PlaySceneThree extends SceneBase {
     this._createBackground('demonForestBG4', 1164 + 2298 + 1000, gameHeight - BGHeight, 1000, BGHeight);
     this._createBackground('demonForestBG3', 1164 + 2298 + 1000 + 1000, gameHeight - BGHeight, 1800, BGHeight);
     this._createBackground('demonForestBG5', 1164 + 2298 + 1000 + 1000 + 1800, gameHeight - BGHeight, 1207, BGHeight);
-    
+
     this._createBackground(
       'demonForest-peaceful-skyTransition',
       1164 + 2298 + 1000 + 1000 + 1800 + 1207,
@@ -135,15 +135,15 @@ class PlaySceneThree extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          y: -100
+          y: -100,
         },
         {
-          y: 100
-        }
+          y: 100,
+        },
         ],
         onComplete: () => {
           platforms[0].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms[2].body.velocity,
@@ -153,15 +153,15 @@ class PlaySceneThree extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          x: -50
+          x: -50,
         },
         {
-          x: 50
-        }
+          x: 50,
+        },
         ],
         onComplete: () => {
           platforms[0].body.velocity.x = 0;
-        }
+        },
     });
     this.tweens.timeline({
       targets: platforms[3].body.velocity,
@@ -171,11 +171,11 @@ class PlaySceneThree extends SceneBase {
       duration: 2500,
       tweens: [
         {
-          y: -100
+          y: -100,
         },
         {
-          y: 100
-        }
+          y: 100,
+        },
         ],
     });
   }
@@ -198,7 +198,6 @@ class PlaySceneThree extends SceneBase {
         }
         this.getPlayer().enemyOverlap = true;
         this.restorePlayer();
-
       }
       // this.time.delayedCall(400, this.restorePlayer);
     });
@@ -219,7 +218,6 @@ class PlaySceneThree extends SceneBase {
         }
         this.getPlayer().enemyOverlap = true;
         this.restorePlayer();
-
       }
       // this.time.delayedCall(400, this.restorePlayer);
     });
@@ -231,14 +229,12 @@ class PlaySceneThree extends SceneBase {
         this.getPlayer().getDamage(1, false);
         this.reduceLife();
         if (this.getPlayer().getHPValue() <= 0) {
-
           this.cameras.main.fadeOut(200, 0, 0, 0);
           this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
             this.scene.start('GameOverScene');
           });
         }
         this.getPlayer().enemyOverlap = true;
-
       }
       this.restorePlayer();
     });
@@ -258,11 +254,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: 200, duration: 5000, delay: 5000
+          x: 200, duration: 5000, delay: 5000,
         },
         {
-          x: -200, duration: 5000, delay: 5000
-        }
+          x: -200, duration: 5000, delay: 5000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -271,11 +267,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: 50, duration: 2000, delay: 2000
+          x: 50, duration: 2000, delay: 2000,
         },
         {
-          x: -50, duration: 2000, delay: 2000
-        }
+          x: -50, duration: 2000, delay: 2000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -284,11 +280,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: -50, duration: 2000, delay: 2000
+          x: -50, duration: 2000, delay: 2000,
         },
         {
-          x: 50, duration: 2000, delay: 2000
-        }
+          x: 50, duration: 2000, delay: 2000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -297,11 +293,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: -200, duration: 5000, delay: 5000
+          x: -200, duration: 5000, delay: 5000,
         },
         {
-          x: 200, duration: 5000, delay: 5000
-        }
+          x: 200, duration: 5000, delay: 5000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -310,11 +306,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: 200, duration: 2000, delay: 2000
+          x: 200, duration: 2000, delay: 2000,
         },
         {
-          x: -200, duration: 2000, delay: 2000
-        }
+          x: -200, duration: 2000, delay: 2000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -323,11 +319,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: 50, duration: 3500, delay: 3500
+          x: 50, duration: 3500, delay: 3500,
         },
         {
-          x: -50, duration: 3500, delay: 3500
-        }
+          x: -50, duration: 3500, delay: 3500,
+        },
         ],
     });
     this.tweens.timeline({
@@ -336,11 +332,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: -50, duration: 3500, delay: 3500
+          x: -50, duration: 3500, delay: 3500,
         },
         {
-          x: 50, duration: 3500, delay: 3500
-        }
+          x: 50, duration: 3500, delay: 3500,
+        },
         ],
     });
     this.tweens.timeline({
@@ -349,11 +345,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: -50, duration: 2500, delay: 2500
+          x: -50, duration: 2500, delay: 2500,
         },
         {
-          x: 50, duration: 2500, delay: 2500
-        }
+          x: 50, duration: 2500, delay: 2500,
+        },
         ],
     });
     this.tweens.timeline({
@@ -362,11 +358,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: 50, duration: 2500, delay: 2500
+          x: 50, duration: 2500, delay: 2500,
         },
         {
-          x: -50, duration: 2500, delay: 2500
-        }
+          x: -50, duration: 2500, delay: 2500,
+        },
         ],
     });
     this.tweens.timeline({
@@ -375,11 +371,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: 100, duration: 3000, delay: 3000
+          x: 100, duration: 3000, delay: 3000,
         },
         {
-          x: -100, duration: 3000, delay: 3000
-        }
+          x: -100, duration: 3000, delay: 3000,
+        },
         ],
     });
     this.tweens.timeline({
@@ -388,11 +384,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: -50, duration: 1500, delay: 1500
+          x: -50, duration: 1500, delay: 1500,
         },
         {
-          x: 50, duration: 1500, delay: 1500
-        }
+          x: 50, duration: 1500, delay: 1500,
+        },
         ],
     });
     this.tweens.timeline({
@@ -401,11 +397,11 @@ class PlaySceneThree extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: 50, duration: 1500, delay: 1500
+          y: 50, duration: 1500, delay: 1500,
         },
         {
-          y: -50, duration: 1500, delay: 1500
-        }
+          y: -50, duration: 1500, delay: 1500,
+        },
         ],
     });
   }

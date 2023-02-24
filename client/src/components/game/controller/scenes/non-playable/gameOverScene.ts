@@ -25,8 +25,11 @@ class GameOverScene extends NonPlayableBaseScene {
   create() {
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     super.create();
-    this.createTitle();
+    this.add.image(this.getMiddlePositionX(), this.getMiddlePositionY(), 'gameOverBackground');
+    this.add.sprite(this.getMiddlePositionX(), this.getMiddlePositionY() + 75, 'gameOverSprite');
+    // this.createTitle();
     this.createMenu(this, this.menu, 150);
+    this.soundServise.playGameOverMusic();
   }
 
   createTitle() {
@@ -36,10 +39,6 @@ class GameOverScene extends NonPlayableBaseScene {
         color: '#ffffff',
       })
       .setOrigin(0.5);
-  }
-
-  returnToMainMenu() {
-    this.scene.start('MainMenuScene');
   }
 }
 

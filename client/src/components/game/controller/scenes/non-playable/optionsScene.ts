@@ -38,7 +38,7 @@ class OptionsScene extends NonPlayableBaseScene {
     this.makeBG();
     this.styleMenu(400);
     this.createTitle('Options');
-    
+
     const xAxis = this.getMiddlePositionX();
     const yAxis = this.getMiddlePositionY();
     const volumeMusic = soundConfigMusic.volume!;
@@ -60,7 +60,7 @@ class OptionsScene extends NonPlayableBaseScene {
 
   createSlider(xPos: number, yPos: number, labelText: string, volume: number, callback: Function) {
     const labeLSlider = this.add.text(270, yPos, `${labelText}:`);
-    labeLSlider.setStyle({ 
+    labeLSlider.setStyle({
       fill: '#0d7575',
       stroke: '#0d7575',
       fontFamily: 'sans-serif',
@@ -140,7 +140,7 @@ class OptionsScene extends NonPlayableBaseScene {
 
   createLangButton(xPos: number, yPos: number) {
     this._langButton = this.add
-      .text(xPos, yPos, EnumLang.en, { 
+      .text(xPos, yPos, EnumLang.en, {
         color: '#0d7575',
         stroke: '#0d7575',
         fontFamily: 'sans-serif',

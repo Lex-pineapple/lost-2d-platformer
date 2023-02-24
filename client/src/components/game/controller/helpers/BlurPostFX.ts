@@ -56,10 +56,8 @@ interface UniformPipelineConfig extends Phaser.Types.Renderer.WebGL.WebGLPipelin
     uniforms?: String[];
 }
 
-export default class BlurPostFX extends Phaser.Renderer.WebGL.WebGLPipeline
-{
-    constructor (game: Phaser.Game)
-    {
+export default class BlurPostFX extends Phaser.Renderer.WebGL.WebGLPipeline {
+    constructor(game: Phaser.Game) {
         const BlurConfig: UniformPipelineConfig = {
             game,
             renderTarget: true,
@@ -69,15 +67,14 @@ export default class BlurPostFX extends Phaser.Renderer.WebGL.WebGLPipeline
                 'uMainSampler',
                 'uResolution',
                 'radius',
-                'dir'
-            ]
+                'dir',
+            ],
         };
         super(BlurConfig);
     }
 
-    onPreRender () 
-    {
-        const r = Math.abs(2 * Math.sin(this.game.loop.time * 10))
+    onPreRender() {
+        const r = Math.abs(2 * Math.sin(this.game.loop.time * 10));
         this.set1f('uResolution', this.renderer.width);
         this.set1f('radius', r);
         this.set2f('dir', 1.0, 1.0);

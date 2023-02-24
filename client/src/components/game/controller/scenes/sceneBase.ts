@@ -6,7 +6,7 @@ import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import tutorialFlow from '../../../../assets/data/tutorialFlow';
 import SoundService from '../audio/soundServise';
 
-interface collidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody {
+interface ICollidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody {
   properties?: {
     collides: boolean;
     noStick?: boolean;
@@ -110,7 +110,7 @@ class SceneBase extends Phaser.Scene {
     const platforms = map.createLayer(platformMap, tileset, 0, -1470);
     // // Dont forget to set collision to each tile in tiled!
     platforms.setCollisionByProperty({ collides: true });
-    this.physics.add.collider(this.player, platforms, (obj1, obj2: collidedObject) => {
+    this.physics.add.collider(this.player, platforms, (obj1, obj2: ICollidedObject) => {
       if (obj2.properties?.noStick) {
         this.player.canStick = false;
       }
@@ -170,6 +170,8 @@ class SceneBase extends Phaser.Scene {
           },
         });
       this.soundServise.playDoorSound();
+      this.saveScoreToSharedState();
+      console.log(this.sharedState.score);
       }
       this.player.collided = true;
     });
@@ -188,6 +190,7 @@ class SceneBase extends Phaser.Scene {
       this.player.diableKeys();
       this.player.disableRun();
       console.log('Win!!!!!!!!!!!!');
+      this.saveScoreToSharedState();
     });
   }
 
@@ -223,7 +226,7 @@ class SceneBase extends Phaser.Scene {
           this.player.enemyCollide = true;
           this.player.getDamage(1, !this.player.onWall);
           console.log(this.getPlayer().getHPValue());
-          
+
           this.reduceLife();
           if (this.getPlayer().getHPValue() <= 0) {
             this.cameras.main.fadeOut(200, 0, 0, 0);
@@ -366,6 +369,15 @@ class SceneBase extends Phaser.Scene {
 
   getPlayer() {
     return this.player;
+  }
+
+  saveScoreToSharedState() {
+    if (!this.sharedState.score) {
+      this.sharedState.score = String(this.score);
+    } else {
+      const prevScore = Number(this.sharedState.score);
+      this.sharedState.score = String(prevScore + this.score);
+    }
   }
 }
 

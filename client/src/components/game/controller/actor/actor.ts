@@ -18,7 +18,6 @@ class Actor extends Phaser.Physics.Arcade.Sprite {
       this.getBody().velocity.y = -200;
     }
 
-    
     this.hp -= value;
     this.scene.tweens.add({
       targets: this,
