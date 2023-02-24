@@ -56,7 +56,12 @@ class SoundService {
 
   playVictoryMusic() {
     this.stopAnyMusic();
-    this.effects.play('victoryMusic', soundConfigEffects);
+    this.music.play('victoryMusic', { volume: soundConfigMusic.volume });
+  }
+
+  playGameOverMusic() {
+    this.stopAnyMusic();
+    this.music.play('gamoOverMusic', { volume: soundConfigMusic.volume });
   }
 
   setVolumeMusic(value: number) {

@@ -204,6 +204,8 @@ class LoadingScene extends Phaser.Scene {
     );
     this.load.image('winnerBackground', 'menu/background/winnerBackground.png');
     this.load.image('speechBubble', 'menu/speech-bubble-longest.png');
+    this.load.image('gameOverBackground', 'menu/background/gameOverBackground.png');
+    this.load.image('gameOverSprite', 'menu/titles/game_over_green.png');
 
     this.load.audio('buttonSound', 'sounds/effects/interface/interface.ogg');
     this.load.audio('cavernMusic', 'sounds/music/cavernous_desert02.mp3');
@@ -216,6 +218,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('doorSound', 'sounds/effects/world/door.ogg');
     this.load.audio('dialogSound', 'sounds/effects/dialog/fast_single_v4.ogg');
     this.load.audio('victoryMusic', 'sounds/music/victory.ogg');
+    this.load.audio('gamoOverMusic', 'sounds/music/game_over.mp3');
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
   }
