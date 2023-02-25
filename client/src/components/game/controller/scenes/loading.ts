@@ -1,17 +1,4 @@
 import * as Phaser from 'phaser';
-// import arrow from '../../../../assets/menu/back_arrow.png';
-// import winnerBackground from '../../assets/menu/background/winnerBackground.png';
-// import speechBubble from '../../assets/menu/speech-bubble-longest.png';
-// import buttonSound from '../../../../assets/sounds/effects/interface/interface.ogg';
-// import cavernMusic from '../../../../assets/sounds/music/cavernous_desert02.mp3';
-// import forestMusic from '../../../../assets/sounds/music/darkforest.mp3';
-// import forestMusicScene1 from '../../../../assets/sounds/music/moonlight_shadow.mp3';
-// import forestMusicScene3 from '../../../../assets/sounds/ambience/forest.mp3';
-// import pickupCoin1 from '../../../../assets/sounds/effects/pickup/coin.ogg';
-// import pickupCoin2 from '../../../../assets/sounds/effects/pickup/coin2.ogg';
-// import hurtSwing from '../../../../assets/sounds/effects/hurts/swing.ogg';
-// import doorSound from '../../../../assets/sounds/effects/world/door.ogg';
-// import dialogSound from '../../../../assets/sounds/effects/dialog/fast_single_v4.ogg';
 import { ISharedState } from '../../../../types/interfaces';
 
 class LoadingScene extends Phaser.Scene {
@@ -207,12 +194,15 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('gameOverBackground', 'menu/background/gameOverBackground.png');
     this.load.image('gameOverSprite', 'menu/titles/game_over_green.png');
 
-    this.load.audio('buttonSound', 'sounds/effects/interface/interface.ogg');
     this.load.audio('forestMusicScene1', 'sounds/music/musicScene1.mp3');
     this.load.audio('cavernMusic', 'sounds/music/musicScene2.mp3');
     this.load.audio('forestMusicScene3', 'sounds/music/musicScene3.mp3');
+    this.load.audio('buttonSound', 'sounds/effects/interface/interface.ogg');
     this.load.audio('pickupCoin1', 'sounds/effects/pickup/coin.ogg');
     this.load.audio('pickupCoin2', 'sounds/effects/pickup/coin2.ogg');
+    this.load.audio('pickupCoin3', 'sounds/effects/pickup/coin3.mp3');
+    this.load.audio('healthPickup', 'sounds/effects/pickup/healthPickup.ogg');
+    this.load.audio('keyPuckup', 'sounds/effects/pickup/keyPickup.mp3');
     this.load.audio('hurtSwing', 'sounds/effects/hurts/swing.ogg');
     this.load.audio('doorSound', 'sounds/effects/world/door.ogg');
     this.load.audio('dialogSound', 'sounds/effects/dialog/fast_single_v4.ogg');
