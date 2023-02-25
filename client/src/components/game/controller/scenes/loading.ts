@@ -208,16 +208,15 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('gameOverSprite', 'menu/titles/game_over_green.png');
 
     this.load.audio('buttonSound', 'sounds/effects/interface/interface.ogg');
-    this.load.audio('cavernMusic', 'sounds/music/cavernous_desert02.mp3');
-    this.load.audio('forestMusic', 'sounds/music/darkforest.mp3');
-    this.load.audio('forestMusicScene1', 'sounds/music/moonlight_shadow.mp3');
-    this.load.audio('forestMusicScene3', 'sounds/ambience/forest.mp3');
+    this.load.audio('forestMusicScene1', 'sounds/music/musicScene1.mp3');
+    this.load.audio('cavernMusic', 'sounds/music/musicScene2.mp3');
+    this.load.audio('forestMusicScene3', 'sounds/music/musicScene3.mp3');
     this.load.audio('pickupCoin1', 'sounds/effects/pickup/coin.ogg');
     this.load.audio('pickupCoin2', 'sounds/effects/pickup/coin2.ogg');
     this.load.audio('hurtSwing', 'sounds/effects/hurts/swing.ogg');
     this.load.audio('doorSound', 'sounds/effects/world/door.ogg');
     this.load.audio('dialogSound', 'sounds/effects/dialog/fast_single_v4.ogg');
-    this.load.audio('victoryMusic', 'sounds/music/victory.ogg');
+    this.load.audio('victoryMusic', 'sounds/music/victory.mp3');
     this.load.audio('gamoOverMusic', 'sounds/music/game_over.mp3');
 
     this.createProgressBar(this.getCenterX(), this.getCenterY());
