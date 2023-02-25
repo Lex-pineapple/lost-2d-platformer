@@ -91,11 +91,12 @@ class SceneBase extends Phaser.Scene {
     if (type === 'flower') {
       this.score += 30;
       this.scoreText.setText(`Score: ${this.score}`);
-      this.soundServise.playPickup1();
+      this.soundServise.playPickup3();
     }
     if (type === 'healthCan') {
       this.player.increaseHP();
       this.livesText.setText(`${this.player.getHPValue()}`);
+      this.soundServise.playHealthPickup();
     }
   }
 
@@ -141,6 +142,7 @@ class SceneBase extends Phaser.Scene {
     .setImmovable(true)
     .setBodySize(8, 17);
     this.physics.add.overlap(this.player, key, (obj1, obj2) => {
+      this.soundServise.playKeyPickup();
       this.player.hasKey = true;
       obj2.destroy();
     });

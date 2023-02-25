@@ -30,8 +30,19 @@ class SoundService {
     this.effects.play('pickupCoin2', soundConfigEffects);
   }
 
+  playPickup3() {
+    this.effects.play('pickupCoin3', soundConfigEffects);
+  }
+
+  playKeyPickup() {
+    this.effects.play('keyPuckup', soundConfigEffects);
+  }
+
+  playHealthPickup() {
+    this.effects.play('healthPickup', soundConfigEffects);
+  }
+
   playHurtSwing() {
-    this.effects.stopAll();
     this.effects.play('hurtSwing', soundConfigEffects);
   }
 
