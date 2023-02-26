@@ -98,7 +98,7 @@ class Game extends Component {
     const SHARED_STATE: ISharedState = {
       playableScenePaused: null,
       playerHP: '100',
-      totalScore: '0',
+      score: '0',
     };
 
     const scenes = [

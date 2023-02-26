@@ -40,6 +40,7 @@ class PlaySceneTwo extends SceneBase {
     this.initNPCBehaviour();
     this.createMovingPlatforms(map);
     this.soundServise.playCavernMusic();
+    this.saveAllDataToSharedState(this.scene.key);
   }
 
   tileBackgrounds(BGHeight: number) {
