@@ -1,5 +1,6 @@
 import { IMenuItem, ISharedState } from '../../../../../types/interfaces';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
+import { saveToLocalStorage, SaveItems } from '../../helpers/localStorage';
 
 class PauseMenuScene extends NonPlayableBaseScene {
   private menu: IMenuItem[] = [
@@ -9,7 +10,12 @@ class PauseMenuScene extends NonPlayableBaseScene {
       textGameObj: null,
       handleEvents: this.resumeGame.bind(this),
     },
-    { sceneKey: null, text: 'Save', textGameObj: null },
+    {
+      sceneKey: null,
+      text: 'Save',
+      textGameObj: null,
+      handleEvents: this.saveButtonEvent.bind(this),
+    },
     { sceneKey: null, text: 'Load', textGameObj: null },
     {
       sceneKey: this.menuScenes.optionsMenu,
@@ -60,15 +66,29 @@ class PauseMenuScene extends NonPlayableBaseScene {
       this.scene.stop(this.sharedState.playableScenePaused);
       this.sharedState.playableScenePaused = null;
     }
-
+    if (this.sharedState.score) this.sharedState.score = String(0);
+    this.sharedState.hp = String(0);
+    this.sharedState.lastLevel = 'PlaySceneOne';
     this.scene.start('MainMenuScene');
   }
 
   openOptionsMenu() {
     this.scene.stop('PauseMenuScene');
-    // this.scene.start('OptionsScene', { key: 'PauseMenuScene' });
     this.scene.start('OptionsScene');
     this.scene.bringToTop('OptionsScene');
+  }
+
+  saveButtonEvent() {
+    if (this.sharedState.score) {
+      saveToLocalStorage(SaveItems.score, this.sharedState.score);
+    }
+    if (this.sharedState.hp) {
+      saveToLocalStorage(SaveItems.healthPoint, this.sharedState.hp);
+    }
+    if (this.sharedState.lastLevel) {
+      saveToLocalStorage(SaveItems.lastLevel, this.sharedState.lastLevel);
+    }
+    console.log('create save');
   }
 }
 

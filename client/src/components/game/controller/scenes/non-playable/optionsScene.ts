@@ -5,6 +5,7 @@ import { Slider } from 'phaser3-rex-plugins/templates/ui/ui-components';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 import { soundConfigMusic, soundConfigEffects, soundConfigMaster } from '../../audio/audioConfigs';
 import { ISharedState } from '../../../../../types/interfaces';
+import { SaveItems, saveToLocalStorage } from '../../helpers/localStorage';
 
 enum EnumLang {
   ru = 'Язык: Русский',
@@ -168,6 +169,9 @@ class OptionsScene extends NonPlayableBaseScene {
     } else {
       this.scene.start('MainMenuScene');
     }
+    saveToLocalStorage(SaveItems.masterVolume, +soundConfigMaster.volume!.toFixed(2));
+    saveToLocalStorage(SaveItems.musicVolume, +soundConfigMusic.volume!.toFixed(2));
+    saveToLocalStorage(SaveItems.effectsVolume, +soundConfigEffects.volume!.toFixed(2));
     this.soundServise.playSoundButton();
   }
 }

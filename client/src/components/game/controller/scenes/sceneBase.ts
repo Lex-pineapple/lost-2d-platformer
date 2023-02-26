@@ -5,6 +5,7 @@ import Player from '../actor/player';
 import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import tutorialFlow from '../../../../assets/data/tutorialFlow';
 import SoundService from '../audio/soundServise';
+import { SaveItems, saveToLocalStorage } from '../helpers/localStorage';
 
 interface ICollidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody {
   properties?: {
@@ -48,7 +49,7 @@ class SceneBase extends Phaser.Scene {
   }
 
   createHUD() {
-    this.score = (this.sharedState.totalScore) ? +this.sharedState.totalScore : 0;
+    this.score = (this.sharedState.score) ? +this.sharedState.score : 0;
 
     const livesHUD = this.add.image(700, 16, 'livesHUD').setOrigin(0, 0);
     const rectangleHUD = this.add.image(16, 16, 'rectangleHUD').setOrigin(0, 0);
@@ -173,7 +174,10 @@ class SceneBase extends Phaser.Scene {
         });
       this.soundServise.playDoorSound();
       this.saveScoreToSharedState();
-      console.log(this.sharedState.score);
+      this.saveHPtoSharedState();
+      // для того чтобы при смене уровня не потерять score и hp
+      console.log('sharedState.score:', this.sharedState.score);
+      console.log('sharedState.hp:', this.sharedState.hp);
       }
       this.player.collided = true;
     });
@@ -329,6 +333,10 @@ class SceneBase extends Phaser.Scene {
       if (!this.scene.isPaused()) {
         this.scene.launch('PauseMenuScene', { key: this.scene.key });
         this.scene.pause();
+/*         this.sharedState.score = String(this.score);
+        this.sharedState.hp = String(this.player.getHPValue());
+        console.log('score: ', this.score);
+        // для того чтобы из паузы можно было получить score и HP */
 
         this.sharedState.playableScenePaused = this.scene.key;
       }
@@ -348,7 +356,7 @@ class SceneBase extends Phaser.Scene {
 
   _spawnCharacters() {
     if (this.sharedState.playerHP) {
-      this.player = new Player(this, 100, 200, +this.sharedState.playerHP);
+      this.player = new Player(this, 10500, 200, +this.sharedState.playerHP);
     } else {
       this.player = new Player(this, 10000, 100, 3);
     }
@@ -374,12 +382,46 @@ class SceneBase extends Phaser.Scene {
   }
 
   saveScoreToSharedState() {
-    if (!this.sharedState.score) {
-      this.sharedState.score = String(this.score);
-    } else {
-      const prevScore = Number(this.sharedState.score);
-      this.sharedState.score = String(prevScore + this.score);
+    this.sharedState.score = String(this.score);
+  }
+
+  saveHPtoSharedState() {
+    this.sharedState.hp = String(this.player.getHPValue());
+  }
+
+  saveSceneToSharedState(sceneKey: string) {
+    this.sharedState.lastLevel = sceneKey;
+  }
+
+  saveScoreToLocalStorage() {
+    this.saveScoreToSharedState();
+    if (this.sharedState.score) saveToLocalStorage(SaveItems.score, this.sharedState.score);
+  }
+
+  saveHPtoLocalStorage() {
+    this.saveHPtoSharedState();
+    if (this.sharedState.hp) saveToLocalStorage(SaveItems.healthPoint, this.sharedState.hp);
+  }
+
+  saveSceneToLocalStorage(sceneKey: string) {
+    this.saveSceneToSharedState(sceneKey);
+    if (this.sharedState.lastLevel) {
+      saveToLocalStorage(SaveItems.lastLevel, this.sharedState.lastLevel);
     }
+  }
+
+  saveAllDataToSharedState(sceneKey: string) {
+    this.saveScoreToSharedState();
+    this.saveHPtoSharedState();
+    this.saveSceneToSharedState(sceneKey);
+    console.log('save all data to shared state');
+  }
+
+  saveAllDataToLocalStorage(sceneKey: string) {
+    this.saveScoreToLocalStorage();
+    this.saveHPtoLocalStorage();
+    this.saveSceneToLocalStorage(sceneKey);
+    console.log('saved all data to local storage');
   }
 }
 

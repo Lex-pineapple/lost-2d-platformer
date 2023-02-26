@@ -68,6 +68,7 @@ class PlaySceneOne extends SceneBase {
     this.createInfoPoints(map);
     // this.makeIntro();
     this.soundServise.playForestMusicScene1();
+    this.saveAllDataToLocalStorage(this.scene.key);
   }
 
   initNPCBehaviour() {

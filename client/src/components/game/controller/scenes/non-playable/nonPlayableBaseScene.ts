@@ -4,6 +4,10 @@ import Button from '../../helpers/button';
 // import AudioMaster from '../../audio/audioManager1';
 import SoundService from '../../audio/soundServise';
 import { IMenuItem, IMenuScenes, ISharedState } from '../../../../../types/interfaces';
+import { soundConfigEffects, soundConfigMusic, soundConfigMaster } from '../../audio/audioConfigs';
+import {
+ SaveItems, saveToLocalStorage, getFromLocalStorage, getAllFromLocalStorage,
+} from '../../helpers/localStorage';
 
 class NonPlayableBaseScene extends Scene {
   protected lastSceneKey: string | undefined;
@@ -131,7 +135,9 @@ class NonPlayableBaseScene extends Scene {
 
         if (sceneKey === 'OptionsScene') {
           this.scene.stop();
-
+          saveToLocalStorage(SaveItems.masterVolume, +soundConfigMaster.volume!.toFixed(2));
+          saveToLocalStorage(SaveItems.musicVolume, +soundConfigMusic.volume!.toFixed(2));
+          saveToLocalStorage(SaveItems.effectsVolume, +soundConfigEffects.volume!.toFixed(2));
           if (this.sharedState.playableScenePaused) {
             this.scene.start('PauseMenuScene');
           } else {
