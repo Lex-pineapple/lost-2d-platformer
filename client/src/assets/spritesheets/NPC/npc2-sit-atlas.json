@@ -1,0 +1,104 @@
+{
+	"textures": [
+		{
+			"image": "npc1-sit-atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 182,
+				"h": 46
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "npc2-sit-frames-3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 4,
+						"w": 47,
+						"h": 44
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 47,
+						"h": 44
+					}
+				},
+				{
+					"filename": "npc2-sit-frames-2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 4,
+						"w": 44,
+						"h": 44
+					},
+					"frame": {
+						"x": 50,
+						"y": 1,
+						"w": 44,
+						"h": 44
+					}
+				},
+				{
+					"filename": "npc2-sit-frames-4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 4,
+						"w": 42,
+						"h": 44
+					},
+					"frame": {
+						"x": 96,
+						"y": 1,
+						"w": 42,
+						"h": 44
+					}
+				},
+				{
+					"filename": "npc2-sit-frames-1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 4,
+						"w": 41,
+						"h": 44
+					},
+					"frame": {
+						"x": 140,
+						"y": 1,
+						"w": 41,
+						"h": 44
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:dc9eb58a8ecfbde91a7f344763ea984b:a32218168b97c5f5008c888ce1a8890a:b595f1f590f6a18044a56a1b1113dc13$"
+	}
+}

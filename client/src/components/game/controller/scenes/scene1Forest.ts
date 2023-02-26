@@ -76,7 +76,7 @@ class PlaySceneOne extends SceneBase {
     NPCArr.push(new NPC(this, 'NPC1', 5810, -310, 'cat', 'PlaySceneOne', 'sit'));
     NPCArr.push(new NPC(this, 'NPC2', 5812, -1137, 'cat', 'PlaySceneOne', 'sleep'));
     NPCArr.push(new NPC(this, 'NPC3', 7266, -1132, 'cat', 'PlaySceneOne', 'lie'));
-    NPCArr.push(new NPC(this, 'NPC4', 8378, -1046, 'cat', 'PlaySceneOne', 'sit'));
+    NPCArr.push(new NPC(this, 'NPC4', 8378, -1046, 'cat', 'PlaySceneOne', 'sit2'));
     NPCArr[1].flip();
     NPCArr[1].tint = 0xD68571;
 

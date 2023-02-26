@@ -75,6 +75,17 @@ class NPC extends Phaser.Physics.Arcade.Sprite {
       repeat: -1,
     });
     this.scene.anims.create({
+      key: 'sit2',
+      frames: this.scene.anims.generateFrameNames('a-npc2-sit', {
+        prefix: 'npc2-sit-frames-',
+        suffix: '.png',
+        start: 1,
+        end: 4,
+      }),
+      frameRate: 3,
+      repeat: -1,
+    });
+    this.scene.anims.create({
       key: 'sleep',
       frames: this.scene.anims.generateFrameNames('a-npc-sleep', {
         prefix: 'cat-sleep-frames-',

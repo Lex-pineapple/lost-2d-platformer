@@ -139,6 +139,11 @@ class LoadingScene extends Phaser.Scene {
       'spritesheets/NPC/npc1-sit-atlas.json'
     );
     this.load.atlas(
+      'a-npc2-sit',
+      'spritesheets/NPC/npc2-sit-atlas.png',
+      'spritesheets/NPC/npc2-sit-atlas.json'
+    );
+    this.load.atlas(
       'a-npc-sleep',
       'spritesheets/NPC/cat-sleep-atlas.png',
       'spritesheets/NPC/cat-sleep-atlas.json'
