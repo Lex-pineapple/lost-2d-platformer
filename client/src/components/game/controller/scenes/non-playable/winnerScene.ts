@@ -29,7 +29,7 @@ class WinnerScene extends NonPlayableBaseScene {
     });
     this.messageCounter = 0;
   }
-  
+
   create() {
     super.create();
     this.dialogArr = ['Congratulations!', 'You finished the game!', `Your score: ${this.sharedState.score}`, 'Back to main menu?'];

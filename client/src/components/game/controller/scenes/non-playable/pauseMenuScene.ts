@@ -46,7 +46,6 @@ class PauseMenuScene extends NonPlayableBaseScene {
     this.createTitle('Pasued');
     this.createMenu(this, this.menu, 100);
     this.createFullscreenSwitch();
-
   }
 
   update() {
@@ -68,7 +67,7 @@ class PauseMenuScene extends NonPlayableBaseScene {
       this.sharedState.playableScenePaused = null;
     }
     if (this.sharedState.score) this.sharedState.score = String(0);
-    this.sharedState.playerHP = String(0);
+    this.sharedState.playerHP = String(0); // ?????
     this.sharedState.lastLevel = 'PlaySceneOne';
     this.scene.start('MainMenuScene');
   }
