@@ -11,7 +11,7 @@ export class PlayerCreationAttrs {
 export class PlayerModel extends Model<PlayerModel, PlayerCreationAttrs> {
   @ApiProperty({ example: '1', description: 'Unique identifier' })
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
-  id: string;
+  id: number;
 
   @ApiProperty({ example: 'Player 1', description: 'Player name' })
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
@@ -36,4 +36,24 @@ export class PlayerModel extends Model<PlayerModel, PlayerCreationAttrs> {
   @ApiProperty({ example: '1', description: 'Last level, default – 1' })
   @Column({ type: DataType.INTEGER, defaultValue: 1 })
   lastLevel: number;
+
+  @ApiProperty({ example: '0.5', description: 'Player master volume, default – 0.5' })
+  @Column({ type: DataType.DECIMAL, defaultValue: 0.5 })
+  masterVolume: number;
+
+  @ApiProperty({ example: '0.5', description: 'Player music volume, default – 0.5' })
+  @Column({ type: DataType.DECIMAL, defaultValue: 0.5 })
+  musicVolume: number;
+
+  @ApiProperty({ example: '0.5', description: 'Player effects volume, default – 0.5' })
+  @Column({ type: DataType.DECIMAL, defaultValue: 0.5 })
+  effectsVolume: number;
+
+  @ApiProperty({ example: 'en', description: 'Lang – en or ru' })
+  @Column({ type: DataType.STRING, defaultValue: 'en' })
+  lang: string;
+
+  toJSON() {
+    return { ...this.get(), password: undefined };
+  }
 }
