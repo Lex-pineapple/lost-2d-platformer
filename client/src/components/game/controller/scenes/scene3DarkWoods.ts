@@ -46,13 +46,15 @@ class PlaySceneThree extends SceneBase {
     this.createPickups(map, 'leaf');
     this.createPickups(map, 'healthCan');
     this.createPickups(map, 'flower');
+    this.initNPCBehaviour();
+    this.displayMapName('The Darkling Woods');
+    this.createFullscreenSwitch();
+    this.createFinalEndpoint(map);
 
     this.soundServise.playForestMusicScene3();
     this.saveAllDataToSharedState(this.scene.key);
-    this.initNPCBehaviour();
-    this.displayMapName('The Darkling Woods');
 
-    this.createFinalEndpoint(map);
+
     // this.addEndpointHandler('PlaySceneNext', 0, 420);
   }
 

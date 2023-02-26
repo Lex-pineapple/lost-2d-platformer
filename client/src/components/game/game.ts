@@ -119,6 +119,13 @@ class Game extends Component {
       title: 'Lost',
       type: Phaser.WEBGL,
       parent: this.gameBoxEl,
+      scale: {
+        // mode: Phaser.Scale.NONE,
+        // mode: Phaser.Scale.FIT,
+        // parent: this.gameBoxEl,
+        // width: 800,
+        // height: 450
+      },
       // scale: {
       //   mode: Phaser.Scale.ScaleModes.NONE,
       //   width: window.innerWidth,

@@ -45,6 +45,8 @@ class WinnerScene extends NonPlayableBaseScene {
         this.displayWinnerMessage();
       }
     });
+    this.createFullscreenSwitch();
+
     this.soundServise.playVictoryMusic();
   }
 

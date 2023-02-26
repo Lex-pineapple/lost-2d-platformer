@@ -41,8 +41,10 @@ class PlaySceneTwo extends SceneBase {
     this.initNPCBehaviour();
     this.createMovingPlatforms(map);
     this.createDestructibleBarricade(map);
-    this.soundServise.playCavernMusic();
     this.displayMapName('The Chrystal Caverns');
+    this.createFullscreenSwitch();
+
+    this.soundServise.playCavernMusic();
 
     this.saveAllDataToSharedState(this.scene.key);
   }

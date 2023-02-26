@@ -45,6 +45,8 @@ class PauseMenuScene extends NonPlayableBaseScene {
     this.styleMenu(200);
     this.createTitle('Pasued');
     this.createMenu(this, this.menu, 100);
+    this.createFullscreenSwitch();
+
   }
 
   update() {

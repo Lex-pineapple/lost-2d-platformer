@@ -31,7 +31,7 @@ class NonPlayableBaseScene extends Scene {
   }
 
   create() {
-    this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
   }
 
   initServices(): void {
@@ -47,6 +47,23 @@ class NonPlayableBaseScene extends Scene {
 
   getMiddlePositionY() {
     return this.cameras.main.height / 2;
+  }
+
+  createFullscreenSwitch() {
+    const button = this.add.image(800 - 32, 450 - 32, 'fullscreenOpen').setOrigin(0).setInteractive();
+    button.scrollFactorX = 0;
+    button.scrollFactorY = 0;
+    button.on('pointerup', () => {
+      if (this.scale.isFullscreen) {
+        button.setTexture('fullscreenOpen');
+        this.scale.stopFullscreen();
+        this.scale.setZoom(1);
+      } else {
+        button.setTexture('fullscreenExit');
+        this.scale.startFullscreen();
+        this.scale.setZoom(window.innerWidth / 800);
+      }
+    }, this);
   }
 
   createMenu(ctx: Phaser.Scene, menu: IMenuItem[], startPosYMargin?: number) {

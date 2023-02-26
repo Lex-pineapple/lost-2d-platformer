@@ -29,6 +29,8 @@ class GameOverScene extends NonPlayableBaseScene {
     this.add.sprite(this.getMiddlePositionX(), this.getMiddlePositionY() + 75, 'gameOverSprite');
     // this.createTitle();
     this.createMenu(this, this.menu, 150);
+    this.createFullscreenSwitch();
+
     this.soundServise.playGameOverMusic();
   }
 

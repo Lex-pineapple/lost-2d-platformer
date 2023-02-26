@@ -49,6 +49,8 @@ class MainMenuScene extends NonPlayableBaseScene {
     this.styleMenu(200);
     this.createTitle('Main Menu');
     this.createMenu(this, this.menu, 25);
+    this.createFullscreenSwitch();
+
     this.soundServise.stopAnyMusic();
     this.loadVolumesFromLocalStorage();
   }
@@ -76,7 +78,7 @@ class MainMenuScene extends NonPlayableBaseScene {
   startNewGame() {
     this.sharedState.score = String(0);
     this.sharedState.lastLevel = 'PlaySceneOne';
-    this.sharedState.playerHP = String(100); // fix: 100 временная величина
+    this.sharedState.playerHP = String(3); // fix: 100 временная величина
     this.scene.start('PlaySceneOne');
   }
 

@@ -104,6 +104,8 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('frontBGBlurred', 'backgrounds/FrontBGBlurred.png');
     this.load.image('frontBGcatSprite', 'spritesheets/FrontBG-catSprite.png');
     this.load.image('destructibleBarricade', 'spritesheets/objects/destructibleBarricade.png');
+    this.load.image('fullscreenExit', 'spritesheets/objects/fullscreen-exit.png');
+    this.load.image('fullscreenOpen', 'spritesheets/objects/fullscreen-open.png');
 
 
     
@@ -228,9 +230,11 @@ class LoadingScene extends Phaser.Scene {
   }
 
   // create(): void {
-  //   this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-  //     this.scene.start('PlaySceneOne');
-  //   });
+  //   this.scale.displaySize.setAspectRatio( 800/450 );
+  //   this.scale.refresh();
+  //   // this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+  //   //   this.scene.start('PlaySceneOne');
+  //   // });
   // }
 }
 

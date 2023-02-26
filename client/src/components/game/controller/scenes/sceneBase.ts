@@ -6,6 +6,7 @@ import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import tutorialFlow from '../../../../assets/data/tutorialFlow';
 import SoundService from '../audio/soundServise';
 import { SaveItems, saveToLocalStorage } from '../helpers/localStorage';
+import ButtonsFactory from 'phaser3-rex-plugins/templates/ui/buttons/Factory';
 
 interface ICollidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody {
   properties?: {
@@ -42,7 +43,7 @@ class SceneBase extends Phaser.Scene {
   }
 
   create() {
-    this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
     this.keyF = this.input.keyboard.addKey('F');
     this.keyR = this.input.keyboard.addKey('R');
   }
@@ -149,6 +150,23 @@ class SceneBase extends Phaser.Scene {
         this.increaseScore(type);
       });
     });
+  }
+
+  createFullscreenSwitch() {
+    const button = this.add.image(800 - 32, 450 - 32, 'fullscreenOpen').setOrigin(0).setInteractive();
+    button.scrollFactorX = 0;
+    button.scrollFactorY = 0;
+    button.on('pointerup', () => {
+      if (this.scale.isFullscreen) {
+        button.setTexture('fullscreenOpen');
+        this.scale.stopFullscreen();
+        this.scale.setZoom(1);
+      } else {
+        button.setTexture('fullscreenExit');
+        this.scale.startFullscreen();
+        this.scale.setZoom(window.innerWidth / 800);
+      }
+    }, this);
   }
 
   createEnergyPickup(map: Phaser.Tilemaps.Tilemap) {
@@ -469,6 +487,8 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
+    console.log(this.sharedState.playerHP);
+    
     if (this.sharedState.playerHP) {
       this.player = new Player(this, 32, 300, +this.sharedState.playerHP);
     } else {

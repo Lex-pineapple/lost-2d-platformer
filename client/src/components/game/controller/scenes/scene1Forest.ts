@@ -68,6 +68,8 @@ class PlaySceneOne extends SceneBase {
     this.createInfoPoints(map);
     this.makeIntro();
     this.displayMapName('The Forest');
+    this.createFullscreenSwitch();
+
     this.soundServise.playForestMusicScene1();
     this.saveAllDataToSharedState(this.scene.key);
   }
