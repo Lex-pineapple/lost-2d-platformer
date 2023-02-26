@@ -16,7 +16,6 @@ class PauseMenuScene extends NonPlayableBaseScene {
       textGameObj: null,
       handleEvents: this.saveButtonEvent.bind(this),
     },
-    { sceneKey: null, text: 'Load', textGameObj: null },
     {
       sceneKey: this.menuScenes.optionsMenu,
       text: 'Options',
@@ -67,7 +66,7 @@ class PauseMenuScene extends NonPlayableBaseScene {
       this.sharedState.playableScenePaused = null;
     }
     if (this.sharedState.score) this.sharedState.score = String(0);
-    this.sharedState.hp = String(0);
+    this.sharedState.playerHP = String(0);
     this.sharedState.lastLevel = 'PlaySceneOne';
     this.scene.start('MainMenuScene');
   }
@@ -82,8 +81,8 @@ class PauseMenuScene extends NonPlayableBaseScene {
     if (this.sharedState.score) {
       saveToLocalStorage(SaveItems.score, this.sharedState.score);
     }
-    if (this.sharedState.hp) {
-      saveToLocalStorage(SaveItems.healthPoint, this.sharedState.hp);
+    if (this.sharedState.playerHP) {
+      saveToLocalStorage(SaveItems.playerHP, this.sharedState.playerHP);
     }
     if (this.sharedState.lastLevel) {
       saveToLocalStorage(SaveItems.lastLevel, this.sharedState.lastLevel);

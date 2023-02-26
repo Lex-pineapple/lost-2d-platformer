@@ -5,7 +5,6 @@ import { soundConfigMaster, soundConfigEffects, soundConfigMusic } from '../../a
 
 class MainMenuScene extends NonPlayableBaseScene {
   private menu: IMenuItem[] = [
-    { sceneKey: 'PlaySceneOne', text: 'Start Game', textGameObj: null },
     {
       sceneKey: '',
       text: 'New Game',
@@ -77,7 +76,7 @@ class MainMenuScene extends NonPlayableBaseScene {
   startNewGame() {
     this.sharedState.score = String(0);
     this.sharedState.lastLevel = 'PlaySceneOne';
-    this.sharedState.hp = String(100);
+    this.sharedState.playerHP = String(100); // fix: 100 временная величина
     this.scene.start('PlaySceneOne');
   }
 
@@ -95,14 +94,12 @@ class MainMenuScene extends NonPlayableBaseScene {
   loadGame() {
     const lastSceneKey = getFromLocalStorage(SaveItems.lastLevel);
     const score = getFromLocalStorage(SaveItems.score);
-    const hp = getFromLocalStorage(SaveItems.healthPoint);
+    const hp = getFromLocalStorage(SaveItems.playerHP);
     if (lastSceneKey && score && hp) {
       this.sharedState.lastLevel = lastSceneKey;
       this.sharedState.score = score;
-      this.sharedState.hp = hp;
-      // this.scene.stop('MainMenuScene');
-      this.scene.start(lastSceneKey);
-      console.log(lastSceneKey);
+      this.sharedState.playerHP = hp;
+      this.scene.start(lastSceneKey, { playerX: 0, playerY: 0, playerHP: hp });
     }
   }
 

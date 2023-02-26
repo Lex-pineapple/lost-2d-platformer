@@ -45,7 +45,7 @@ class PlaySceneThree extends SceneBase {
     this.createPickups(map, 'flower');
 
     this.soundServise.playForestMusicScene3();
-    this.saveAllDataToLocalStorage(this.scene.key);
+    this.saveAllDataToSharedState(this.scene.key);
     // this.addEndpointHandler('PlaySceneNext', 0, 420);
   }
 

@@ -177,7 +177,7 @@ class SceneBase extends Phaser.Scene {
       this.saveHPtoSharedState();
       // для того чтобы при смене уровня не потерять score и hp
       console.log('sharedState.score:', this.sharedState.score);
-      console.log('sharedState.hp:', this.sharedState.hp);
+      console.log('sharedState.hp:', this.sharedState.playerHP);
       }
       this.player.collided = true;
     });
@@ -334,7 +334,7 @@ class SceneBase extends Phaser.Scene {
         this.scene.launch('PauseMenuScene', { key: this.scene.key });
         this.scene.pause();
 /*         this.sharedState.score = String(this.score);
-        this.sharedState.hp = String(this.player.getHPValue());
+        this.sharedState.playerHP = String(this.player.getHPValue());
         console.log('score: ', this.score);
         // для того чтобы из паузы можно было получить score и HP */
 
@@ -356,7 +356,7 @@ class SceneBase extends Phaser.Scene {
 
   _spawnCharacters() {
     if (this.sharedState.playerHP) {
-      this.player = new Player(this, 10500, 200, +this.sharedState.playerHP);
+      this.player = new Player(this, 100, 200, +this.sharedState.playerHP);
     } else {
       this.player = new Player(this, 10000, 100, 3);
     }
@@ -386,7 +386,7 @@ class SceneBase extends Phaser.Scene {
   }
 
   saveHPtoSharedState() {
-    this.sharedState.hp = String(this.player.getHPValue());
+    this.sharedState.playerHP = String(this.player.getHPValue());
   }
 
   saveSceneToSharedState(sceneKey: string) {
@@ -400,7 +400,9 @@ class SceneBase extends Phaser.Scene {
 
   saveHPtoLocalStorage() {
     this.saveHPtoSharedState();
-    if (this.sharedState.hp) saveToLocalStorage(SaveItems.healthPoint, this.sharedState.hp);
+    if (this.sharedState.playerHP) {
+      saveToLocalStorage(SaveItems.playerHP, this.sharedState.playerHP);
+    }
   }
 
   saveSceneToLocalStorage(sceneKey: string) {

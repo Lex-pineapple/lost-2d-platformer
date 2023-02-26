@@ -3,7 +3,7 @@ export enum SaveItems {
   musicVolume = 'musicVolume',
   effectsVolume = 'effectsVolume',
   score = 'score',
-  healthPoint = 'healthPoint',
+  playerHP = 'playerHP',
   lastLevel = 'lastLevel'
 }
 
