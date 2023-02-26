@@ -73,7 +73,7 @@ class Player extends Actor {
     this.dialogueModal = new DialogueModal(this.scene, {});
     this.enemyCollide = false;
     this.collisionEnd = false;
-    this.hasKey = true;
+    this.hasKey = false;
     this.onPlatform = false;
     this.lockedTo = null;
     this.collided = false;
