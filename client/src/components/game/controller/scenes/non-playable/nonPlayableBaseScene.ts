@@ -1,4 +1,4 @@
-import { Scene, Sound } from 'phaser';
+import { Scene } from 'phaser';
 
 import Button from '../../helpers/button';
 // import AudioMaster from '../../audio/audioManager1';
@@ -8,6 +8,12 @@ import { soundConfigEffects, soundConfigMusic, soundConfigMaster } from '../../a
 import {
  SaveItems, saveToLocalStorage, getFromLocalStorage, getAllFromLocalStorage,
 } from '../../helpers/localStorage';
+
+enum SceneKeys {
+  scene1 = 'PlaySceneOne',
+  scene2 = 'PlaySceneTwo',
+  scene3 = 'PlaySceneThree'
+}
 
 class NonPlayableBaseScene extends Scene {
   protected lastSceneKey: string | undefined;
@@ -164,6 +170,23 @@ class NonPlayableBaseScene extends Scene {
       }
       this.soundServise.playSoundButton();
     }
+  }
+
+  getSpawnCoordniates(sceneKey: string) {
+    const coordObj = { x: 32, y: 300 };
+    if (sceneKey === SceneKeys.scene1) {
+      coordObj.x = 32;
+      coordObj.y = 300;
+    }
+    if (sceneKey === SceneKeys.scene2) {
+      coordObj.x = 24;
+      coordObj.y = 3274;
+    }
+    if (sceneKey === SceneKeys.scene3) {
+      coordObj.x = 32;
+      coordObj.y = 300;
+    }
+    return coordObj;
   }
 
   returnToMainMenu() {
