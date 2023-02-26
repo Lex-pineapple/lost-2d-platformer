@@ -2,11 +2,14 @@ import Enemy from '../actor/enemy';
 import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import { IPlayerPosition, ISharedState } from '../../../../types/interfaces';
 import SceneBase from './sceneBase';
+import NPC from '../actor/npc';
 
 class PlaySceneThree extends SceneBase {
   private playerX: number | null = null;
 
   private playerY: number | null = null;
+
+  private finalNPC!: NPC;
 
   constructor(name: string, protected sharedState: ISharedState) {
     super('PlaySceneThree', sharedState);
@@ -43,9 +46,15 @@ class PlaySceneThree extends SceneBase {
     this.createPickups(map, 'leaf');
     this.createPickups(map, 'healthCan');
     this.createPickups(map, 'flower');
+    this.initNPCBehaviour();
+    this.displayMapName('The Darkling Woods');
+    this.createFullscreenSwitch();
+    this.createFinalEndpoint(map);
 
     this.soundServise.playForestMusicScene3();
     this.saveAllDataToSharedState(this.scene.key);
+
+
     // this.addEndpointHandler('PlaySceneNext', 0, 420);
   }
 
@@ -74,6 +83,73 @@ class PlaySceneThree extends SceneBase {
       2145,
       BGHeight
     );
+  }
+
+  initNPCBehaviour() {
+    const NPCArr = [];
+    NPCArr.push(new NPC(this, 'NPC1', 608, 364, 'cat', 'PlaySceneThree', 'black-cat-sit'));
+    this.finalNPC = new NPC(this, 'NPC2', 16241, -210, 'cat', 'PlaySceneThree', 'black-cat-sit');
+    this.finalNPC.flip();
+
+    
+    NPCArr.forEach((npc) => {
+      this.physics.add.overlap(this.getPlayer(), npc, () => {
+        if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+          this.getPlayer().diableKeys();
+          npc.initDialog();
+          if (npc.mainDialogFinished && npc.idleDialogFinished) {
+            this.getPlayer().enableKeys();
+          }
+        }
+      });
+    });
+  }
+
+  createFinalEndpoint(map: Phaser.Tilemaps.Tilemap) {
+    const finalPlant = gameObjectsToObjectPoints(
+      map.filterObjects('FunctionalLayer', (obj) => obj.name === 'finalPlant')
+    );
+
+    this.endpoint = this.physics.add.sprite(finalPlant[0].x, 450 - (1920 - finalPlant[0].y), 'bigFlowerPickup')
+    .setScale(1)
+    .setImmovable(true)
+    .setBodySize(64, 117);
+    this.physics.add.collider(this.getPlayer(), this.endpoint, (obj1, obj2) => {
+      // this.getPlayer().disableRun();
+      this.saveScoreToSharedState();
+      console.log(this.sharedState.score);
+      
+      if (!this.getPlayer().collided) {
+        this.tweens.add({
+          targets: this.endpoint,
+          duration: 500,
+          // repeat: 3,
+          // yoyo: true,
+          alpha: 0,
+          onComplete: () => {
+            this.getPlayer().diableKeys();
+            this.getPlayer().disableRun();
+            this.initFinalDialog();
+            obj2.destroy();
+            this.time.delayedCall(15000, () => {
+              this.initWinState();
+            });
+          },
+        });
+      }
+      this.getPlayer().collided = true;
+    });
+  }
+
+  initFinalDialog() {
+    this.finalNPC.initDialog();
+  }
+
+  initWinState() {
+    this.cameras.main.fadeOut(1000, 0, 0, 0);
+    this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      this.scene.start('WinnerScene');
+    });
   }
 
   createMovingPlatforms(map: Phaser.Tilemaps.Tilemap) {

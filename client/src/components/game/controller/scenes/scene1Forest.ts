@@ -58,15 +58,18 @@ class PlaySceneOne extends SceneBase {
     this.initEnemyMovement(enemyArr);
     this.createHUD();
     this.createKey(map);
-    // this.createEndpoint(map, 'PlaySceneTwo', 24, 3274);
-    this.createEndpoint(map, 'PlaySceneTwo', 7956, -1238);
+    this.createEndpoint(map, 'PlaySceneTwo', 24, 3274);
+    // this.createEndpoint(map, 'PlaySceneTwo', 7956, -1238);
     this.createMovingPlatforms(map);
 
     // if (this.playerX !== null) this.getPlayer().x = this.playerX;
     // if (this.playerY !== null) this.getPlayer().y = this.playerY;
     this.initNPCBehaviour();
     this.createInfoPoints(map);
-    // this.makeIntro();
+    this.makeIntro();
+    this.displayMapName('The Forest');
+    this.createFullscreenSwitch();
+
     this.soundServise.playForestMusicScene1();
     this.saveAllDataToSharedState(this.scene.key);
   }
@@ -76,7 +79,7 @@ class PlaySceneOne extends SceneBase {
     NPCArr.push(new NPC(this, 'NPC1', 5810, -310, 'cat', 'PlaySceneOne', 'sit'));
     NPCArr.push(new NPC(this, 'NPC2', 5812, -1137, 'cat', 'PlaySceneOne', 'sleep'));
     NPCArr.push(new NPC(this, 'NPC3', 7266, -1132, 'cat', 'PlaySceneOne', 'lie'));
-    NPCArr.push(new NPC(this, 'NPC4', 8378, -1046, 'cat', 'PlaySceneOne', 'sit'));
+    NPCArr.push(new NPC(this, 'NPC4', 8378, -1046, 'cat', 'PlaySceneOne', 'sit2'));
     NPCArr[1].flip();
     NPCArr[1].tint = 0xD68571;
 
@@ -192,10 +195,10 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: -40, duration: 2000, delay: 2000,
+          y: 40, duration: 1000, delay: 1000,
         },
         {
-          x: 40, duration: 2000, delay: 2000,
+          y: -40, duration: 1000, delay: 1000,
         },
         ],
     });
@@ -205,28 +208,15 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: 40, duration: 1000, delay: 1000,
+          y: -40, duration: 1000, delay: 1000,
         },
         {
-          y: -40, duration: 1000, delay: 1000,
+          y: 40, duration: 1000, delay: 1000,
         },
         ],
     });
     this.tweens.timeline({
       targets: enemies[12].body.velocity,
-      loop: -1,
-      ease: 'Linear',
-      tweens: [
-        {
-          y: -40, duration: 1000, delay: 1000,
-        },
-        {
-          y: 40, duration: 1000, delay: 1000,
-        },
-        ],
-    });
-    this.tweens.timeline({
-      targets: enemies[13].body.velocity,
       loop: -1,
       ease: 'Linear',
       tweens: [

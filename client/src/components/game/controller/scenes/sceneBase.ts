@@ -6,6 +6,7 @@ import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import tutorialFlow from '../../../../assets/data/tutorialFlow';
 import SoundService from '../audio/soundServise';
 import { SaveItems, saveToLocalStorage } from '../helpers/localStorage';
+import ButtonsFactory from 'phaser3-rex-plugins/templates/ui/buttons/Factory';
 
 interface ICollidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody {
   properties?: {
@@ -20,6 +21,8 @@ class SceneBase extends Phaser.Scene {
   private keyESC!: Phaser.Input.Keyboard.Key;
 
   keyF!: Phaser.Input.Keyboard.Key;
+
+  keyR!: Phaser.Input.Keyboard.Key;
 
   private scoreText!: Phaser.GameObjects.Text;
 
@@ -40,8 +43,9 @@ class SceneBase extends Phaser.Scene {
   }
 
   create() {
-    this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
     this.keyF = this.input.keyboard.addKey('F');
+    this.keyR = this.input.keyboard.addKey('R');
   }
 
   update() {
@@ -126,12 +130,91 @@ class SceneBase extends Phaser.Scene {
     );
     const pickups = objectPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), `${type}Pickup`).setScale(1.5).setSize(16, 16));
     pickups.forEach((leaf) => {
+      this.tweens.timeline({
+        targets: leaf,
+        loop: -1,
+        yoyo: true,
+        duration: 500,
+        ease: 'Linear',
+        tweens: [
+          {
+            y: leaf.y - 5,
+          },
+          {
+            y: leaf.y + 5,
+          },
+          ],
+      });
       this.physics.add.overlap(this.player, leaf, (obj1, obj2) => {
         obj2.destroy();
         this.increaseScore(type);
       });
     });
   }
+
+  createFullscreenSwitch() {
+    const button = this.add.image(800 - 32, 450 - 32, 'fullscreenOpen').setOrigin(0).setInteractive();
+    button.scrollFactorX = 0;
+    button.scrollFactorY = 0;
+    button.on('pointerup', () => {
+      if (this.scale.isFullscreen) {
+        button.setTexture('fullscreenOpen');
+        this.scale.stopFullscreen();
+        this.scale.setZoom(1);
+      } else {
+        button.setTexture('fullscreenExit');
+        this.scale.startFullscreen();
+        this.scale.setZoom(window.innerWidth / 800);
+      }
+    }, this);
+  }
+
+  createEnergyPickup(map: Phaser.Tilemaps.Tilemap) {
+    const energyCanPoint = gameObjectsToObjectPoints(
+      map.filterObjects('EntityLayer', (obj) => obj.name === 'energyCanPoint')
+    );
+    const energyCan = this.physics.add.sprite(energyCanPoint[0].x - 20, 450 - (1920 - energyCanPoint[0].y) - 20, 'energyCanPickup')
+    .setScale(1.5)
+    .setImmovable(true);
+    this.tweens.timeline({
+      targets: energyCan,
+      loop: -1,
+      yoyo: true,
+      duration: 500,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: energyCan.y - 5,
+        },
+        {
+          y: energyCan.y + 5,
+        },
+        ],
+    });
+    this.physics.add.overlap(this.player, energyCan, (obj1, obj2) => {
+      const text = tutorialFlow.attack;
+      const tutorialText = this.make.text(
+        {
+          x: 32,
+          y: 116,
+          text,
+          style: {
+            wordWrap: { width: +this.sys.game.config.width - 40 },
+          },
+        }
+  );
+      tutorialText.scrollFactorX = 0;
+      tutorialText.scrollFactorY = 0;
+      this.time.delayedCall(5000, () => {
+        tutorialText.destroy();
+      })
+      this.soundServise.playKeyPickup();
+      this.player.canAttack = true;
+      obj2.destroy();
+    });
+  }
+
+
 
   createKey(map: Phaser.Tilemaps.Tilemap) {
     const keyPoint = gameObjectsToObjectPoints(
@@ -142,6 +225,21 @@ class SceneBase extends Phaser.Scene {
     .setScale(2)
     .setImmovable(true)
     .setBodySize(8, 17);
+    this.tweens.timeline({
+      targets: key,
+      loop: -1,
+      yoyo: true,
+      duration: 500,
+      ease: 'Linear',
+      tweens: [
+        {
+          y: key.y - 5,
+        },
+        {
+          y: key.y + 5,
+        },
+        ],
+    });
     this.physics.add.overlap(this.player, key, (obj1, obj2) => {
       this.soundServise.playKeyPickup();
       this.player.hasKey = true;
@@ -183,22 +281,45 @@ class SceneBase extends Phaser.Scene {
     });
   }
 
-  createFinalEndpoint(map: Phaser.Tilemaps.Tilemap) {
-    const finalPlant = gameObjectsToObjectPoints(
-      map.filterObjects('FunctionalLayer', (obj) => obj.name === 'finalPlant')
+  createDestructibleBarricade(map: Phaser.Tilemaps.Tilemap) {
+    const destructibleBarricadePoints = gameObjectsToObjectPoints(
+      map.filterObjects('FunctionalLayer', (obj) => obj.name === 'destructibleBarricadePoint')
     );
+    const zoneArr: Phaser.GameObjects.Zone[] = [];
 
-    this.endpoint = this.physics.add.sprite(finalPlant[0].x, 450 - (1920 - finalPlant[0].y), 'plantFinal')
-    .setScale(1)
-    .setImmovable(true)
-    .setBodySize(64, 55);
-    this.physics.add.collider(this.player, this.endpoint, (obj1, obj2) => {
-      this.player.diableKeys();
-      this.player.disableRun();
-      console.log('Win!!!!!!!!!!!!');
-      this.saveScoreToSharedState();
+    const destructibleBarricades = destructibleBarricadePoints.map((point) => {
+      const zone = this.add.zone(point.x, 450 - (1920 - point.y), 80, 64);
+      this.physics.world.enable(zone);
+      zoneArr.push(zone);
+      return this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'destructibleBarricade').setSize(55, 64).setImmovable(true);
+    })
+    destructibleBarricades.forEach((barricade) => {
+      this.physics.add.collider(this.player, barricade);
+    });
+
+    zoneArr.forEach((zone, idx) => {
+      this.physics.add.overlap(this.player, zone, (obj1, obj2) => {
+        if (Phaser.Input.Keyboard.JustDown(this.keyR) && this.player.canAttack) {
+          this.player.attacked = true;
+          console.log('attack');
+          this.tweens.add({
+            targets: destructibleBarricades[idx],
+            duration: 100,
+            repeat: 3,
+            yoyo: true,
+            alpha: 0.5,
+            onComplete: () => {
+              zone.destroy();
+              destructibleBarricades[idx].destroy();
+              this.player.attacked = false;
+            },
+          });
+        }
+      });
     });
   }
+
+
 
   beginTransition(nextSceneKey: string, posX: number, posY: number) {
     this.player.diableKeys();
@@ -208,6 +329,8 @@ class SceneBase extends Phaser.Scene {
       this.handleEndpointChange(nextSceneKey, posX, posY);
     });
   }
+
+
 
   handleEndpointChange(nextSceneKey: string, playerPosX: number, playerPosY: number) {
     this.scene.start(
@@ -263,30 +386,15 @@ class SceneBase extends Phaser.Scene {
     });
   }
 
-  makeIntroCamera() {
-    this.cameras.main.y = -2000;
-    this.player.diableKeys();
-    this.time.addEvent({
-      callback: () => {
-        this.cameras.main.y += 5;
-      },
-      repeat: 106,
-    });
-  }
 
   makeIntro() {
-    this.makeIntroCamera();
-
     const text = tutorialFlow.walk;
     const positionX = this.cameras.main.worldView.x + 32;
-    const positionY = this.cameras.main.worldView.y + 32;
+    const positionY = this.cameras.main.worldView.y + 80;
     const textGraphic = this.make.text({
       x: positionX,
       y: positionY,
       text,
-      // style: {
-
-      // }
     });
     this.tweens.add({
       targets: textGraphic,
@@ -306,18 +414,42 @@ class SceneBase extends Phaser.Scene {
         },
       });
     });
+    textGraphic.scrollFactorX = 0;
+    textGraphic.scrollFactorY = 0;
+  }
+
+  displayMapName(text: string) {
+    const textGraphic = this.make.text({
+      x: 300,
+      y: 32,
+      text,
+      style: {
+        fontSize: '32px',
+        strokeThickness: 0.5,
+      }
+    });
+    this.time.delayedCall(3000, () => {
+      this.tweens.add({
+        targets: textGraphic,
+        alpha: 0,
+        duration: 300,
+        ease: 'Power2',
+      });
+    });
+    textGraphic.scrollFactorX = 0;
+    textGraphic.scrollFactorY = 0;
   }
 
   playTutorial(type: string) {
     const positionX = this.cameras.main.worldView.x + 32;
-    const positionY = this.cameras.main.worldView.y + 32;
+    const positionY = this.cameras.main.worldView.y + 48;
     const text = tutorialFlow[type as keyof ITutorialFlow];
     console.log(positionX, positionY);
 
     this.player.tutorialText = this.make.text(
       {
         x: 32,
-        y: 100,
+        y: 116,
         text,
         style: {
           wordWrap: { width: +this.sys.game.config.width - 40 },
@@ -355,8 +487,10 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
+    console.log(this.sharedState.playerHP);
+    
     if (this.sharedState.playerHP) {
-      this.player = new Player(this, 100, 200, +this.sharedState.playerHP);
+      this.player = new Player(this, 32, 300, +this.sharedState.playerHP);
     } else {
       this.player = new Player(this, 10000, 100, 3);
     }

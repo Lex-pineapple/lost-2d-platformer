@@ -47,6 +47,10 @@ class Player extends Actor {
 
   enemyOverlap: boolean;
 
+  attacked: boolean;
+
+  canAttack: boolean;
+
   lockedTo: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | null;
 
   constructor(scene: Phaser.Scene, x: number, y: number, hp: number) {
@@ -69,12 +73,14 @@ class Player extends Actor {
     this.dialogueModal = new DialogueModal(this.scene, {});
     this.enemyCollide = false;
     this.collisionEnd = false;
-    this.hasKey = true;
+    this.hasKey = false;
     this.onPlatform = false;
     this.lockedTo = null;
     this.collided = false;
     this.canStick = true;
     this.enemyOverlap = false;
+    this.attacked = false;
+    this.canAttack = false;
 
     this.getBody().setSize(40, 32);
     this.getBody().setGravityY(1400);
@@ -117,6 +123,16 @@ class Player extends Actor {
       }),
       frameRate: 5,
     });
+    this.scene.anims.create({
+      key: 'attack',
+      frames: this.scene.anims.generateFrameNames('a-cat-attack', {
+        prefix: 'cat-attack-',
+        suffix: '.png',
+        start: 1,
+        end: 3,
+      }),
+      frameRate: 10,
+    });
   }
 
   private checkWallCollision() {
@@ -126,20 +142,20 @@ class Player extends Actor {
 
   private handleJump() {
     if ((this.canJump && this.body.blocked.down) || this.onWall) {
-      if (this.onWall) {
-        if (!this.keyD?.isDown && !this.keyA?.isDown) {
-          this.scaleX *= -1;
-          if (this.scaleX < 0) {
-            this.getBody().setOffset(40, 16);
-          } else {
-          this.getBody().setOffset(0, 16);
-        }
-        this.body.velocity.x = this.runVelocity * this.scaleX;
-        this.body.velocity.y = -this.jumpVelocity;
-        }
-      } else {
-        this.body.velocity.y = -this.jumpVelocity;
-      }
+      // if (this.onWall) {
+      //   if (!this.keyD?.isDown && !this.keyA?.isDown) {
+      //     this.scaleX *= -1;
+      //     if (this.scaleX < 0) {
+      //       this.getBody().setOffset(40, 16);
+      //     } else {
+      //     this.getBody().setOffset(0, 16);
+      //   }
+      //   this.body.velocity.x = this.runVelocity * this.scaleX;
+      //   this.body.velocity.y = -this.jumpVelocity;
+      //   }
+      // } else {
+      // }
+      this.body.velocity.y = -this.jumpVelocity;
       this.jumped = true;
       this.canJump = false;
       this.onWall = false;
@@ -225,7 +241,7 @@ class Player extends Actor {
       }
       this.body.velocity.x = this.runVelocity;
       this.checkFlip();
-      this.getBody().setOffset(0, 16);
+      this.getBody().setOffset(6, 16);
     }
 
     // Run left on A press
@@ -257,6 +273,10 @@ class Player extends Actor {
     //   this.getDamage(1, !this.onWall);
     //   this.collisionEnd = true;
     // }
+
+    if (this.attacked) {
+      this.anims.play('attack', true);
+    }
 
     if (this.body.embedded) {
       this.body.touching.none = false;
@@ -321,6 +341,7 @@ class Player extends Actor {
       !this.keyD?.isDown
       && !this.keyA?.isDown
       && !this.keySpace?.isDown
+      && !this.attacked
       && !this.onWall
       && this.body.blocked.down
     ) {
