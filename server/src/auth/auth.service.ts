@@ -19,7 +19,7 @@ export class AuthService {
     }
 
     if (player && isPasswordValid) {
-      return this.signToken(player.id.toString(), player.email);
+      return this.signToken(player.id, player.email, player.name);
     }
 
     throw new UnauthorizedException(AUTH_UNAUTHORIZED_ERROR);
@@ -32,14 +32,23 @@ export class AuthService {
       throw new NotFoundException(AUTH_CREATION_ERROR);
     }
 
-    return this.signToken(createdPlayer.id.toString(), createdPlayer.email);
+    return this.signToken(createdPlayer.id, createdPlayer.email, createdPlayer.name);
   }
 
-  async signToken(id: string, email: string) {
-    const payload = { sub: id, email };
+  async signToken(id: number, email: string, name: string) {
+    const payload = { sub: id, email, name };
 
     return {
       token: this.jwtService.sign(payload),
     };
+  }
+
+  verifyToken(token: string) {
+    try {
+      const decoded = this.jwtService.verify(token);
+      return { result: true, playerId: decoded.sub, playerName: decoded.name };
+    } catch {
+      return { result: false };
+    }
   }
 }
