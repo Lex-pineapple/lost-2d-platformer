@@ -59,6 +59,7 @@ export interface ITutorialFlow {
   stick: string;
   enemy: string;
   dialog: string;
+  attack: string;
 }
 
 export interface INPCDialogData {

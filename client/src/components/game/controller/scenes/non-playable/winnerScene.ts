@@ -9,7 +9,7 @@ class WinnerScene extends NonPlayableBaseScene {
 
   private messageCounter: number;
 
-  private dialogArr: Array<string>;
+  private dialogArr!: Array<string>;
 
   private menu: IMenuItem[] = [
     {
@@ -28,11 +28,11 @@ class WinnerScene extends NonPlayableBaseScene {
       fontSize: '28px',
     });
     this.messageCounter = 0;
-    this.dialogArr = ['Congratulations!', 'You finished the game!', `Your score: ${this.sharedState.score}`, 'Back to main menu?'];
   }
-
+  
   create() {
     super.create();
+    this.dialogArr = ['Congratulations!', 'You finished the game!', `Your score: ${this.sharedState.score}`, 'Back to main menu?'];
     this.messageCounter = 0;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
     const xAxis = this.getMiddlePositionX();

@@ -58,15 +58,16 @@ class PlaySceneOne extends SceneBase {
     this.initEnemyMovement(enemyArr);
     this.createHUD();
     this.createKey(map);
-    // this.createEndpoint(map, 'PlaySceneTwo', 24, 3274);
-    this.createEndpoint(map, 'PlaySceneTwo', 7956, -1238);
+    this.createEndpoint(map, 'PlaySceneTwo', 24, 3274);
+    // this.createEndpoint(map, 'PlaySceneTwo', 7956, -1238);
     this.createMovingPlatforms(map);
 
     // if (this.playerX !== null) this.getPlayer().x = this.playerX;
     // if (this.playerY !== null) this.getPlayer().y = this.playerY;
     this.initNPCBehaviour();
     this.createInfoPoints(map);
-    // this.makeIntro();
+    this.makeIntro();
+    this.displayMapName('The Forest');
     this.soundServise.playForestMusicScene1();
     this.saveAllDataToSharedState(this.scene.key);
   }
@@ -192,10 +193,10 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          x: -40, duration: 2000, delay: 2000,
+          y: 40, duration: 1000, delay: 1000,
         },
         {
-          x: 40, duration: 2000, delay: 2000,
+          y: -40, duration: 1000, delay: 1000,
         },
         ],
     });
@@ -205,28 +206,15 @@ class PlaySceneOne extends SceneBase {
       ease: 'Linear',
       tweens: [
         {
-          y: 40, duration: 1000, delay: 1000,
+          y: -40, duration: 1000, delay: 1000,
         },
         {
-          y: -40, duration: 1000, delay: 1000,
+          y: 40, duration: 1000, delay: 1000,
         },
         ],
     });
     this.tweens.timeline({
       targets: enemies[12].body.velocity,
-      loop: -1,
-      ease: 'Linear',
-      tweens: [
-        {
-          y: -40, duration: 1000, delay: 1000,
-        },
-        {
-          y: 40, duration: 1000, delay: 1000,
-        },
-        ],
-    });
-    this.tweens.timeline({
-      targets: enemies[13].body.velocity,
       loop: -1,
       ease: 'Linear',
       tweens: [

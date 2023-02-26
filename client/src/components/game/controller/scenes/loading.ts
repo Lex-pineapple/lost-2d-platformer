@@ -90,18 +90,23 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('canPickup', 'spritesheets/objects/pickupCatCan-small.png');
     this.load.image('plantFinal', 'spritesheets/objects/plant-big.png');
     this.load.image('leafPickup', 'spritesheets/objects/plant-small.png');
+    this.load.image('energyCanPickup', 'spritesheets/objects/pickupEnergyCan-small.png');
     this.load.image('keyPickup', 'spritesheets/objects/keyPng.png');
     this.load.image('doorLock', 'spritesheets/objects/doorLock.png');
     this.load.image('movingPlatform', 'spritesheets/objects/movingPlatform.png');
     this.load.image('movingPlatform2', 'spritesheets/objects/movingPlatform2.png');
     this.load.image('flowerPickup', 'spritesheets/objects/flowerPickup.png');
+    this.load.image('bigFlowerPickup', 'spritesheets/objects/bigFlowerPickup.png');
     this.load.image('healthCanPickup', 'spritesheets/objects/healthCan.png');
     this.load.image('livesHUD', 'spritesheets/objects/livesHUD.png');
     this.load.image('rectangleHUD', 'spritesheets/objects/rectangleHUD.png');
     this.load.image('frontBG', 'backgrounds/FrontBG.png');
     this.load.image('frontBGBlurred', 'backgrounds/FrontBGBlurred.png');
     this.load.image('frontBGcatSprite', 'spritesheets/FrontBG-catSprite.png');
+    this.load.image('destructibleBarricade', 'spritesheets/objects/destructibleBarricade.png');
 
+
+    
     this.load.image('infoSign', 'spritesheets/objects/infoSign.png');
 
     this.load.spritesheet('objectPickups', 'spritesheets/objects/PickupObjectMap.png', {
@@ -127,6 +132,11 @@ class LoadingScene extends Phaser.Scene {
       'a-cat-jump',
       'spritesheets/cat-jump-atlas.png',
       'spritesheets/cat-jump-atlas.json'
+    );
+    this.load.atlas(
+      'a-cat-attack',
+      'spritesheets/cat-attack-atlas.png',
+      'spritesheets/cat-attack-atlas.json'
     );
     this.load.atlas(
       'a-cat-sit',

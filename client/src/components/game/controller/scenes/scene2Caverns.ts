@@ -34,12 +34,16 @@ class PlaySceneTwo extends SceneBase {
     this.createPickups(map, 'can');
     this.createEnemies(map);
     this.createKey(map);
-    // this.createEndpoint(map, 'PlaySceneThree', 8038, 362);
-    this.createEndpoint(map, 'PlaySceneThree', 1952, -450);
+    this.createEnergyPickup(map);
+    // this.createEndpoint(map, 'PlaySceneThree', 15900, -214);
+    this.createEndpoint(map, 'PlaySceneThree', 32, 300);
     this.createHUD();
     this.initNPCBehaviour();
     this.createMovingPlatforms(map);
+    this.createDestructibleBarricade(map);
     this.soundServise.playCavernMusic();
+    this.displayMapName('The Chrystal Caverns');
+
     this.saveAllDataToSharedState(this.scene.key);
   }
 
@@ -52,8 +56,10 @@ class PlaySceneTwo extends SceneBase {
   initNPCBehaviour() {
     const NPCArr = [];
     NPCArr.push(new NPC(this, 'NPC1', 834, 3274, 'cat', 'PlaySceneTwo', 'sit'));
-    NPCArr.push(new NPC(this, 'NPC2', 6144, 650, 'cat', 'PlaySceneTwo', 'lie'));
+    NPCArr.push(new NPC(this, 'NPC2', 6144, 660, 'cat', 'PlaySceneTwo', 'lie'));
     NPCArr.push(new NPC(this, 'NPC3', 6160, 106, 'cat', 'PlaySceneTwo', 'sit'));
+    NPCArr[2].flip();
+    NPCArr[1].flip();
 
     NPCArr.forEach((npc) => {
       this.physics.add.overlap(this.getPlayer(), npc, () => {
@@ -75,7 +81,7 @@ class PlaySceneTwo extends SceneBase {
     const platformPoints2 = gameObjectsToObjectPoints(
       map.filterObjects('MovingLayer', (obj) => obj.name === 'movingPlatformPoint2')
     );
-    const platforms = platformPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'movingPlatform').setSize(160, 32).setImmovable(true));
+    const platforms = platformPoints.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'movingPlatform').setSize(138, 16).setImmovable(true));
     const platforms2 = platformPoints2.map((point) => this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'movingPlatform2').setSize(64, 16).setImmovable(true));
 
     platforms.forEach((platform) => {
@@ -201,6 +207,21 @@ class PlaySceneTwo extends SceneBase {
         onComplete: () => {
           platforms[5].body.velocity.x = 0;
         },
+    });
+    this.tweens.timeline({
+      targets: platforms[6].body.velocity,
+      delay: 3000,
+      loop: -1,
+      ease: 'Linear',
+      duration: 3000,
+      tweens: [
+        {
+          y: -150,
+        },
+        {
+          y: 150,
+        },
+        ],
     });
 
     this.tweens.timeline({
