@@ -47,6 +47,7 @@ class PlaySceneTwo extends SceneBase {
     this.soundServise.playCavernMusic();
 
     this.saveAllDataToSharedState(this.scene.key);
+    this.savePlayerStats(this.scene.key);
   }
 
   tileBackgrounds(BGHeight: number) {

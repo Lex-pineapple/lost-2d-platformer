@@ -1,16 +1,12 @@
-import Game from '../components/game/game';
-
 export type StateData = {
   playerId: number | null;
   playerName: string;
-  game: Game | null
 };
 
 export class State {
   static #data: StateData = {
     playerId: null,
     playerName: '',
-    game: null,
   };
 
   static get data() {

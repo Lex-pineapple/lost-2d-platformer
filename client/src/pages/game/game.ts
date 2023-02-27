@@ -1,5 +1,5 @@
 import { ElementPosition } from '../../app/types';
-import { State } from '../../app/state';
+import { StateGame } from '../../app/stateGame';
 import Game from '../../components/game/game';
 import Page from '../_/page';
 
@@ -9,11 +9,11 @@ class GamePage extends Page {
   constructor() {
     super();
 
-    if (State.data.game) {
-      this.game = State.data.game;
+    if (StateGame.data.game) {
+      this.game = StateGame.data.game;
     } else {
       this.game = new Game();
-      State.setDataKey('game', this.game);
+      StateGame.setDataKey('game', this.game);
     }
 
     this.game.render(this.container, ElementPosition.BEFORE_END);

@@ -51,6 +51,13 @@ export const ApiSettings = {
       },
       method: HttpMethod.GET,
     },
+    getHighscore: {
+      path: '/highscores/',
+      headers: {
+        Authorization: 'Bearer ',
+      },
+      method: HttpMethod.GET,
+    },
     createHighscore: {
       path: '/highscores',
       headers: {

@@ -3,7 +3,7 @@ import NotFoundPage from '../pages/not-found/not-found';
 import GamePage from '../pages/game/game';
 import HighscorePage from '../pages/highscore/highscore';
 import AboutPage from '../pages/about/about';
-import { State } from './state';
+import { StateGame } from './stateGame';
 
 type Params = {
   [key: string]: string;
@@ -44,8 +44,8 @@ export const Routes: Route[] = [
       const page = new GamePage();
 
       if (page) {
-        if (State.data.game) {
-          State.data.game.wake();
+        if (StateGame.data.game) {
+          StateGame.data.game.wake();
         }
 
         page.render(outletEl);
@@ -60,8 +60,8 @@ export const Routes: Route[] = [
       const page = new HighscorePage();
 
       if (page) {
-        if (State.data.game) {
-          State.data.game.sleep();
+        if (StateGame.data.game) {
+          StateGame.data.game.sleep();
         }
 
         page.render(outletEl);
@@ -76,8 +76,8 @@ export const Routes: Route[] = [
       const page = new AboutPage();
 
       if (page) {
-        if (State.data.game) {
-          State.data.game.sleep();
+        if (StateGame.data.game) {
+          StateGame.data.game.sleep();
         }
 
         page.render(outletEl);
@@ -94,8 +94,8 @@ const defaultRoute: Route = {
     const page = new NotFoundPage('');
 
     if (page) {
-      if (State.data.game) {
-        State.data.game.sleep();
+      if (StateGame.data.game) {
+        StateGame.data.game.sleep();
       }
 
       page.render(outletEl);

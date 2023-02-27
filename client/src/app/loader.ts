@@ -43,7 +43,7 @@ export class Loader {
     return playersHttpClient.getOne(url);
   }
 
-  static async updatePlayer(id: number, playerObj: Omit<Player, 'id'>): Promise<Player | null> {
+  static async updatePlayer(id: number, playerObj: Partial<Omit<Player, 'id'>>): Promise<Player | null> {
     const url = API_URL + ApiSettings.API_ENDPOINTS.updatePlayer.path + id;
     const { headers } = ApiSettings.API_ENDPOINTS.updatePlayer;
     const token = localStorage.getItem('auth') || '';
@@ -70,7 +70,15 @@ export class Loader {
     return highscoresHttpClient.getAll(url);
   }
 
-  static async createHighscore(highscoreObj: Highscore): Promise<Highscore | null> {
+  static async getHighscore(playerId: number): Promise<Highscore | null> {
+    const url = API_URL + ApiSettings.API_ENDPOINTS.getHighscore.path + playerId;
+    const { headers } = ApiSettings.API_ENDPOINTS.getPlayer;
+    const token = localStorage.getItem('auth') || '';
+    headers.Authorization += token;
+    return highscoresHttpClient.getOne(url);
+  }
+
+  static async createHighscore(highscoreObj: Pick<Highscore, 'highscore' | 'playerId'>): Promise<Highscore | null> {
     const url = API_URL + ApiSettings.API_ENDPOINTS.createHighscore.path;
     const { headers } = ApiSettings.API_ENDPOINTS.createHighscore;
     const token = localStorage.getItem('auth') || '';
@@ -79,7 +87,7 @@ export class Loader {
     return highscoresHttpClient.createOne(url, headers, body);
   }
 
-  static async updateHighscore(id: number, highscoreObj: Omit<Highscore, 'id'>): Promise<Highscore | null> {
+  static async updateHighscore(id: number, highscoreObj: Pick<Omit<Highscore, 'id'>, 'highscore'>): Promise<Highscore | null> {
     const url = API_URL + ApiSettings.API_ENDPOINTS.updateHighscore.path + id;
     const { headers } = ApiSettings.API_ENDPOINTS.updateHighscore;
     const token = localStorage.getItem('auth') || '';

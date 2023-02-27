@@ -53,6 +53,7 @@ class PlaySceneThree extends SceneBase {
 
     this.soundServise.playForestMusicScene3();
     this.saveAllDataToSharedState(this.scene.key);
+    this.savePlayerStats(this.scene.key);
 
     // this.addEndpointHandler('PlaySceneNext', 0, 420);
   }

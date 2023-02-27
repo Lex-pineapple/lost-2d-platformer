@@ -72,6 +72,7 @@ class PlaySceneOne extends SceneBase {
 
     this.soundServise.playForestMusicScene1();
     this.saveAllDataToSharedState(this.scene.key);
+    this.savePlayerStats(this.scene.key);
   }
 
   initNPCBehaviour() {
