@@ -58,14 +58,15 @@ const clientConfig = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif|ogg|mp3|wav)/,
+        test: /\.(png|jpg|jpeg|gif|ogg|mp3|wav)/,
         type: 'asset/resource',
         generator: {
           filename: 'assets/images/[hash][ext][query]',
         },
       },
+      { test: /\.svg$/, loader: 'svg-inline-loader' },
       {
-        test: /\.(woff|woff2|eot|ttf|otf|svg)/,
+        test: /\.(woff|woff2|eot|ttf|otf)/,
         type: 'asset/resource',
         generator: {
           filename: 'assets/fonts/[hash][ext][query]',

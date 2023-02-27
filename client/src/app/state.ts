@@ -1,12 +1,14 @@
 export type StateData = {
   playerId: number | null;
   playerName: string;
+  theme: 'light' | 'dark';
 };
 
 export class State {
   static #data: StateData = {
     playerId: null,
     playerName: '',
+    theme: 'light',
   };
 
   static get data() {
