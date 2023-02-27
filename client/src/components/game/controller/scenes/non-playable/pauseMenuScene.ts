@@ -1,6 +1,8 @@
 import { IMenuItem, ISharedState } from '../../../../../types/interfaces';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 import { saveToLocalStorage, SaveItems } from '../../helpers/localStorage';
+import { State } from '../../../../../app/state';
+import { Loader } from '../../../../../app/loader';
 
 class PauseMenuScene extends NonPlayableBaseScene {
   private menu: IMenuItem[] = [
@@ -14,7 +16,7 @@ class PauseMenuScene extends NonPlayableBaseScene {
       sceneKey: null,
       text: 'Save',
       textGameObj: null,
-      handleEvents: this.saveButtonEvent.bind(this),
+      handleEvents: this.savePlayerStats.bind(this),
     },
     {
       sceneKey: this.menuScenes.optionsMenu,
@@ -88,7 +90,29 @@ class PauseMenuScene extends NonPlayableBaseScene {
     if (this.sharedState.lastLevel) {
       saveToLocalStorage(SaveItems.lastLevel, this.sharedState.lastLevel);
     }
-    console.log('create save');
+  }
+
+  async savePlayerStats() {
+    const sceneKey = this.sharedState.lastLevel;
+    if (!State.data.playerId) return;
+    const totalScore = Number(this.sharedState.score);
+    const hp = Number(this.sharedState.playerHP);
+    let sceneNumber = 1;
+    if (sceneKey === 'PlaySceneOne') {
+      sceneNumber = 1;
+    }
+    if (sceneKey === 'PlaySceneTwo') {
+      sceneNumber = 2;
+    }
+    if (sceneKey === 'PlaySceneThree') {
+      sceneNumber = 3;
+    }
+
+    await Loader.updatePlayer(State.data.playerId, {
+      score: totalScore,
+      lastLevel: sceneNumber,
+      livesLeft: hp,
+      });
   }
 }
 
