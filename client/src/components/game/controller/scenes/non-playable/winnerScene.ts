@@ -1,6 +1,8 @@
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 import DialogueModal from '../../actor/dialogueModal';
 import { IMenuItem, ISharedState } from '../../../../../types/interfaces';
+import { Loader } from '../../../../../app/loader';
+import { State } from '../../../../../app/state';
 
 class WinnerScene extends NonPlayableBaseScene {
   private dialogueModal!: DialogueModal;
@@ -48,6 +50,7 @@ class WinnerScene extends NonPlayableBaseScene {
     this.createFullscreenSwitch();
 
     this.soundServise.playVictoryMusic();
+    this.saveScore();
   }
 
   displayWinnerMessage() {
@@ -59,6 +62,22 @@ class WinnerScene extends NonPlayableBaseScene {
       this.createMenu(this, this.menu, 150);
     }
     this.messageCounter += 1;
+  }
+
+  async saveScore() {
+    const score = Number(this.sharedState.score);
+    if (score && State.data.playerId) {
+      await Loader.updatePlayer(State.data.playerId, { score });
+      const highscoreRecord = await Loader.getHighscore(State.data.playerId);
+      if (highscoreRecord) {
+       const { highscore } = highscoreRecord;
+       if (highscore < score) {
+         await Loader.updateHighscore(State.data.playerId, { highscore: score });
+        }
+      } else {
+        await Loader.createHighscore({ highscore: score, playerId: State.data.playerId });
+      }
+    }
   }
 }
 

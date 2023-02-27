@@ -7,6 +7,8 @@ import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import tutorialFlow from '../../../../assets/data/tutorialFlow';
 import SoundService from '../audio/soundServise';
 import { SaveItems, saveToLocalStorage } from '../helpers/localStorage';
+import { State } from '../../../../app/state';
+import { Loader } from '../../../../app/loader';
 
 interface ICollidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody {
   properties?: {
@@ -14,6 +16,18 @@ interface ICollidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody
     noStick?: boolean;
   }
 }
+
+enum SceneNumbers {
+  PlaySceneOne = 1,
+  PlaySceneTwo = 2,
+  PlaySceneThree = 3,
+}
+
+const SceneNumberObj = {
+  PlaySceneOne: 1,
+  PlaySceneTwo: 2,
+  PlaySceneThree: 3,
+};
 
 class SceneBase extends Phaser.Scene {
   private player!: Player;
@@ -552,6 +566,28 @@ class SceneBase extends Phaser.Scene {
     this.saveHPtoLocalStorage();
     this.saveSceneToLocalStorage(sceneKey);
     console.log('saved all data to local storage');
+  }
+
+  async savePlayerStats(sceneKey: string) {
+    if (!State.data.playerId) return;
+    const totalScore = Number(this.sharedState.score);
+    const hp = Number(this.sharedState.playerHP);
+    let sceneNumber = 1;
+    if (sceneKey === 'PlaySceneOne') {
+      sceneNumber = 1;
+    }
+    if (sceneKey === 'PlaySceneTwo') {
+      sceneNumber = 2;
+    }
+    if (sceneKey === 'PlaySceneThree') {
+      sceneNumber = 3;
+    }
+
+    await Loader.updatePlayer(State.data.playerId, {
+      score: totalScore,
+      lastLevel: sceneNumber,
+      livesLeft: hp,
+      });
   }
 }
 

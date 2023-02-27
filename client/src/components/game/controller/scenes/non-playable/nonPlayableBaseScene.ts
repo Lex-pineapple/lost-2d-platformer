@@ -8,6 +8,8 @@ import { soundConfigEffects, soundConfigMusic, soundConfigMaster } from '../../a
 import {
  SaveItems, saveToLocalStorage, getFromLocalStorage, getAllFromLocalStorage,
 } from '../../helpers/localStorage';
+import { State } from '../../../../../app/state';
+import { Loader } from '../../../../../app/loader';
 
 enum SceneKeys {
   scene1 = 'PlaySceneOne',
@@ -158,6 +160,7 @@ class NonPlayableBaseScene extends Scene {
 
         if (sceneKey === 'OptionsScene') {
           this.scene.stop();
+          this.saveVolumesToApi();
           saveToLocalStorage(SaveItems.masterVolume, +soundConfigMaster.volume!.toFixed(2));
           saveToLocalStorage(SaveItems.musicVolume, +soundConfigMusic.volume!.toFixed(2));
           saveToLocalStorage(SaveItems.effectsVolume, +soundConfigEffects.volume!.toFixed(2));
@@ -170,6 +173,15 @@ class NonPlayableBaseScene extends Scene {
       }
       this.soundServise.playSoundButton();
     }
+  }
+
+  async saveVolumesToApi() {
+    if (!State.data.playerId) return;
+    await Loader.updatePlayer(State.data.playerId, {
+      masterVolume: +soundConfigMaster.volume!.toFixed(2),
+      musicVolume: +soundConfigMusic.volume!.toFixed(2),
+      effectsVolume: +soundConfigEffects.volume!.toFixed(2),
+    });
   }
 
   getSpawnCoordniates(sceneKey: string) {

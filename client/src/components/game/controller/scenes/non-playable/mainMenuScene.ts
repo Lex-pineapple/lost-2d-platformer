@@ -2,6 +2,8 @@ import { IMenuItem, ISharedState } from '../../../../../types/interfaces';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 import { SaveItems, getFromLocalStorage } from '../../helpers/localStorage';
 import { soundConfigMaster, soundConfigEffects, soundConfigMusic } from '../../audio/audioConfigs';
+import { State } from '../../../../../app/state';
+import { Loader } from '../../../../../app/loader';
 
 class MainMenuScene extends NonPlayableBaseScene {
   private menu: IMenuItem[] = [
@@ -15,7 +17,7 @@ class MainMenuScene extends NonPlayableBaseScene {
       sceneKey: '',
       text: 'Load Game',
       textGameObj: null,
-      handleEvents: this.loadGame.bind(this),
+      handleEvents: this.loadGameFromApi.bind(this),
     },
 
     { sceneKey: this.menuScenes.optionsMenu, text: 'Options', textGameObj: null },
@@ -34,7 +36,7 @@ class MainMenuScene extends NonPlayableBaseScene {
     this.createFullscreenSwitch();
 
     this.soundServise.stopAnyMusic();
-    this.loadVolumesFromLocalStorage();
+    this.loadVolumesFromApi();
   }
 
   makeBG() {
@@ -72,7 +74,16 @@ class MainMenuScene extends NonPlayableBaseScene {
     if (masterVolume) soundConfigMaster.volume = masterVolume;
     if (musicVolume) this.soundServise.setVolumeMusic(musicVolume);
     if (effectsVolume) this.soundServise.setVolumeEffects(effectsVolume);
-    console.log(soundConfigEffects.volume);
+  }
+
+  async loadVolumesFromApi() {
+    if (!State.data.playerId) return;
+    const playerStats = await Loader.getPlayer(State.data.playerId);
+    if (playerStats) {
+      soundConfigMaster.volume = playerStats.masterVolume;
+      this.soundServise.setVolumeEffects(playerStats.effectsVolume);
+      this.soundServise.setVolumeMusic(playerStats.musicVolume);
+    }
   }
 
   loadGame() {
@@ -90,6 +101,36 @@ class MainMenuScene extends NonPlayableBaseScene {
           playerX: coordinates?.x,
           playerY: coordinates?.y,
           playerHP: hp,
+        }
+      );
+    }
+  }
+
+  async loadGameFromApi() {
+    if (!State.data.playerId) return;
+    const playerStats = await Loader.getPlayer(State.data.playerId);
+    if (playerStats) {
+      const { lastLevel } = playerStats;
+      let lastLevelStr = 'PlaySceneOne';
+      if (lastLevel === 1) {
+        lastLevelStr = 'PlaySceneOne';
+      }
+      if (lastLevel === 2) {
+        lastLevelStr = 'PlaySceneTwo';
+      }
+      if (lastLevel === 3) {
+        lastLevelStr = 'PlaySceneThree';
+      }
+      const coordinates = this.getSpawnCoordniates(lastLevelStr);
+      this.sharedState.lastLevel = lastLevelStr;
+      this.sharedState.score = String(playerStats.score);
+      this.sharedState.playerHP = String(playerStats.livesLeft);
+      this.scene.start(
+        lastLevelStr,
+        {
+          playerX: coordinates?.x,
+          playerY: coordinates?.y,
+          playerHP: playerStats.livesLeft,
         }
       );
     }
