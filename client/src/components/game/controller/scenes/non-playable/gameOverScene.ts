@@ -2,10 +2,13 @@ import { IMenuItem, ISharedState } from '../../../../../types/interfaces';
 import NonPlayableBaseScene from './nonPlayableBaseScene';
 
 class GameOverScene extends NonPlayableBaseScene {
-  private previousScene!: string;
-
   private menu: IMenuItem[] = [
-    { sceneKey: 'PlaySceneOne', text: 'Restart', textGameObj: null },
+    {
+      sceneKey: '',
+      text: 'Restart',
+      textGameObj: null,
+      handleEvents: this.restartLevel.bind(this),
+    },
     {
       sceneKey: 'MainMenuScene',
       text: 'Main Menu',
@@ -17,10 +20,6 @@ class GameOverScene extends NonPlayableBaseScene {
   constructor(name: string, protected sharedState: ISharedState) {
     super('GameOverScene', sharedState);
   }
-
-  // init(data: IInitScene) {
-  //   this.previousScene = data.key;
-  // }
 
   create() {
     this.cameras.main.fadeIn(1000, 0, 0, 0);
@@ -41,6 +40,11 @@ class GameOverScene extends NonPlayableBaseScene {
         color: '#ffffff',
       })
       .setOrigin(0.5);
+  }
+
+  restartLevel() {
+    const levelKey = this.sharedState.lastLevel;
+    if (levelKey) this.scene.start(levelKey);
   }
 }
 
