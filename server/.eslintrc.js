@@ -1,40 +1,25 @@
 module.exports = {
-  plugins: [
-    "prettier",
-    "import",
-    "@typescript-eslint"
-  ],
-  extends: [
-    "airbnb-base",
-    "airbnb-typescript/base"
-  ],
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    "project": "./tsconfig.json",
-    "tsconfigRootDir": __dirname,
-    "sourceType": "module"
+    project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
+    sourceType: 'module',
   },
+  plugins: ['@typescript-eslint/eslint-plugin'],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+  ],
+  root: true,
   env: {
-    "es6": true,
-    "browser": true,
-    "node": true
+    node: true,
+    jest: true,
   },
-  ignorePatterns: [".eslintrc.js"],
+  ignorePatterns: ['.eslintrc.js'],
   rules: {
-    "no-debugger": "off",
-    "no-console": 0,
-    "class-methods-use-this": "off",
-    "max-classes-per-file": "off",
-    "@typescript-eslint/no-unused-vars" : "off",
-    "no-underscore-dangle": "off",
-    "@typescript-eslint/no-explicit-any": "error",
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto",
-        "tabWidth": 2,
-        "singleQuote": true
-      }
-    ]
-  }
-}
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+  },
+};
