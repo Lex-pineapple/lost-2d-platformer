@@ -1,57 +1,61 @@
 import { HttpMethod } from './types';
 
 export const ApiSettings = {
-  API_HOST: 'http://127.0.0.1',
+  API_HOST: 'https://lost-2d-platformer-server.onrender.com',
   API_PORT: 7878,
   API_ENDPOINTS: {
-    getPlayers: {
-      path: '/players',
-      query: {
-        page: 'page',
-        limit: 'limit',
-      },
-      method: HttpMethod.GET,
-    },
-    getPlayer: {
-      path: '/players/',
-      method: HttpMethod.GET,
-    },
-    createPlayer: {
-      path: '/players',
+    signup: {
+      path: '/auth/signup',
       headers: {
         'Content-Type': 'application/json',
       },
       method: HttpMethod.POST,
     },
-    deletePlayer: {
+    login: {
+      path: '/auth/login',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: HttpMethod.POST,
+    },
+    verifyToken: {
+      path: '/auth/verify',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ',
+      },
+      method: HttpMethod.POST,
+    },
+    getPlayer: {
       path: '/players/',
-      method: HttpMethod.DELETE,
+      headers: {
+        Authorization: 'Bearer ',
+      },
+      method: HttpMethod.GET,
     },
     updatePlayer: {
       path: '/players/',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ',
       },
-      method: HttpMethod.PUT,
+      method: HttpMethod.PATCH,
     },
     getHighscores: {
       path: '/highscores',
-      query: {
-        page: 'page',
-        limit: 'limit',
-        sort: 'sort',
-        order: 'order',
+      headers: {
+        Authorization: 'Bearer ',
       },
-      method: HttpMethod.GET,
-    },
-    getHighscore: {
-      path: '/highscores/',
+      query: {
+        limit: 'limit',
+      },
       method: HttpMethod.GET,
     },
     createHighscore: {
       path: '/highscores',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ',
       },
       method: HttpMethod.POST,
     },
@@ -59,14 +63,12 @@ export const ApiSettings = {
       path: '/highscores/',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ',
       },
       method: HttpMethod.PUT,
-    },
-    deleteHighscore: {
-      path: '/highscores/',
-      method: HttpMethod.DELETE,
     },
   },
 };
 
-export const API_URL = `${ApiSettings.API_HOST}:${ApiSettings.API_PORT}`;
+// export const API_URL = `${ApiSettings.API_HOST}:${ApiSettings.API_PORT}`;
+export const API_URL = `${ApiSettings.API_HOST}`;

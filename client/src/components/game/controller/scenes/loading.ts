@@ -107,8 +107,6 @@ class LoadingScene extends Phaser.Scene {
     this.load.image('fullscreenExit', 'spritesheets/objects/fullscreen-exit.png');
     this.load.image('fullscreenOpen', 'spritesheets/objects/fullscreen-open.png');
 
-
-    
     this.load.image('infoSign', 'spritesheets/objects/infoSign.png');
 
     this.load.spritesheet('objectPickups', 'spritesheets/objects/PickupObjectMap.png', {

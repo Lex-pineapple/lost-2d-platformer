@@ -1,4 +1,6 @@
 import { filesHttpClient } from './http-client';
+import { Loader } from './loader';
+import { Player, PlayerLoginKeys, PlayerSignupKeys } from './types';
 
 interface IManifest {
   login: string;
@@ -6,37 +8,53 @@ interface IManifest {
 }
 
 class Auth {
-  // constructor() {}
+  async signup(credentials: Pick<Player, PlayerSignupKeys>) {
+    const signupData = await Loader.createPlayer(credentials);
+    return signupData;
+  }
 
-  clean() {
+  async login(credentials: Pick<Player, PlayerLoginKeys>) {
+    const loginData = await Loader.loginPlayer(credentials);
+
+    if (loginData && 'token' in loginData) {
+      localStorage.setItem('auth', loginData.token);
+    }
+
+    return loginData;
+  }
+
+  async verify() {
+    const token = localStorage.getItem('auth');
+    if (!token) return { result: false };
+    return Loader.verifyPlayer(token);
+  }
+
+  async is() {
+    const authVerificationData = await this.verify();
+    return authVerificationData ? authVerificationData.result : false;
+  }
+
+  async clean() {
     document.body.style.display = 'none';
-    const auth = localStorage.getItem('auth');
-    this.validate(auth);
+    this.validate();
   }
 
-  is() {
-    const auth = localStorage.getItem('auth');
-    return auth === '1';
-  }
-
-  validate(auth: string | null) {
-    if (auth !== '1') {
-      // window.location.replace('/');
-    } else {
+  async validate() {
+    if (await this.is()) {
       document.body.style.display = 'block';
+    } else {
+      window.location.replace('/');
     }
   }
 
-  logOut() {
+  logout() {
     localStorage.removeItem('auth');
     window.location.replace('/');
   }
 
   async loadApp() {
     document.body.textContent = '';
-    // need to add main.js and remove login.js if possible
     const manifestObj = await filesHttpClient.getFile('manifest.json') as IManifest;
-    console.log(manifestObj);
 
     if (manifestObj && manifestObj.main) {
       const oldScriptEl = document.head.querySelector('script');

@@ -54,7 +54,6 @@ class PlaySceneThree extends SceneBase {
     this.soundServise.playForestMusicScene3();
     this.saveAllDataToSharedState(this.scene.key);
 
-
     // this.addEndpointHandler('PlaySceneNext', 0, 420);
   }
 
@@ -91,7 +90,6 @@ class PlaySceneThree extends SceneBase {
     this.finalNPC = new NPC(this, 'NPC2', 16241, -210, 'cat', 'PlaySceneThree', 'black-cat-sit');
     this.finalNPC.flip();
 
-    
     NPCArr.forEach((npc) => {
       this.physics.add.overlap(this.getPlayer(), npc, () => {
         if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
@@ -118,7 +116,7 @@ class PlaySceneThree extends SceneBase {
       // this.getPlayer().disableRun();
       this.saveScoreToSharedState();
       console.log(this.sharedState.score);
-      
+
       if (!this.getPlayer().collided) {
         this.tweens.add({
           targets: this.endpoint,

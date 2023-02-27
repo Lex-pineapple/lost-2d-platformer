@@ -1,15 +1,15 @@
 import { ElementPosition } from '../../app/types';
-import Highscore from '../../components/highscore/highscore';
+import Highscores from '../../components/highscores/highscores';
 import Page from '../_/page';
 
 class HighscorePage extends Page {
-  private highscore: Highscore;
+  private highscores: Highscores;
 
   constructor() {
     super();
 
-    this.highscore = new Highscore();
-    this.highscore.render(this.container, ElementPosition.BEFORE_END);
+    this.highscores = new Highscores();
+    this.highscores.render(this.container, ElementPosition.BEFORE_END);
   }
 }
 

@@ -5,6 +5,7 @@ import Router from './router';
 import Menu from '../components/menu/menu';
 import Header from '../components/header/header';
 import Footer from '../components/footer/footer';
+import { State } from './state';
 
 class App {
   public pageEl = Utils.createEl('div', ['page']);
@@ -18,6 +19,17 @@ class App {
   }
 
   async start() {
+    const authVerificationData = await auth.verify();
+
+    if (!authVerificationData || !authVerificationData.result) {
+      return;
+    }
+
+    const { playerId, playerName } = authVerificationData;
+
+    if (playerId) State.setDataKey('playerId', playerId);
+    if (playerName) State.setDataKey('playerName', playerName);
+
     const menu = new Menu();
 
     const header = new Header(menu);
@@ -41,7 +53,7 @@ class App {
     if (logoutEl) {
       logoutEl.addEventListener('click', (event: Event) => {
         event.preventDefault();
-        auth.logOut();
+        auth.logout();
       });
     }
   }

@@ -17,7 +17,7 @@ const dialogFlow = {
         '...',
         '...',
         '...Hng...Catnip...',
-        '*snore*'
+        '*snore*',
       ],
     },
     NPC3: {
@@ -70,8 +70,8 @@ const dialogFlow = {
   PlaySceneThree: {
     NPC1: {
       story: ["Are you looking for me? Well it seems you have found me. The plant you've been searching for is indeed located just beyond the forest.",
-      "But beware! This forest has a dark reputation for it is full of danger!",
-      "Hm, my advise? Be quick on your feet but dont make haste decisions.",
+      'But beware! This forest has a dark reputation for it is full of danger!',
+      'Hm, my advise? Be quick on your feet but dont make haste decisions.',
       'Survive the night child and we might meet again...'],
       idle: [
         '...',
