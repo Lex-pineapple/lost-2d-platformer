@@ -30,6 +30,17 @@ class App {
     if (playerId) State.setDataKey('playerId', playerId);
     if (playerName) State.setDataKey('playerName', playerName);
 
+    const themeVal = window.localStorage.getItem('theme');
+
+    if (themeVal === 'dark') {
+      State.setDataKey('theme', 'dark');
+      document.body.classList.add('theme-dark');
+    } else {
+      State.setDataKey('theme', 'light');
+      window.localStorage.setItem('theme', 'light');
+      document.body.classList.remove('theme-dark');
+    }
+
     const menu = new Menu();
 
     const header = new Header(menu);

@@ -11,12 +11,13 @@
   margin-right: -12px;
 }
 
-.menu__item--player-name {
+.menu__item--switch-theme {
   margin-left: auto;
 }
 
 .menu__link,
-.menu__player-name {
+.menu__player-name,
+.menu__item--switch-theme {
   display: block;
   @include text-16-500;
   padding: 12px 20px 20px 20px;
@@ -24,4 +25,30 @@
 
 .menu__link {
   text-transform: uppercase;
+}
+
+.menu__switch-theme {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+
+  .svg {
+    display: block;
+    width: 100%;
+    fill: currentColor;
+  }
+}
+
+.theme-dark {
+  .menu {
+    .link--dark {
+      color: $grey-lighter;
+
+      @include hover-link-grey;
+    }
+  }
+
+  .menu__switch-theme {
+    color: $grey-lighter;
+  }
 }
