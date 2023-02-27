@@ -135,7 +135,7 @@ class Game extends Component {
         default: 'arcade',
         arcade: {
           // gravity: { y: 1400 },
-          debug: true,
+          debug: false,
         },
       },
       plugins: {

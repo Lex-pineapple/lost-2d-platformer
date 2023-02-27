@@ -164,7 +164,8 @@ class SceneBase extends Phaser.Scene {
       } else {
         button.setTexture('fullscreenExit');
         this.scale.startFullscreen();
-        this.scale.setZoom(window.innerWidth / 800);
+        
+        this.scale.setZoom(window.screen.width / 800);
       }
     }, this);
   }
