@@ -1,5 +1,5 @@
 import {
- HttpMethod, Player, Highscore, PlayersData, HighscoresData,
+ HttpMethod, Player, Highscore, PlayersData, HighscoresData, AuthData, AuthVerificationData,
 } from './types';
 
 enum HttpStatusCode {
@@ -47,7 +47,7 @@ abstract class AppHttpClient implements HttpClient<Promise<ResponseData>> {
     body: string
   ): Promise<T | null> {
     return this.checkResponse(async () => {
-      const method = HttpMethod.PUT;
+      const method = HttpMethod.PATCH;
       const response = await fetch(url, { method, headers, body });
       return response;
     }, false);
@@ -100,30 +100,46 @@ abstract class AppHttpClient implements HttpClient<Promise<ResponseData>> {
 }
 
 class PlayersHttpClient extends AppHttpClient {
-  async getAll(url: string): Promise<PlayersData | null> {
-    return super.get(url, true);
-  }
+  // async getAll(url: string): Promise<PlayersData | null> {
+  //   return super.get(url, true);
+  // }
 
   async getOne(url: string): Promise<Player | null> {
     return super.get(url, false);
   }
 
-  async createOne(url: string, headers: HttpHeaders, body: string): Promise<Player | null> {
+  async createOne(url: string, headers: HttpHeaders, body: string): Promise<AuthData | null> {
     return super.create(url, headers, body);
+  }
+
+  async login(url: string, headers: HttpHeaders, body: string): Promise<AuthData | null> {
+    return this.checkResponse(async () => {
+      const method = HttpMethod.POST;
+      const response = await fetch(url, { method, headers, body });
+      return response;
+    }, false, []);
+  }
+
+  async verify(url: string, headers: HttpHeaders): Promise<AuthVerificationData | null> {
+    return this.checkResponse(async () => {
+      const method = HttpMethod.POST;
+      const response = await fetch(url, { method, headers });
+      return response;
+    }, false, []);
   }
 
   async updateOne(url: string, headers: HttpHeaders, body: string): Promise<Player | null> {
     return super.update(url, headers, body);
   }
 
-  async deleteOne(url: string): Promise<object | null> {
-    return super.delete(url);
-  }
+  // async deleteOne(url: string): Promise<object | null> {
+  //   return super.delete(url);
+  // }
 }
 
 class HighscoresHttpClient extends AppHttpClient {
   async getAll(url: string): Promise<HighscoresData | null> {
-    return super.get(url, true);
+    return super.get(url, false);
   }
 
   async getOne(url: string): Promise<Highscore | null> {

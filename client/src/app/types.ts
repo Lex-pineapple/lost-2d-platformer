@@ -20,12 +20,22 @@ export type Player = {
   score: number;
   livesLeft: number;
   lastLevel: number;
+  masterVolume: number;
+  musicVolume: number;
+  effectsVolume: number;
+  lang: 'en' | 'ru';
   id: number;
 };
 
+export type PlayerLoginKeys = 'email' | 'password';
+export type PlayerSignupKeys = 'name' | 'email' | 'password';
+
 export type Highscore = {
-  score: number;
-  livesLeft: number;
+  highscore: number;
+  playerId: number;
+  player: {
+    name: string
+  }
   id: number;
 };
 
@@ -34,7 +44,19 @@ export type PlayersData = {
   total?: string | null;
 };
 
-export type HighscoresData = {
-  data: Highscore[];
-  total?: string | null;
+// export type HighscoresData = {
+//   data: Highscore[];
+//   total?: string | null;
+// };
+
+export type HighscoresData = Highscore[];
+
+export type AuthData = {
+  token: string;
+};
+
+export type AuthVerificationData = {
+  result: boolean;
+  playerId?: number;
+  playerName?: string;
 };

@@ -2,27 +2,38 @@ import Component from '../_/component';
 import Router, { PagePaths } from '../../app/router';
 import Utils from '../../app/utils';
 import { ElementPosition } from '../../app/types';
+import { State } from '../../app/state';
 
 const MenuData = [
   {
     text: 'Game',
     path: PagePaths.GamePage.path,
-    cls: 'js-menu-link',
+    outerClsModifier: 'game',
+    innerCls: 'js-menu-link',
   },
   {
     text: 'High Score',
     path: PagePaths.HighscorePage.path,
-    cls: 'js-menu-link',
+    outerClsModifier: 'highscores',
+    innerCls: 'js-menu-link',
   },
   {
     text: 'About',
     path: PagePaths.AboutPage.path,
-    cls: 'js-menu-link',
+    outerClsModifier: 'about',
+    innerCls: 'js-menu-link',
+  },
+  {
+    text: State.data.playerName,
+    path: null,
+    outerClsModifier: 'player-name',
+    innerCls: 'menu__player-name',
   },
   {
     text: 'Log out',
     path: '/',
-    cls: 'logout',
+    outerClsModifier: 'logout',
+    innerCls: 'logout js-logout',
   },
 ];
 
@@ -38,7 +49,17 @@ class Menu extends Component {
     let menuItemsHtml = '';
 
     MenuData.forEach((item) => {
-      menuItemsHtml += `<li class="menu__item"><a class="menu__link link link--dark ${item.cls}" href="${item.path}">${item.text}</a></li>`;
+      const inner = item.path
+      ? `
+        <a class="menu__link link link--dark ${item.innerCls}" href="${item.path}">${item.text}</a>
+      `
+      : `
+        <span class="${item.innerCls}">${State.data.playerName}</a>
+      `;
+
+      menuItemsHtml += `
+        <li class="menu__item ${item.outerClsModifier ? `menu__item--${item.outerClsModifier}` : ''}">${inner}</li>
+      `;
     });
 
     const html = `

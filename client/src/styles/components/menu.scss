@@ -11,15 +11,17 @@
   margin-right: -12px;
 }
 
-.menu__item {
-  &:last-child {
-    margin-left: auto;
-  }
+.menu__item--player-name {
+  margin-left: auto;
+}
+
+.menu__link,
+.menu__player-name {
+  display: block;
+  @include text-16-500;
+  padding: 12px 20px 20px 20px;
 }
 
 .menu__link {
-  display: block;
-  @include text-16-500;
   text-transform: uppercase;
-  padding: 12px 20px 20px 20px;
 }

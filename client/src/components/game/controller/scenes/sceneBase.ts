@@ -1,4 +1,5 @@
 import TouchEventStop from 'phaser3-rex-plugins/plugins/toucheventstop';
+import ButtonsFactory from 'phaser3-rex-plugins/templates/ui/buttons/Factory';
 import { ISharedState, ITutorialFlow } from '../../../../types/interfaces';
 import Enemy from '../actor/enemy';
 import Player from '../actor/player';
@@ -6,7 +7,6 @@ import gameObjectsToObjectPoints from '../helpers/gameobject-to-objectpoint';
 import tutorialFlow from '../../../../assets/data/tutorialFlow';
 import SoundService from '../audio/soundServise';
 import { SaveItems, saveToLocalStorage } from '../helpers/localStorage';
-import ButtonsFactory from 'phaser3-rex-plugins/templates/ui/buttons/Factory';
 
 interface ICollidedObject extends Phaser.Types.Physics.Arcade.GameObjectWithBody {
   properties?: {
@@ -207,14 +207,12 @@ class SceneBase extends Phaser.Scene {
       tutorialText.scrollFactorY = 0;
       this.time.delayedCall(5000, () => {
         tutorialText.destroy();
-      })
+      });
       this.soundServise.playKeyPickup();
       this.player.canAttack = true;
       obj2.destroy();
     });
   }
-
-
 
   createKey(map: Phaser.Tilemaps.Tilemap) {
     const keyPoint = gameObjectsToObjectPoints(
@@ -292,7 +290,7 @@ class SceneBase extends Phaser.Scene {
       this.physics.world.enable(zone);
       zoneArr.push(zone);
       return this.physics.add.sprite(point.x, 450 - (1920 - point.y), 'destructibleBarricade').setSize(55, 64).setImmovable(true);
-    })
+    });
     destructibleBarricades.forEach((barricade) => {
       this.physics.add.collider(this.player, barricade);
     });
@@ -319,8 +317,6 @@ class SceneBase extends Phaser.Scene {
     });
   }
 
-
-
   beginTransition(nextSceneKey: string, posX: number, posY: number) {
     this.player.diableKeys();
     this.sharedState.playerHP = String(this.player.getHPValue());
@@ -329,8 +325,6 @@ class SceneBase extends Phaser.Scene {
       this.handleEndpointChange(nextSceneKey, posX, posY);
     });
   }
-
-
 
   handleEndpointChange(nextSceneKey: string, playerPosX: number, playerPosY: number) {
     this.scene.start(
@@ -386,7 +380,6 @@ class SceneBase extends Phaser.Scene {
     });
   }
 
-
   makeIntro() {
     const text = tutorialFlow.walk;
     const positionX = this.cameras.main.worldView.x + 32;
@@ -426,7 +419,7 @@ class SceneBase extends Phaser.Scene {
       style: {
         fontSize: '32px',
         strokeThickness: 0.5,
-      }
+      },
     });
     this.time.delayedCall(3000, () => {
       this.tweens.add({
@@ -488,7 +481,7 @@ class SceneBase extends Phaser.Scene {
 
   _spawnCharacters() {
     console.log(this.sharedState.playerHP);
-    
+
     if (this.sharedState.playerHP) {
       this.player = new Player(this, 32, 300, +this.sharedState.playerHP);
     } else {
