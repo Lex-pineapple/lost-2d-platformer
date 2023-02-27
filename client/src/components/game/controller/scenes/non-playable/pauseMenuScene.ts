@@ -67,7 +67,7 @@ class PauseMenuScene extends NonPlayableBaseScene {
       this.sharedState.playableScenePaused = null;
     }
     if (this.sharedState.score) this.sharedState.score = String(0);
-    this.sharedState.playerHP = String(0);
+    this.sharedState.playerHP = String(0); // ?????
     this.sharedState.lastLevel = 'PlaySceneOne';
     this.scene.start('MainMenuScene');
   }

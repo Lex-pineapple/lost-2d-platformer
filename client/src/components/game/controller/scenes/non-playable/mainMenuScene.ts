@@ -19,24 +19,6 @@ class MainMenuScene extends NonPlayableBaseScene {
     },
 
     { sceneKey: this.menuScenes.optionsMenu, text: 'Options', textGameObj: null },
-    // {
-    //   sceneKey: 'ScoreScene',
-    //   text: 'Score',
-    //   textGameObj: null,
-    //   handleEvents: this.handleMenuItemEvents.bind(this)
-    // },
-    // {
-    //   sceneKey: null,
-    //   text: 'Authors',
-    //   textGameObj: null,
-    //   handleEvents: this.handleMenuItemEvents.bind(this)
-    // },
-    // {
-    //   sceneKey: 'MainMenuScene',
-    //   text: 'Exit',
-    //   textGameObj: null,
-    //   handleEvents: this.handleMenuItemEvents.bind(this)
-    // },
   ];
 
   constructor(name: string, protected sharedState: ISharedState) {
@@ -98,10 +80,18 @@ class MainMenuScene extends NonPlayableBaseScene {
     const score = getFromLocalStorage(SaveItems.score);
     const hp = getFromLocalStorage(SaveItems.playerHP);
     if (lastSceneKey && score && hp) {
+      const coordinates = this.getSpawnCoordniates(lastSceneKey);
       this.sharedState.lastLevel = lastSceneKey;
       this.sharedState.score = score;
       this.sharedState.playerHP = hp;
-      this.scene.start(lastSceneKey, { playerX: 0, playerY: 0, playerHP: hp });
+      this.scene.start(
+        lastSceneKey,
+        {
+          playerX: coordinates?.x,
+          playerY: coordinates?.y,
+          playerHP: hp,
+        }
+      );
     }
   }
 
