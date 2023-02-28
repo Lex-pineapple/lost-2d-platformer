@@ -136,9 +136,11 @@ Footer (не оценивается)
 
 ### Backend
 
-    * Написан своими руками с нуля и имеет историю коммитов
-    * Использован JS стек TS/NodeJS/NestJS (Express)
-    * Backend-приложение задеплоено и отвечает на запросы POSTman (примеры запросов в документации https://lost-2d-platformer-server.onrender.com/api/docs)
+1. Написан своими руками с нуля и имеет историю коммитов
+
+2. Использован JS стек TS/NodeJS/NestJS (Express)
+
+3. Backend-приложение задеплоено и отвечает на запросы POSTman (примеры запросов в документации https://lost-2d-platformer-server.onrender.com/api/docs)
     * Backend-приложение построено на MVC архитектуре (models, controllers, services, routes), +10
     * Backend-приложение и все его маршруты полностью задокументированы в Swagger API docs https://lost-2d-platformer-server.onrender.com/api/docs +10
     * Реализован REST API, +5
