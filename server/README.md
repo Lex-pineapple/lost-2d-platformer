@@ -13,7 +13,8 @@
 - Go to server directory: `$ cd server`
 - Install dependencies: `$ npm i`
 - Start server: `$ npm run start:dev`
-- Send requests to: `http://127.0.0.1:7878`
+- Send requests to: `http://127.0.0.1:7878` or to deploy `https://lost-2d-platformer-server.onrender.com`
+- Complete Swagger API documentation at: `http://127.0.0.1:7878/api/docs` or in deploy: `https://lost-2d-platformer-server.onrender.com/api/docs`
 
 ## Installation
 
