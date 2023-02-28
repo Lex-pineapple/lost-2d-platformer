@@ -10,12 +10,15 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { PLAYER_CREATION_ERROR, PLAYER_NOT_FOUND_ERROR } from './players.constants';
+import {
+  PLAYER_CREATION_ERROR,
+  PLAYER_NOT_FOUND_ERROR,
+} from './players.constants';
 import { PlayerModel } from './player.model/player.model';
 import { PlayersService } from './players.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { PatchPlayerDto } from './dto/patch-player.dto';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PutPlayerDto } from './dto/put-player.dto';
 import { JwtAuthGuard } from 'src/auth/strategy/jwt-auth.guard';
 
@@ -39,6 +42,7 @@ export class PlayersController {
 
   @ApiOperation({ summary: 'Get all players' })
   @ApiResponse({ status: 200, type: [PlayerModel] })
+  @ApiBearerAuth('token')
   @UseGuards(JwtAuthGuard)
   @Get()
   async getPlayers(): Promise<PlayerModel[]> {

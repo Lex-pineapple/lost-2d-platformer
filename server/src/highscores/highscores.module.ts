@@ -7,7 +7,9 @@ import { HighscoresService } from './highscores.service';
 
 @Module({
   controllers: [HighscoresController],
-  providers: [HighscoresService],
+  providers: [
+    HighscoresService,
+  ],
   imports: [SequelizeModule.forFeature([HighscoreModel]), PlayersModule],
 })
 export class HighscoresModule {}
