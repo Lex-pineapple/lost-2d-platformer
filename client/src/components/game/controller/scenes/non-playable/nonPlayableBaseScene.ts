@@ -143,7 +143,7 @@ class NonPlayableBaseScene extends Scene {
     this.checkEsc();
   }
 
-  checkEsc() {
+  async checkEsc() {
     // This is for the case if ESC key pressed in any non playable scene (menu)
     if (this.keyESC && Phaser.Input.Keyboard.JustDown(this.keyESC)) {
       if (!this.scene.isPaused()) {
@@ -160,7 +160,7 @@ class NonPlayableBaseScene extends Scene {
 
         if (sceneKey === 'OptionsScene') {
           this.scene.stop();
-          this.saveVolumesToApi();
+        await this.saveVolumesToApi();
           saveToLocalStorage(SaveItems.masterVolume, +soundConfigMaster.volume!.toFixed(2));
           saveToLocalStorage(SaveItems.musicVolume, +soundConfigMusic.volume!.toFixed(2));
           saveToLocalStorage(SaveItems.effectsVolume, +soundConfigEffects.volume!.toFixed(2));

@@ -46,14 +46,14 @@ class OptionsScene extends NonPlayableBaseScene {
     const volumeMusic = soundConfigMusic.volume!;
     const volumeEffects = soundConfigEffects.volume!;
     this.createBackButton(40, 30);
-    this.masterSlider = this.createSlider(xAxis, yAxis - 100, ' Master Volume', masterVolumeValue, this.changeMasterVolume);
     this.musicSlider = this.createSlider(xAxis, yAxis - 50, '  Music Volume', volumeMusic, this.changeMusicVolume);
     this.effectsSlider = this.createSlider(xAxis, yAxis, 'Effects Volume', volumeEffects, this.changeEffectsVolume);
+    this.masterSlider = this.createSlider(xAxis, yAxis - 100, ' Master Volume', this.currentMasterVolumeValue, this.changeMasterVolume);
     this.createLangButton(xAxis, yAxis + 50);
     this.createFullscreenSwitch();
   }
 
-  createBackButton(xPos: number, yPos: number) {
+ createBackButton(xPos: number, yPos: number) {
     this.add
       .sprite(xPos, yPos, 'menu-arrow')
       .setInteractive({ useHandCursor: true })
@@ -167,15 +167,12 @@ class OptionsScene extends NonPlayableBaseScene {
 
   async returnBack() {
     this.soundServise.playSoundButton();
-    this.saveVolumesToApi();
+   await this.saveVolumesToApi();
     if (this.sharedState.playableScenePaused) {
       this.scene.start('PauseMenuScene');
     } else {
       this.scene.start('MainMenuScene');
     }
-    saveToLocalStorage(SaveItems.masterVolume, +soundConfigMaster.volume!.toFixed(2));
-    saveToLocalStorage(SaveItems.musicVolume, +soundConfigMusic.volume!.toFixed(2));
-    saveToLocalStorage(SaveItems.effectsVolume, +soundConfigEffects.volume!.toFixed(2));
   }
 }
 

@@ -80,9 +80,9 @@ class MainMenuScene extends NonPlayableBaseScene {
     if (!State.data.playerId) return;
     const playerStats = await Loader.getPlayer(State.data.playerId);
     if (playerStats) {
-      soundConfigMaster.volume = playerStats.masterVolume;
       this.soundServise.setVolumeEffects(playerStats.effectsVolume);
       this.soundServise.setVolumeMusic(playerStats.musicVolume);
+      soundConfigMaster.volume = playerStats.masterVolume;
     }
   }
 
