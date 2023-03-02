@@ -11,8 +11,6 @@ class Player extends Actor {
 
   private keyF: Phaser.Input.Keyboard.Key;
 
-  private keyW: Phaser.Input.Keyboard.Key;
-
   private keySpace: Phaser.Input.Keyboard.Key;
 
   onWall: boolean;
@@ -59,7 +57,6 @@ class Player extends Actor {
     this.keyD = this.scene.input.keyboard.addKey('D');
     this.keyS = this.scene.input.keyboard.addKey('S');
     this.keyF = this.scene.input.keyboard.addKey('F');
-    this.keyW = this.scene.input.keyboard.addKey('W');
 
     this.hp = hp;
 
@@ -307,9 +304,6 @@ class Player extends Actor {
       }
       if (this.keyS.isDown) {
         this.body.velocity.y = 600;
-      }
-      if (this.keyW.isDown) {
-        this.body.velocity.y = -600;
       }
     } else {
       this.angle = 0;
