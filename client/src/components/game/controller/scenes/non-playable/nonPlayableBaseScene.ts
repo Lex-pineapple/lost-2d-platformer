@@ -20,7 +20,7 @@ enum SceneKeys {
 class NonPlayableBaseScene extends Scene {
   protected lastSceneKey: string | undefined;
 
-  private keyESC!: Phaser.Input.Keyboard.Key;
+  private keyTAB!: Phaser.Input.Keyboard.Key;
 
   soundServise!: SoundService;
 
@@ -39,7 +39,8 @@ class NonPlayableBaseScene extends Scene {
   }
 
   create() {
-    this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
+    this.keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
+    this.addFullscreenChangedHandler();
   }
 
   initServices(): void {
@@ -140,12 +141,24 @@ class NonPlayableBaseScene extends Scene {
   }
 
   update() {
-    this.checkEsc();
+    this.checkTab();
   }
 
-  async checkEsc() {
-    // This is for the case if ESC key pressed in any non playable scene (menu)
-    if (this.keyESC && Phaser.Input.Keyboard.JustDown(this.keyESC)) {
+  addFullscreenChangedHandler() {
+    if (!this.sharedState.isFullScreenHandler) {
+      document.addEventListener('fullscreenchange', (event: Event) => {
+        if (!document.fullscreenElement) {
+          this.scale.setZoom(1);
+        }
+      });
+
+      this.sharedState.isFullScreenHandler = true;
+    }
+  }
+
+  async checkTab() {
+    // This is for the case if TAB key pressed in any non playable scene (menu)
+    if (this.keyTAB && Phaser.Input.Keyboard.JustDown(this.keyTAB)) {
       if (!this.scene.isPaused()) {
         const sceneKey = this.scene.key;
 

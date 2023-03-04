@@ -32,7 +32,7 @@ const SceneNumberObj = {
 class SceneBase extends Phaser.Scene {
   private player!: Player;
 
-  private keyESC!: Phaser.Input.Keyboard.Key;
+  private keyTAB!: Phaser.Input.Keyboard.Key;
 
   keyF!: Phaser.Input.Keyboard.Key;
 
@@ -57,13 +57,14 @@ class SceneBase extends Phaser.Scene {
   }
 
   create() {
-    this.keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
+    this.keyTAB = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
     this.keyF = this.input.keyboard.addKey('F');
     this.keyR = this.input.keyboard.addKey('R');
+    this.addFullscreenChangedHandler();
   }
 
   update() {
-    this.checkEsc();
+    this.checkTab();
   }
 
   createHUD() {
@@ -170,6 +171,7 @@ class SceneBase extends Phaser.Scene {
     const button = this.add.image(800 - 32, 450 - 32, 'fullscreenOpen').setOrigin(0).setInteractive();
     button.scrollFactorX = 0;
     button.scrollFactorY = 0;
+
     button.on('pointerup', () => {
       if (this.scale.isFullscreen) {
         button.setTexture('fullscreenOpen');
@@ -178,7 +180,6 @@ class SceneBase extends Phaser.Scene {
       } else {
         button.setTexture('fullscreenExit');
         this.scale.startFullscreen();
-
         this.scale.setZoom(window.screen.width / 800);
       }
     }, this);
@@ -287,8 +288,8 @@ class SceneBase extends Phaser.Scene {
       this.saveScoreToSharedState();
       this.saveHPtoSharedState();
       // для того чтобы при смене уровня не потерять score и hp
-      console.log('sharedState.score:', this.sharedState.score);
-      console.log('sharedState.hp:', this.sharedState.playerHP);
+      // console.log('sharedState.score:', this.sharedState.score);
+      // console.log('sharedState.hp:', this.sharedState.playerHP);
       }
       this.player.collided = true;
     });
@@ -314,7 +315,7 @@ class SceneBase extends Phaser.Scene {
       this.physics.add.overlap(this.player, zone, (obj1, obj2) => {
         if (Phaser.Input.Keyboard.JustDown(this.keyR) && this.player.canAttack) {
           this.player.attacked = true;
-          console.log('attack');
+          // console.log('attack');
           this.tweens.add({
             targets: destructibleBarricades[idx],
             duration: 100,
@@ -363,7 +364,7 @@ class SceneBase extends Phaser.Scene {
         if (!this.player.enemyOverlap) {
           this.player.enemyCollide = true;
           this.player.getDamage(1, !this.player.onWall);
-          console.log(this.getPlayer().getHPValue());
+          // console.log(this.getPlayer().getHPValue());
 
           this.reduceLife();
           if (this.getPlayer().getHPValue() <= 0) {
@@ -452,7 +453,7 @@ class SceneBase extends Phaser.Scene {
     const positionX = this.cameras.main.worldView.x + 32;
     const positionY = this.cameras.main.worldView.y + 48;
     const text = tutorialFlow[type as keyof ITutorialFlow];
-    console.log(positionX, positionY);
+    // console.log(positionX, positionY);
 
     this.player.tutorialText = this.make.text(
       {
@@ -468,15 +469,27 @@ class SceneBase extends Phaser.Scene {
     this.player.tutorialText.scrollFactorY = 0;
   }
 
-  checkEsc() {
-    if (Phaser.Input.Keyboard.JustDown(this.keyESC)) {
+  addFullscreenChangedHandler() {
+    if (!this.sharedState.isFullScreenHandler) {
+      document.addEventListener('fullscreenchange', (event: Event) => {
+        if (!document.fullscreenElement) {
+          this.scale.setZoom(1);
+        }
+      });
+
+      this.sharedState.isFullScreenHandler = true;
+    }
+  }
+
+  checkTab() {
+    if (Phaser.Input.Keyboard.JustDown(this.keyTAB)) {
       if (!this.scene.isPaused()) {
         this.scene.launch('PauseMenuScene', { key: this.scene.key });
         this.scene.pause();
-/*         this.sharedState.score = String(this.score);
-        this.sharedState.playerHP = String(this.player.getHPValue());
-        console.log('score: ', this.score);
-        // для того чтобы из паузы можно было получить score и HP */
+        // this.sharedState.score = String(this.score);
+        // this.sharedState.playerHP = String(this.player.getHPValue());
+        // console.log('score: ', this.score);
+        // // для того чтобы из паузы можно было получить score и HP
 
         this.sharedState.playableScenePaused = this.scene.key;
       }
@@ -495,7 +508,7 @@ class SceneBase extends Phaser.Scene {
   }
 
   _spawnCharacters() {
-    console.log(this.sharedState.playerHP);
+    // console.log(this.sharedState.playerHP);
 
     if (this.sharedState.playerHP) {
       this.player = new Player(this, 32, 300, +this.sharedState.playerHP);
@@ -558,14 +571,14 @@ class SceneBase extends Phaser.Scene {
     this.saveScoreToSharedState();
     this.saveHPtoSharedState();
     this.saveSceneToSharedState(sceneKey);
-    console.log('save all data to shared state');
+    // console.log('save all data to shared state');
   }
 
   saveAllDataToLocalStorage(sceneKey: string) {
     this.saveScoreToLocalStorage();
     this.saveHPtoLocalStorage();
     this.saveSceneToLocalStorage(sceneKey);
-    console.log('saved all data to local storage');
+    // console.log('saved all data to local storage');
   }
 
   async savePlayerStats(sceneKey: string) {

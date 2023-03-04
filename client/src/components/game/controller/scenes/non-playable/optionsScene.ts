@@ -49,7 +49,7 @@ class OptionsScene extends NonPlayableBaseScene {
     this.musicSlider = this.createSlider(xAxis, yAxis - 50, '  Music Volume', volumeMusic, this.changeMusicVolume);
     this.effectsSlider = this.createSlider(xAxis, yAxis, 'Effects Volume', volumeEffects, this.changeEffectsVolume);
     this.masterSlider = this.createSlider(xAxis, yAxis - 100, ' Master Volume', this.currentMasterVolumeValue, this.changeMasterVolume);
-    this.createLangButton(xAxis, yAxis + 50);
+    // this.createLangButton(xAxis, yAxis + 50);
     this.createFullscreenSwitch();
   }
 
