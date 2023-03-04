@@ -109,14 +109,12 @@ class Menu extends Component {
         if (State.data.theme === 'light') {
           switchThemeBtn.textContent = '';
           switchThemeBtn.insertAdjacentHTML(ElementPosition.BEFORE_END, lightModeIcon);
-          console.log('change theme to dark');
           State.setDataKey('theme', 'dark');
           window.localStorage.setItem('theme', 'dark');
           document.body.classList.add('theme-dark');
         } else if (State.data.theme === 'dark') {
           switchThemeBtn.textContent = '';
           switchThemeBtn.insertAdjacentHTML(ElementPosition.BEFORE_END, darkModeIcon);
-          console.log('change theme to light');
           State.setDataKey('theme', 'light');
           window.localStorage.setItem('theme', 'light');
           document.body.classList.remove('theme-dark');

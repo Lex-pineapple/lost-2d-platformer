@@ -51,7 +51,7 @@ class PauseMenuScene extends NonPlayableBaseScene {
   }
 
   update() {
-    this.checkEsc();
+    this.checkTab();
   }
 
   resumeGame() {

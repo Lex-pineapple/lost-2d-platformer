@@ -1,5 +1,9 @@
 export interface ISharedState {
-  [key: string]: string | null;
+  playableScenePaused: string | null;
+  playerHP: string | null;
+  score: string | null;
+  lastLevel: string | null;
+  isFullScreenHandler: boolean;
 }
 export interface IJSONData {
   platforms: IPlatformData[];

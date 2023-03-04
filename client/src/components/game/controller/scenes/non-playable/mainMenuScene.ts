@@ -137,7 +137,7 @@ class MainMenuScene extends NonPlayableBaseScene {
   }
 
   update() {
-    this.checkEsc();
+    this.checkTab();
   }
 }
 

@@ -317,7 +317,7 @@ class PlaySceneOne extends SceneBase {
   }
 
   update(): void {
-    this.checkEsc();
+    this.checkTab();
     this.getPlayer().update();
   }
 }

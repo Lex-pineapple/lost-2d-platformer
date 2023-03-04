@@ -116,7 +116,7 @@ class PlaySceneThree extends SceneBase {
     this.physics.add.collider(this.getPlayer(), this.endpoint, (obj1, obj2) => {
       // this.getPlayer().disableRun();
       this.saveScoreToSharedState();
-      console.log(this.sharedState.score);
+      // console.log(this.sharedState.score);
 
       if (!this.getPlayer().collided) {
         this.tweens.add({
@@ -259,7 +259,7 @@ class PlaySceneThree extends SceneBase {
   createPitFalls() {
     const zone = this.add.zone(11128, 450, 6048, 32);
     this.physics.world.enable(zone);
-    console.log(this.getPlayer().getHPValue());
+    // console.log(this.getPlayer().getHPValue());
 
     this.physics.add.overlap(this.getPlayer(), zone, () => {
       if (!this.getPlayer().enemyOverlap) {
@@ -483,7 +483,7 @@ class PlaySceneThree extends SceneBase {
   }
 
   update(): void {
-    this.checkEsc();
+    this.checkTab();
     this.getPlayer().update();
   }
 }

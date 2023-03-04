@@ -99,6 +99,8 @@ class Game extends Component {
       playableScenePaused: null,
       playerHP: '3',
       score: '0',
+      lastLevel: null,
+      isFullScreenHandler: false,
     };
 
     const scenes = [
