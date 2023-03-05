@@ -13,6 +13,8 @@ class WinnerScene extends NonPlayableBaseScene {
 
   private dialogArr!: Array<string>;
 
+  private keyF!: Phaser.Input.Keyboard.Key;
+
   private menu: IMenuItem[] = [
     {
       sceneKey: 'MainMenuScene',
@@ -34,6 +36,7 @@ class WinnerScene extends NonPlayableBaseScene {
 
   create() {
     super.create();
+    this.keyF = this.input.keyboard.addKey('F');
     this.dialogArr = ['Congratulations!', 'You finished the game!', `Your score: ${this.sharedState.score}`, 'Back to main menu?'];
     this.messageCounter = 0;
     this.cameras.main.fadeIn(1000, 0, 0, 0);
@@ -42,15 +45,15 @@ class WinnerScene extends NonPlayableBaseScene {
     this.add.image(xAxis, yAxis, 'winnerBackground');
     this.speechBubble = this.add.sprite(xAxis + 95, yAxis - 90, 'speechBubble');
     this.displayWinnerMessage();
-    this.input.keyboard.on('keydown', (event: KeyboardEvent) => {
-      if (event.key === 'f') {
-        this.displayWinnerMessage();
-      }
-    });
     this.createFullscreenSwitch();
-
     this.soundServise.playVictoryMusic();
     this.saveScore();
+  }
+
+  update(): void {
+    if (Phaser.Input.Keyboard.JustDown(this.keyF)) {
+      this.displayWinnerMessage();
+    }
   }
 
   displayWinnerMessage() {
