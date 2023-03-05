@@ -1,0 +1,82 @@
+{
+	"textures": [
+		{
+			"image": "cat-attack-atlas",
+			"format": "RGBA8888",
+			"size": {
+				"w": 91,
+				"h": 78
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "cat-attack-3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 11,
+						"w": 48,
+						"h": 37
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 48,
+						"h": 37
+					}
+				},
+				{
+					"filename": "cat-attack-1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 9,
+						"w": 43,
+						"h": 39
+					},
+					"frame": {
+						"x": 48,
+						"y": 0,
+						"w": 43,
+						"h": 39
+					}
+				},
+				{
+					"filename": "cat-attack-2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 7,
+						"w": 42,
+						"h": 41
+					},
+					"frame": {
+						"x": 0,
+						"y": 37,
+						"w": 42,
+						"h": 41
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7"
+	}
+}

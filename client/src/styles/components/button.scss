@@ -1,0 +1,13 @@
+.button {
+  @include btn-reset;
+  display: block;
+
+  // &:hover,
+  // &:focus,
+  // &:active {
+  // }
+
+  // &:disabled,
+  // &.disabled {
+  // }
+}

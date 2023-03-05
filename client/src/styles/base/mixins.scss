@@ -1,0 +1,255 @@
+@mixin btn-reset {
+  position: relative;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+@mixin list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin desktop {
+  @media only screen and (max-width: $desktop-width-lb) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media only screen and (max-width: $laptop-width-lb) {
+    @content;
+  }
+}
+
+@mixin tablet-landscape {
+  @media only screen and (max-width: $tablet-landscape-width-lb) {
+    @content;
+  }
+}
+
+@mixin tablet-intermediate-2 {
+  @media only screen and (max-width: $tablet-intermediate-2-width) {
+    @content;
+  }
+}
+
+@mixin tablet-intermediate {
+  @media only screen and (max-width: $tablet-intermediate-width) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: $tablet-width-lb) {
+    @content;
+  }
+}
+
+@mixin mobile-intermediate-3 {
+  @media only screen and (max-width: $mobile-intermediate-3-width) {
+    @content;
+  }
+}
+
+@mixin mobile-intermediate-2 {
+  @media only screen and (max-width: $mobile-intermediate-2-width) {
+    @content;
+  }
+}
+
+@mixin mobile-intermediate {
+  @media only screen and (max-width: $mobile-intermediate-width) {
+    @content;
+  }
+}
+
+@mixin mobile-max {
+  @media only screen and (max-width: $mobile-max-width) {
+    @content;
+  }
+}
+
+@mixin mobile-midi {
+  @media only screen and (max-width: $mobile-midi-width) {
+    @content;
+  }
+}
+
+@mixin mobile-mini {
+  @media only screen and (max-width: $mobile-mini-width) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media only screen and (max-width: $mobile-width) {
+    @content;
+  }
+}
+
+@mixin font-h1 {
+  font-size: 52px;
+  line-height: 56px;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+
+  @include tablet {
+    font-size: 28px;
+    line-height: 32px;
+  }
+}
+
+@mixin font-h2 {
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+
+  @include tablet-landscape {
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  @include mobile-intermediate-2 {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}
+
+@mixin font-h3 {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+}
+
+@mixin font-h4 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  padding: 0;
+  margin: 0;
+}
+
+@mixin text-32-600 {
+  font-size: 32px;
+  line-height: 38px;
+  font-weight: 600;
+}
+
+@mixin text-20 {
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+@mixin text-18 {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+@mixin text-16 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+@mixin text-16-500 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+@mixin text-16-600 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+@mixin text-15 {
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+@mixin text-14 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+@mixin text-14-500 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+@mixin text-12 {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+}
+
+@mixin text-12-600 {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
+}
+
+@mixin text-10 {
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 400;
+}
+
+@mixin text-10-500 {
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 500;
+}
+
+@mixin hover-link {
+  transition: color $style-transition-duration $style-transition-function;
+
+  &:hover,
+  &:focus {
+    color: inherit;
+  }
+
+  &:active {
+    color: inherit;
+  }
+}
+
+@mixin hover-link-grey {
+  transition: color $style-transition-duration $style-transition-function;
+
+  svg {
+    transition: fill $style-transition-duration $style-transition-function;
+  }
+
+  &:hover,
+  &:focus,
+  &.active {
+    color: $text-primary;
+
+    svg {
+      fill: $text-primary;
+    }
+  }
+
+  &:active {
+    color: $text-grey;
+
+    svg {
+      fill: $text-grey;
+    }
+  }
+}

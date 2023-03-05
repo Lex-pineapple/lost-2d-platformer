@@ -1,0 +1,77 @@
+.table {
+  @include text-18;
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+  border-bottom: 1px solid $grey-spirit;
+
+  &__thead {
+    display: table-header-group;
+
+    @include mobile-midi {
+      display: none;
+    }
+  }
+
+  &__tbody {
+    display: table-row-group;
+  }
+
+  &__tfoot {
+    display: table-footer-group;
+  }
+
+  &__col {
+    display: table-column;
+  }
+
+  &__colgroup {
+    display: table-column-group;
+  }
+
+  &__caption {
+    display: table-caption;
+  }
+
+  &__tr {
+    position: relative;
+    width: 100%;
+    display: table-row;
+    border-top: 1px solid $grey-spirit;
+
+    @include mobile-midi {
+      display: block;
+    }
+  }
+
+  &__td,
+  &__th {
+    display: table-cell;
+    width: 25%;
+    vertical-align: middle;
+    padding: 30px 0;
+
+    @include mobile-midi {
+      display: block;
+      padding: 16px 0;
+    }
+
+    &--ordinal-number {
+      width: 3%;
+    }
+  }
+
+  &__th {
+    @include text-18;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 16px 0 16px 0;
+  }
+
+  &__colspan {
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+}

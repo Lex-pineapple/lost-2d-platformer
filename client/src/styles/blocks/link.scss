@@ -1,0 +1,18 @@
+.link {
+  text-decoration: none;
+  border: 0;
+
+  @include hover-link;
+
+  &--dark {
+    color: $text-dark;
+
+    @include hover-link-grey;
+  }
+
+  &--grey {
+    color: $text-grey-darker;
+
+    @include hover-link-grey;
+  }
+}

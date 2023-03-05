@@ -1,0 +1,57 @@
+$font: 'B612 Mono', 'Arial', sans-serif;
+
+$mobile-width: 320px;
+$mobile-mini-width: 335px;
+$mobile-midi-width: 400px;
+$mobile-max-width: 500px;
+$mobile-max-width-lb: $mobile-max-width - 1;
+$mobile-intermediate-width: 600px;
+$mobile-intermediate-2-width: 675px;
+$mobile-intermediate-3-width: 744px;
+$tablet-width: 768px;
+$tablet-width-lb: $tablet-width - 1;
+$tablet-intermediate-width: 880px;
+$tablet-intermediate-2-width: 925px;
+$tablet-landscape-width: 1024px;
+$tablet-landscape-width-lb: $tablet-landscape-width - 1;
+$laptop-width: 1280px;
+$laptop-width-lb: $laptop-width - 1;
+$desktop-width: 1440px;
+$desktop-width-lb: $desktop-width - 1;
+$desktop-max-width: 1920px;
+
+$white: #ffffff;
+$black: #000000;
+$grey: #98a2b3;
+$grey-dark: #101828;
+$grey-dark-two: #17233a;
+$grey-darker: #667085;
+$grey-lighter: #f6f6f6;
+$grey-spirit: #f5f5f5;
+$transparent: rgba(255, 255, 255, 0);
+$bg: $grey-spirit;
+
+$yellow: #fec84b;
+$red: #d60f16;
+$red-darker: darken($red, 3%);
+$red-light: #ffb8ba; // #fff1f3;
+$orange: #f57402;
+$orange-light: #fffaeb;
+$orange-darker: darken($orange, 3%);
+
+$primary-color: $orange;
+$primary-darker-color: $orange-darker;
+$primary-light-color: $orange-light;
+
+$text-primary: $primary-color;
+
+$text-dark: $grey-dark;
+$text-light: $white;
+$text-grey: $grey;
+$text-grey-darker: $grey-darker;
+$text-grey-lighter: $grey-lighter;
+
+$basic-transition: color 0.3s, background-color 0.3s, border-color 0.3s, box-shadow 0.3s, opacity 0.3s;
+
+$style-transition-duration: 0.15s;
+$style-transition-function: ease-out;

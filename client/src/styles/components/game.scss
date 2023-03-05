@@ -1,0 +1,76 @@
+.game {
+  &__container {
+    background: url('/assets/contour-cat.png') bottom -20px right 107px no-repeat;
+    background-size: 330px auto;
+
+    @include laptop {
+      background: none;
+    }
+  }
+
+  &__headline {
+    margin-bottom: 40px;
+  }
+
+  &__box {
+    min-width: 800px;
+
+    @include laptop {
+      min-width: 0;
+      margin-bottom: 24px;
+    }
+  }
+
+  canvas {
+    display: block;
+    max-width: 100%;
+
+    @include laptop {
+      width: 100%;
+    }
+  }
+
+  p:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  &__cols {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 28px;
+
+    @include laptop {
+      display: block;
+      margin-bottom: 16px;
+    }
+  }
+
+  // &__col--one {
+  // padding-top: 8px;
+  // }
+
+  &__col--one,
+  &__col--two {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+  }
+
+  &__epilogue {
+    max-width: 800px;
+
+    @include laptop {
+      max-width: 100%;
+    }
+  }
+}
+
+.theme-dark {
+  .game__container {
+    background: none;
+  }
+}
